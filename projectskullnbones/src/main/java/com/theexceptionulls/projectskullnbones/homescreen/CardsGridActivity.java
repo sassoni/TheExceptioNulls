@@ -14,7 +14,6 @@ import com.theexceptionulls.projectskullnbones.Card.CardActivity;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.addcard.StoreListActivity;
 
-
 public class CardsGridActivity extends Activity {
 
     @Override
@@ -29,13 +28,11 @@ public class CardsGridActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = new Intent(CardsGridActivity.this, CardActivity.class);
                 startActivity(intent);
-                Toast.makeText(CardsGridActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             }
         });
 
         AppController.loadBarcodeScanner();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,17 +43,12 @@ public class CardsGridActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
-                return true;
+//            case R.id.action_settings:
+//                return true;
             case R.id.action_add:
-//                Intent intent = new Intent(this, AddCardActivity.class);
-//                startActivity(intent);
                 Intent intent = new Intent(this, StoreListActivity.class);
                 startActivity(intent);
                 return true;
@@ -65,4 +57,5 @@ public class CardsGridActivity extends Activity {
         }
 
     }
+
 }

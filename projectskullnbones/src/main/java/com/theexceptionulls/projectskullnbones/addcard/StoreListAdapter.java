@@ -34,7 +34,7 @@ public class StoreListAdapter extends ArrayAdapter<String> {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.store_list_row, null, true);
+            convertView = inflater.inflate(R.layout.store_list_row, null, false);
 
             holder = new ViewHolder();
             holder.text = (TextView) convertView.findViewById(R.id.store_name);
@@ -50,7 +50,6 @@ public class StoreListAdapter extends ArrayAdapter<String> {
         holder.text.setText(stores[position]);
 
         return convertView;
-
     }
 
 }
