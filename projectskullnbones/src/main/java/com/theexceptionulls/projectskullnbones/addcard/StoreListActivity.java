@@ -1,8 +1,13 @@
 package com.theexceptionulls.projectskullnbones.addcard;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import com.theexceptionulls.projectskullnbones.Card.CardActivity;
 import com.theexceptionulls.projectskullnbones.R;
+import com.theexceptionulls.projectskullnbones.ScanActivity;
 
 public class StoreListActivity extends ListActivity {
 
@@ -46,21 +51,21 @@ public class StoreListActivity extends ListActivity {
 
         StoreListAdapter storeListAdapter = new StoreListAdapter(this, storeList, storeListThumbnailsID);
         setListAdapter(storeListAdapter);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+                startActivityForResult(intent, ScanActivity.SCAN_CARD_REQUEST);
+            }
+        });
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.store_list, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ScanActivity.SCAN_CARD_REQUEST && resultCode == RESULT_OK){
+            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 }

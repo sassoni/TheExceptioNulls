@@ -25,6 +25,7 @@ import com.catalinamarketing.scanner.vo.ScannerDecodeResponse;
 public class ScanActivity extends Activity implements Handler.Callback {
 
     private static final int TIMEOUT_CANCEL_SCANNING = 45000;
+    public static final int SCAN_CARD_REQUEST = 121;
     private Drawable scanLines;
     private Drawable scanLinesFound;
     private ToneGenerator toneGenerator;

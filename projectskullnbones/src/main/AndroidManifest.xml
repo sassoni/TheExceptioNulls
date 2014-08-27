@@ -27,6 +27,7 @@
             android:theme="@style/AppTheme">
         <activity
             android:name=".homescreen.CardsGridActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_cards_grid" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -36,12 +37,14 @@
         </activity>
         <activity
             android:name=".addcard.AddCardActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_add_card" >
         </activity>
         <activity android:name=".Card.CardActivity"
                 android:screenOrientation="portrait"/>
         <activity
             android:name=".addcard.StoreListActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_store_list" >
         </activity>
         <activity
