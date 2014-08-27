@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+import com.theexceptionulls.projectskullnbones.AppController;
 import com.theexceptionulls.projectskullnbones.Card.CardActivity;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.addcard.StoreListActivity;
@@ -31,6 +32,8 @@ public class CardsGridActivity extends Activity {
                 Toast.makeText(CardsGridActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             }
         });
+
+        AppController.loadBarcodeScanner();
     }
 
 

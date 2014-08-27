@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.theexceptionulls.projectskullnbones.R;
-import com.theexceptionulls.projectskullnbones.zxing.IntentIntegrator;
 
 
 public class AddCardActivity extends Activity {

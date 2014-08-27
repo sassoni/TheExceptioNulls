@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent">
+
+    <SurfaceView
+            android:id="@+id/scan_surface_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+        <TextView
+                android:alpha="0.5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:text="SCAN CARD"
+                android:textColor="@android:color/white"
+                android:background="@android:color/black"/>
+
+        <ImageView
+                android:id="@+id/scan_view_scan_panel"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+        <TextView
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:padding="15dp"
+                android:background="@android:color/black"
+                android:alpha="0.5"
+                android:text="Tap if cannot scan or No Barcode"
+                android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>

@@ -22,4 +22,6 @@
     <string name="add_card_take_photo_label">Take a picture of your card</string>
     <string name="title_activity_store_list">StoreListActivity</string>
 
+    <string name="scanner_license_key">3DBD4170-AB9B-11E2-BE6C-ADC68976D761</string>
+
 </resources>
