@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+            android:id="@+id/card_fragment_retailer_logo"
+            android:layout_width="match_parent"
+            android:background="#791d7e"
+            android:layout_height="120dp"/>
+
+    <ScrollView
+            android:id="@+id/card_fragment_scroll_view"
+            android:layout_below="@+id/card_fragment_retailer_logo"
+            android:background="#efefef"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:id="@+id/card_fragment_barcode_image"
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"/>
+
+            <TextView
+                    android:id="@+id/card_fragment_card_number"
+                    android:layout_below="@+id/card_fragment_barcode_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="2210590929072"
+                    android:padding="10dp"
+                    android:background="@android:color/white"/>
+
+            <RelativeLayout
+                    android:id="@+id/card_fragment_card_image_layout"
+                    android:layout_below="@+id/card_fragment_card_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:color/white"
+                    >
+
+                <ImageView
+                        android:layout_alignParentTop="true"
+                        android:id="@+id/card_fragment_card_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"/>
+
+                <Button
+                        android:id="@+id/card_fragment_card_image_flip"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignBottom="@+id/card_fragment_card_image"
+                        android:layout_alignRight="@+id/card_fragment_card_image"/>
+
+                <Button
+                        android:id="@+id/card_fragment_card_image_edit"
+                        android:layout_below="@+id/card_fragment_card_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@android:drawable/ic_menu_edit"
+                        android:text="Edit"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

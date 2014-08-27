@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+import com.theexceptionulls.projectskullnbones.Card.CardActivity;
 
 
 public class CardsGridActivity extends Activity {
@@ -23,6 +24,8 @@ public class CardsGridActivity extends Activity {
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Intent intent = new Intent(CardsGridActivity.this, CardActivity.class);
+                startActivity(intent);
                 Toast.makeText(CardsGridActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             }
         });

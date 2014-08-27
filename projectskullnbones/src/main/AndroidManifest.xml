@@ -18,18 +18,22 @@
         </activity>
         <activity
             android:name=".CardsGridActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_cards_grid" >
         </activity>
         <activity
             android:name=".AddCardActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_add_card" >
         </activity>
-        <activity android:name=".zxing.scanner."
-                  android:screenOrientation="landscape"
-                  android:configChanges="orientation|keyboardHidden"
-                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-                  android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+        <activity android:name=".Card.CardActivity"
+                android:screenOrientation="portrait"/>
+        <!--<activity android:name=".zxing.scanner."-->
+                  <!--android:screenOrientation="landscape"-->
+                  <!--android:configChanges="orientation|keyboardHidden"-->
+                  <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
+                  <!--android:windowSoftInputMode="stateAlwaysHidden">-->
+        <!--</activity>-->
     </application>
 
 </manifest>
