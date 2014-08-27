@@ -6,9 +6,36 @@ import com.theexceptionulls.projectskullnbones.R;
 
 public class StoreListActivity extends ListActivity {
 
-    private String[] storeList;
-    private int[] storeListThumbnailsID;
-    private StoreListAdapter storeListAdapter;
+    private String[] storeList = {
+            "A&P",
+            "Family Express",
+            "Giant",
+            "Giant BONUSCARD",
+            "Harris Teeter",
+            "Kroger",
+            "Marsh",
+            "Martin's",
+            "Safeway",
+            "ShopRite",
+            "Stop & Shop",
+            "Walmart",
+            "Weis"
+    };
+    private int[] storeListThumbnailsID = {
+            R.drawable.i_aandp,
+            R.drawable.i_familyexpress,
+            R.drawable.i_gl,
+            R.drawable.i_gc,
+            R.drawable.i_harristeeter,
+            R.drawable.i_kroger,
+            R.drawable.i_marsh,
+            R.drawable.i_martins,
+            R.drawable.i_safeway,
+            R.drawable.i_shoprite,
+            R.drawable.i_stopandshop,
+            R.drawable.i_walmart,
+            R.drawable.i_weis
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,37 +44,7 @@ public class StoreListActivity extends ListActivity {
 
         setTitle("Add Card");
 
-        storeList = new String[]{
-                "A&P",
-                "Family Express",
-                "Giant",
-                "Giant BONUSCARD",
-                "Harris Teeter",
-                "Kroger",
-                "Marsh",
-                "Martin's",
-                "Safeway",
-                "ShopRite",
-                "Walmart",
-                "Weis"
-        };
-
-        storeListThumbnailsID = new int[]{
-                R.drawable.i_aandp,
-                R.drawable.i_familyexpress,
-                R.drawable.i_gl,
-                R.drawable.i_gc,
-                R.drawable.i_harristeeter,
-                R.drawable.i_kroger,
-                R.drawable.i_marsh,
-                R.drawable.i_martins,
-                R.drawable.i_safeway,
-                R.drawable.i_shoprite,
-                R.drawable.i_walmart,
-                R.drawable.i_weis
-        };
-
-        storeListAdapter = new StoreListAdapter(this, storeList, storeListThumbnailsID);
+        StoreListAdapter storeListAdapter = new StoreListAdapter(this, storeList, storeListThumbnailsID);
         setListAdapter(storeListAdapter);
     }
 

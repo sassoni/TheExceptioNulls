@@ -23,24 +23,38 @@ public class CardsGridTileAdapter extends BaseAdapter {
 
     private Context context;
     private Resources resources;
-    DisplayMetrics metrics;
+    private DisplayMetrics metrics;
 
-    // references to our images
-    private Integer[] thumbnailsIds = {
-            R.drawable.pic1, R.drawable.pic2,
-            R.drawable.pic3, R.drawable.pic4,
-            R.drawable.pic1, R.drawable.pic2
-            /*
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7
-            */
+    private String[] storeList = {
+            "A&P",
+            "Family Express",
+            "Giant",
+            "Giant BONUSCARD",
+            "Harris Teeter",
+            "Kroger",
+            "Marsh",
+            "Martin's",
+            "Safeway",
+            "ShopRite",
+            "Stop & Shop",
+            "Walmart",
+            "Weis"
+    };
+
+    private int[] storeListThumbnailsID = {
+            R.drawable.i_aandp,
+            R.drawable.i_familyexpress,
+            R.drawable.i_gl,
+            R.drawable.i_gc,
+            R.drawable.i_harristeeter,
+            R.drawable.i_kroger,
+            R.drawable.i_marsh,
+            R.drawable.i_martins,
+            R.drawable.i_safeway,
+            R.drawable.i_shoprite,
+            R.drawable.i_stopandshop,
+            R.drawable.i_walmart,
+            R.drawable.i_weis
     };
 
     public CardsGridTileAdapter(Context context) {
@@ -51,7 +65,7 @@ public class CardsGridTileAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return thumbnailsIds.length;
+        return storeListThumbnailsID.length;
     }
 
     @Override
@@ -65,9 +79,9 @@ public class CardsGridTileAdapter extends BaseAdapter {
     }
 
 
-    // REMEMBER TO CONVERT THAT STUFF TO DPSSSSSSSSSSSSSSSSSSSSSSSSSSSS
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         TextView textView;
         View view;
 
@@ -79,10 +93,10 @@ public class CardsGridTileAdapter extends BaseAdapter {
 //            textView.setBackgroundColor(Color.parseColor("#CCCCCC"));
 //            textView.setGravity(Gravity.CENTER);
 //            textView.setTextSize(26);
-            LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view=inflater.inflate(R.layout.grid_tile, null, false);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.grid_tile, null, false);
         } else {
-           // textView = (TextView) convertView;
+            // textView = (TextView) convertView;
             view = convertView;
         }
 
@@ -90,7 +104,7 @@ public class CardsGridTileAdapter extends BaseAdapter {
 //        textView.setText("George\nClooney");
 
 //        return textView;
-return view;
+        return view;
 
     }
 
