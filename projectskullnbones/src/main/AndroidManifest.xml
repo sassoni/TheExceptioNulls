@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.catalinamarketing.mcommerce.theexceptionulls.projectskullnbones.CardsGridActivity"
+            android:label="@string/title_activity_cards_grid" >
+        </activity>
+        <activity
+            android:name="com.catalinamarketing.mcommerce.theexceptionulls.projectskullnbones.AddCardActivity"
+            android:label="@string/title_activity_add_card" >
+        </activity>
     </application>
 
 </manifest>
