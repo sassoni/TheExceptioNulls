@@ -1,4 +1,4 @@
-package com.catalinamarketing.mcommerce.theexceptionulls.projectskullnbones;
+package com.theexceptionulls.projectskullnbones;
 
 import android.content.Context;
 import android.view.View;

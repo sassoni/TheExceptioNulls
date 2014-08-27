@@ -1,17 +1,30 @@
-package com.catalinamarketing.mcommerce.theexceptionulls.projectskullnbones;
+package com.theexceptionulls.projectskullnbones;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import com.theexceptionulls.projectskullnbones.zxing.IntentIntegrator;
 
 
 public class AddCardActivity extends Activity {
+
+    Button scanCardBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_card);
+
+
+        scanCardBtn = (Button) findViewById(R.id.scan_card_btn);
+        scanCardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator integrator = new IntentIntegrator(AddCardActivity.this);
+                integrator.initiateScan();
+            }
+        });
     }
 
 
