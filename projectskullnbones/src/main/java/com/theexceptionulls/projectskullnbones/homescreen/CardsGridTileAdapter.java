@@ -1,4 +1,4 @@
-package com.theexceptionulls.projectskullnbones;
+package com.theexceptionulls.projectskullnbones.homescreen;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.theexceptionulls.projectskullnbones.R;
 import org.w3c.dom.Text;
 
 /**

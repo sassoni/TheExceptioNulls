@@ -8,8 +8,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name=".homescreen.CardsGridActivity"
+            android:label="@string/title_activity_cards_grid" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,30 +17,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CardsGridActivity"
-            android:label="@string/title_activity_cards_grid" >
-        </activity>
-        <activity
-            android:name=".AddCardActivity"
+            android:name=".addcard.AddCardActivity"
             android:label="@string/title_activity_add_card" >
         </activity>
         <activity android:name=".Card.CardActivity"
                 android:screenOrientation="portrait"/>
-        <!--<activity android:name=".zxing.scanner."-->
-                  <!--android:screenOrientation="landscape"-->
-                  <!--android:configChanges="orientation|keyboardHidden"-->
-                  <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
-                  <!--android:windowSoftInputMode="stateAlwaysHidden">-->
-        <!--</activity>-->
         <activity
-            android:name="com.theexceptionulls.projectskullnbones.zxing.scanner."
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
-        <activity
-            android:name="com.theexceptionulls.projectskullnbones.StoreListActivity"
+            android:name=".addcard.StoreListActivity"
             android:label="@string/title_activity_store_list" >
         </activity>
     </application>

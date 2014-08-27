@@ -1,4 +1,4 @@
-package com.theexceptionulls.projectskullnbones;
+package com.theexceptionulls.projectskullnbones.homescreen;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 import com.theexceptionulls.projectskullnbones.Card.CardActivity;
+import com.theexceptionulls.projectskullnbones.R;
+import com.theexceptionulls.projectskullnbones.addcard.StoreListActivity;
 
 
 public class CardsGridActivity extends Activity {
