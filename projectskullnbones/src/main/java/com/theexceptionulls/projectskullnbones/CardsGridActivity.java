@@ -20,7 +20,7 @@ public class CardsGridActivity extends Activity {
         setContentView(R.layout.activity_cards_grid);
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new CardsGridImageAdapter(this));
+        gridview.setAdapter(new CardsGridTileAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -50,7 +50,9 @@ public class CardsGridActivity extends Activity {
             case R.id.action_settings:
                 return true;
             case R.id.action_add:
-                Intent intent = new Intent(this, AddCardActivity.class);
+//                Intent intent = new Intent(this, AddCardActivity.class);
+//                startActivity(intent);
+                Intent intent = new Intent(this, StoreListActivity.class);
                 startActivity(intent);
                 return true;
             default:

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.theexceptionulls.projectskullnbones">
+    package="com.theexceptionulls.projectskullnbones" >
 
     <application
         android:allowBackup="true"
@@ -18,12 +18,10 @@
         </activity>
         <activity
             android:name=".CardsGridActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_cards_grid" >
         </activity>
         <activity
             android:name=".AddCardActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_add_card" >
         </activity>
         <activity android:name=".Card.CardActivity"
@@ -34,6 +32,17 @@
                   <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
                   <!--android:windowSoftInputMode="stateAlwaysHidden">-->
         <!--</activity>-->
+        <activity
+            android:name="com.theexceptionulls.projectskullnbones.zxing.scanner."
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name="com.theexceptionulls.projectskullnbones.StoreListActivity"
+            android:label="@string/title_activity_store_list" >
+        </activity>
     </application>
 
 </manifest>

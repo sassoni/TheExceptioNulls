@@ -20,5 +20,6 @@
     <string name="add_card_select_store_label">Select store</string>
     <string name="add_card_add_number_label">Add card number</string>
     <string name="add_card_take_photo_label">Take a picture of your card</string>
+    <string name="title_activity_store_list">StoreListActivity</string>
 
 </resources>
