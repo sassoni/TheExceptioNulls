@@ -10,14 +10,16 @@ public class CardData {
     private String cardNumber;
     private String retailerName;
     private Uri photoUri;
+    private String retailerOpco;
 
     public CardData() {
     }
 
-    public CardData(String cardNumber, String retailerName, Uri photoUri) {
+    public CardData(String cardNumber, Uri photoUri, String retailerName, String retailerOpco) {
         this.cardNumber = cardNumber;
         this.retailerName = retailerName;
         this.photoUri = photoUri;
+        this.retailerOpco = retailerOpco;
     }
 
     public String getCardNumber() {
@@ -42,5 +44,13 @@ public class CardData {
 
     public void setPhotoUri(Uri uri) {
         this.photoUri = uri;
+    }
+
+    public String getRetailerOpco() {
+        return retailerOpco;
+    }
+
+    public void setRetailerOpco(String retailerOpco) {
+        this.retailerOpco = retailerOpco;
     }
 }

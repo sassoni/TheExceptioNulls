@@ -40,6 +40,7 @@ public class CardFragment extends Fragment {
     private TextView credentialNumber;
     private String barcode;
     private String retailer;
+    private String retailerOpco;
     private int gridPosition;
     private static boolean fromRegistration = false;
 
@@ -73,8 +74,9 @@ public class CardFragment extends Fragment {
             fromRegistration = true;
             barcode = getArguments().getString(CardData.CARD_NUMBER);
             retailer = getArguments().getString(CardData.RETAILER_NAME);
-            AppSettings.getInstance().addToCardDataList(new CardData(barcode, retailer, null));
-            actionBar.setTitle(retailer + " Card");
+            retailerOpco = AppSettings.getRetailerOpco(retailer);
+            AppSettings.getInstance().addToCardDataList(new CardData(barcode, null, retailer, retailerOpco));
+            actionBar.setTitle(retailer+" Card");
             //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
             actionBar.setDisplayHomeAsUpEnabled(true);
         } else {
@@ -88,6 +90,7 @@ public class CardFragment extends Fragment {
             //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
     }
 
     @Override
