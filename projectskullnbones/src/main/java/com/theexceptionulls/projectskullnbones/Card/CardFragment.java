@@ -3,7 +3,6 @@ package com.theexceptionulls.projectskullnbones.Card;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -27,34 +26,21 @@ public class CardFragment extends Fragment {
 
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
-    ImageView credentialBarcode;
-    TextView credentialNumber;
-    String barcode;
-    String retailer;
-    int gridPosition;
-    static boolean fromRegistration = false;
+    private ImageView credentialBarcode;
+    private TextView credentialNumber;
+    private String barcode;
+    private String retailer;
+    private int gridPosition;
+    private static boolean fromRegistration = false;
 
     int REQUEST = 11;
 
     public CardFragment() {
     }
 
-    public static final CardFragment newInstance(Bundle dataBundle) {
+    public static final CardFragment newInstance(Bundle bundle) {
         CardFragment fragment = new CardFragment();
-
-//        Bundle bundle = new Bundle();
-//
-//        String intentFrom = dataBundle.getString(Constants.INTENT_FROM);
-//        bundle.putString(Constants.INTENT_FROM, dataBundle.getString(Constants.INTENT_FROM));
-//
-//        if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
-//            bundle.putString(CardData.CARD_NUMBER, dataBundle.getString(CardData.CARD_NUMBER));
-//            bundle.putString(CardData.RETAILER_NAME, dataBundle.getString(CardData.RETAILER_NAME));
-//        } else {
-//            bundle.putInt(Constants.LOYALTY_CARD_POSITION, dataBundle.getInt(Constants.LOYALTY_CARD_POSITION));
-//        }
-
-        fragment.setArguments(dataBundle);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -70,9 +56,9 @@ public class CardFragment extends Fragment {
             retailer = getArguments().getString(CardData.RETAILER_NAME);
             AppSettings.getInstance().addToCardDataList(new CardData(barcode, retailer));
         } else {
+            fromRegistration = false;
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
         }
-
     }
 
     @Override
@@ -110,7 +96,7 @@ public class CardFragment extends Fragment {
                 credentialBarcode.setImageBitmap(bitmap);
             } catch (WriterException e) {
                 e.printStackTrace();
-            }            //credentialBarcode.setImageDrawable(AppSettings.getDrawable(getActivity(), cardData.getRetailerName()));
+            }
         }
 
         return view;

@@ -16,29 +16,16 @@ import com.theexceptionulls.projectskullnbones.R;
 public class OffersFragment extends Fragment {
 
     private LinearLayout offerListParentLayout;
-    String barcode;
-    String retailer;
-    int gridPosition;
-    static boolean fromRegistration = false;
+    private String barcode;
+    private String retailer;
+    private int gridPosition;
+    private static boolean fromRegistration = false;
 
     public OffersFragment() {
     }
 
-    public static final OffersFragment newInstance(Bundle dataBundle) {
+    public static final OffersFragment newInstance(Bundle bundle) {
         OffersFragment fragment = new OffersFragment();
-
-        Bundle bundle = new Bundle();
-
-        String intentFrom = dataBundle.getString(Constants.INTENT_FROM);
-        bundle.putString(Constants.INTENT_FROM, dataBundle.getString(Constants.INTENT_FROM));
-
-        if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
-            bundle.putString(CardData.CARD_NUMBER, dataBundle.getString(CardData.CARD_NUMBER));
-            bundle.putString(CardData.RETAILER_NAME, dataBundle.getString(CardData.RETAILER_NAME));
-        } else {
-            bundle.putInt(Constants.LOYALTY_CARD_POSITION, dataBundle.getInt(Constants.LOYALTY_CARD_POSITION));
-        }
-
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -54,6 +41,7 @@ public class OffersFragment extends Fragment {
             barcode = getArguments().getString(CardData.CARD_NUMBER);
             retailer = getArguments().getString(CardData.RETAILER_NAME);
         } else {
+            fromRegistration = false;
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
         }
     }
@@ -64,14 +52,14 @@ public class OffersFragment extends Fragment {
 
         offerListParentLayout = (LinearLayout) view.findViewById(R.id.offers_linear_layout);
 
-        for (int i=0; i<7; i++){
+        for (int i = 0; i < 7; i++) {
             addOfferToParent();
         }
 
         return view;
     }
 
-    private void addOfferToParent(){
+    private void addOfferToParent() {
 
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity().getApplicationContext());
         View view = layoutInflater.inflate(R.layout.offer_layout, null, false);
