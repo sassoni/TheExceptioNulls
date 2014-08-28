@@ -1,25 +1,36 @@
 package com.theexceptionulls.projectskullnbones.Card;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.catalinamarketing.scanner.BarcodeScanner;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.theexceptionulls.projectskullnbones.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -34,10 +45,14 @@ public class CardFragment extends Fragment {
     private int gridPosition;
     private static boolean fromRegistration = false;
 
-    int REQUEST = 11;
+    static final int REQUEST_BARCODE_CAPTURE = 11;
+    static final int REQUEST_IMAGE_CAPTURE = 12;
 
     private LinearLayout logoLinearLayout;
     private ImageView logoImage;
+    private ImageView cardPhoto;
+
+    private File photoFile = null;
 
     public CardFragment() {
     }
@@ -72,7 +87,6 @@ public class CardFragment extends Fragment {
             //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
     }
 
     @Override
@@ -88,15 +102,23 @@ public class CardFragment extends Fragment {
 
         credentialBarcode = (ImageView) view.findViewById(R.id.card_fragment_barcode_image);
         credentialNumber = (TextView) view.findViewById(R.id.card_fragment_card_number);
+        cardPhoto = (ImageView) view.findViewById(R.id.card_fragment_card_image);
 
-        Button button = (Button) view.findViewById(R.id.card_fragment_card_image_edit);
-        button.setOnClickListener(new View.OnClickListener() {
+        cardPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ScanActivity.class);
-                startActivityForResult(intent, REQUEST);
+                dispatchTakePictureIntent(getActivity());
             }
         });
+
+//        Button button = (Button) view.findViewById(R.id.card_fragment_card_image_edit);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), ScanActivity.class);
+//                startActivityForResult(intent, REQUEST_BARCODE_CAPTURE);
+//            }
+//        });
 
         if (fromRegistration) {
             credentialNumber.setText(barcode);
@@ -123,12 +145,55 @@ public class CardFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST && resultCode == getActivity().RESULT_OK) {
-            String barcode = data.getStringExtra(ScanActivity.BARCODE_VALUE_KEY);
-            Toast.makeText(getActivity().getApplicationContext(), "Barcode " + barcode, Toast.LENGTH_LONG).show();
+    public void onResume() {
+        super.onResume();
+        BarcodeScanner.getInstance().releaseScanner();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppController.loadBarcodeScanner();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == getActivity().RESULT_OK) {
+//            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            cardPhoto.setImageBitmap(imageBitmap);
+//            cardPhoto.setClickable(false);
+
+
+            Uri uri = Uri.fromFile(photoFile);
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // We assume nothing wrong happens. Just because
+            }
+            int nh = (int) ( bitmap.getHeight() * (640.0 / bitmap.getWidth()) );
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 640, nh, true);
+
+
+//            ImageView iv  = (ImageView)waypointListView.findViewById(R.id.waypoint_picker_photo);
+//            Bitmap d = new BitmapDrawable(ctx.getResources() , w.photo.getAbsolutePath()).getBitmap();
+//            int nh = (int) ( d.getHeight() * (512.0 / d.getWidth()) );
+//            Bitmap scaled = Bitmap.createScaledBitmap(d, 512, nh, true);
+//            iv.setImageBitmap(scaled);
+//
+//            Bitmap bitmap = BitmapFactory.decodeFile(photoFile);
+
+//            cardPhoto.setImageURI(uri);
+            cardPhoto.setImageBitmap(scaledBitmap);
         }
+
+//        if (requestCode == REQUEST_BARCODE_CAPTURE && resultCode == getActivity().RESULT_OK) {
+//            String barcode = data.getStringExtra(ScanActivity.BARCODE_VALUE_KEY);
+//            Toast.makeText(getActivity().getApplicationContext(), "Barcode " + barcode, Toast.LENGTH_LONG).show();
+//
+//        }
     }
 
     Bitmap encodeAsBitmap(String contents, com.google.zxing.BarcodeFormat format, int img_width, int img_height) throws WriterException {
@@ -180,5 +245,61 @@ public class CardFragment extends Fragment {
         Resources resources = getResources();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, resources.getDisplayMetrics());
     }
+
+//    private void dispatchTakePictureIntent(Context context) {
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
+//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//        }
+//    }
+
+    private void dispatchTakePictureIntent(Context context) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
+            // Create the File where the photo should go
+
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Log.i("*********************", "photoFile not null");
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            } else {
+                Log.i("*********************", "photoFile null");
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        String mCurrentPhotoPath;
+        // = getActivity().getExternalFilesDir(null).toString();
+
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+
+
+        return image;
+    }
+
+
+
 
 }

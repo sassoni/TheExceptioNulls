@@ -6,18 +6,18 @@
                 android:orientation="vertical">
 
     <LinearLayout
-            android:id="@+id/card_fragment_retailer_logo"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+        android:id="@+id/card_fragment_retailer_logo"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageView
-                android:id="@+id/card_fragment_retailer_logo_imageview"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_gravity="center"
-                />
+            android:id="@+id/card_fragment_retailer_logo_imageview"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            />
 
 
     </LinearLayout>
@@ -69,22 +69,12 @@
                     android:id="@+id/card_fragment_card_image"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_alignParentTop="true"/>
-
-                <Button
-                    android:id="@+id/card_fragment_card_image_flip"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_alignBottom="@+id/card_fragment_card_image"
-                    android:layout_alignRight="@+id/card_fragment_card_image"/>
-
-                <Button
-                    android:id="@+id/card_fragment_card_image_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/card_fragment_card_image"
-                    android:drawableRight="@android:drawable/ic_menu_edit"
-                    android:text="Edit"/>
+                    android:layout_alignParentTop="true"
+                    android:background="@android:color/white"
+                    android:clickable="true"
+                    android:scaleType="center"
+                    android:src="@drawable/i_camera"
+                    />
 
             </RelativeLayout>
 
