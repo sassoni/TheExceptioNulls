@@ -73,6 +73,7 @@
                     android:background="@android:color/white"
                     android:clickable="true"
                     android:scaleType="center"
+                    android:src="@drawable/i_camera"
                     />
 
             </RelativeLayout>
