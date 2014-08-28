@@ -8,34 +8,42 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
-import com.theexceptionulls.projectskullnbones.AppController;
+import com.theexceptionulls.projectskullnbones.*;
 import com.theexceptionulls.projectskullnbones.Card.CardActivity;
-import com.theexceptionulls.projectskullnbones.Constants;
-import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.addcard.StoreListActivity;
 
 public class CardsGridActivity extends Activity {
 
-
+    GridView gridview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards_grid);
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new CardsGridTileAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = new Intent(CardsGridActivity.this, CardActivity.class);
+
+                String retailerName = AppSettings.getInstance().getStoreList()[position];
+                intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_GRID);
                 intent.putExtra(Constants.LOYALTY_CARD_POSITION, position);
+//                intent.putExtra(CardData.RETAILER_NAME, retailerName);
+
                 startActivity(intent);
             }
         });
 
         AppController.loadBarcodeScanner();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gridview.invalidateViews();
     }
 
     @Override

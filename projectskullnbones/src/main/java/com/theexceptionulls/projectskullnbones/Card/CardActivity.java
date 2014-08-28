@@ -2,16 +2,12 @@ package com.theexceptionulls.projectskullnbones.Card;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
-import com.theexceptionulls.projectskullnbones.R;
+import com.theexceptionulls.projectskullnbones.*;
 
-/**
- * Created by rohithavatapally on 8/27/14.
- */
 public class CardActivity extends FragmentActivity {
 
     ViewPager viewPager;
@@ -26,7 +22,24 @@ public class CardActivity extends FragmentActivity {
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        tabPagerAdapter = new TabPagerAdapter(TAB_COUNT, getSupportFragmentManager());
+//        Intent intent = getIntent();
+//        String intentFrom = intent.getStringExtra(Constants.INTENT_FROM);
+//
+//        if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
+//            String cardNumber = intent.getStringExtra(CardData.CARD_NUMBER);
+//            String retailerName = intent.getStringExtra(CardData.RETAILER_NAME);
+//        } else {
+//            bundle.putInt(Constants.LOYALTY_CARD_POSITION, dataBundle.getInt(Constants.LOYALTY_CARD_POSITION));
+//        }
+//
+//
+//
+        CardData newCardData = new CardData("0123", "345");
+
+
+        //////////////////////CHECK FOR WHEN BARCODE IS NULL
+
+        tabPagerAdapter = new TabPagerAdapter(TAB_COUNT, getSupportFragmentManager(), newCardData, getIntent().getExtras());
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(tabPagerAdapter);
 
@@ -73,22 +86,22 @@ public class CardActivity extends FragmentActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

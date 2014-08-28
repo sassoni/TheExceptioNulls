@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import com.theexceptionulls.projectskullnbones.AppSettings;
+import com.theexceptionulls.projectskullnbones.*;
 import com.theexceptionulls.projectskullnbones.Card.CardActivity;
-import com.theexceptionulls.projectskullnbones.Constants;
-import com.theexceptionulls.projectskullnbones.R;
-import com.theexceptionulls.projectskullnbones.ScanActivity;
 
 public class StoreListActivity extends ListActivity {
 
@@ -34,26 +31,25 @@ public class StoreListActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.SCAN_CARD_REQUEST) {
+            int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
+            String retailerName = AppSettings.getInstance().getStoreList()[loyaltyCardPosition];
 
-        if (requestCode == Constants.SCAN_CARD_REQUEST){
+            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+            intent.putExtra(CardData.RETAILER_NAME, retailerName);
 
-            if (resultCode == RESULT_OK){
-                int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
-                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-                intent.putExtra(Constants.LOYALTY_CARD_POSITION, loyaltyCardPosition);
+            if (resultCode == RESULT_OK) {
+                String barcode = data.getStringExtra(ScanActivity.BARCODE_VALUE_KEY);
+                intent.putExtra(CardData.CARD_NUMBER, barcode);
                 startActivity(intent);
                 finish();
             }
 
-            if (resultCode == Constants.RESULT_SCAN_NO_BARCODE){
-                int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
-                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-                intent.putExtra(Constants.LOYALTY_CARD_POSITION, loyaltyCardPosition);
+            if (resultCode == Constants.RESULT_SCAN_NO_BARCODE) {
                 startActivity(intent);
                 finish();
             }
-
         }
-
     }
+
 }

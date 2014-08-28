@@ -1,90 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <ImageView
-            android:id="@+id/card_fragment_retailer_logo"
-            android:layout_width="match_parent"
-            android:background="#791d7e"
-            android:layout_height="120dp"/>
+        android:id="@+id/card_fragment_retailer_logo"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#791d7e"/>
 
     <ScrollView
-            android:id="@+id/card_fragment_scroll_view"
-            android:layout_below="@+id/card_fragment_retailer_logo"
-            android:background="#efefef"
-            android:padding="20dp"
+        android:id="@+id/card_fragment_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/card_fragment_retailer_logo"
+        android:background="#efefef"
+        android:padding="20dp">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
             <ImageView
-                    android:id="@+id/card_fragment_barcode_image"
-                    android:padding="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"/>
+                android:id="@+id/card_fragment_barcode_image"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="#FFFFFF"
+                android:padding="10dp"/>
 
             <TextView
-                    android:id="@+id/card_fragment_card_number"
-                    android:layout_below="@+id/card_fragment_barcode_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="2210590929072"
-                    android:padding="10dp"
-                    android:background="@android:color/white"/>
+                android:id="@+id/card_fragment_card_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_fragment_barcode_image"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="2210590929072"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
             <RelativeLayout
-                    android:id="@+id/card_fragment_card_image_layout"
-                    android:layout_below="@+id/card_fragment_card_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@android:color/white"
-                    >
+                android:id="@+id/card_fragment_card_image_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_fragment_card_number"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/white"
+                >
 
                 <ImageView
-                        android:layout_alignParentTop="true"
-                        android:id="@+id/card_fragment_card_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"/>
+                    android:id="@+id/card_fragment_card_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_alignParentTop="true"/>
 
-                <LinearLayout
-                        android:layout_below="@+id/card_fragment_card_image"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/card_fragment_card_image_flip"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignBottom="@+id/card_fragment_card_image"
+                    android:layout_alignRight="@+id/card_fragment_card_image"/>
 
-                    <Button
-                            android:id="@+id/card_fragment_card_image_flip"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/holo_blue_dark"
-                            style="@android:style/Widget.Holo.Light.Button"
-                            android:text="Flip"
-                            android:layout_weight="1"/>
-
-                    <Button
-                            android:id="@+id/card_fragment_card_image_edit"
-                            android:layout_below="@+id/card_fragment_card_image"
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/holo_blue_dark"
-                            android:drawableRight="@android:drawable/ic_menu_edit"
-                            style="@android:style/Widget.Holo.Light.Button"
-                            android:text="Edit"/>
-
-                </LinearLayout>
-
+                <Button
+                    android:id="@+id/card_fragment_card_image_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/card_fragment_card_image"
+                    android:drawableRight="@android:drawable/ic_menu_edit"
+                    android:text="Edit"/>
 
             </RelativeLayout>
 

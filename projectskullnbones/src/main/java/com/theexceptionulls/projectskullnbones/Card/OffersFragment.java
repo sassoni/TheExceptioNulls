@@ -9,14 +9,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.R;
 
-/**
- * Created by rohithavatapally on 8/27/14.
- */
 public class OffersFragment extends Fragment {
 
     private LinearLayout offerListParentLayout;
+    String barcode;
+    String retailer;
+
+    public OffersFragment() {
+    }
+
+    public static final OffersFragment newInstance(CardData cardData) {
+        OffersFragment fragment = new OffersFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(CardData.CARD_NUMBER, cardData.getCardNumber());
+        bundle.putString(CardData.RETAILER_NAME, cardData.getRetailerName());
+
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        barcode = getArguments().getString(CardData.CARD_NUMBER);
+        retailer = getArguments().getString(CardData.RETAILER_NAME);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -13,6 +13,8 @@ import com.theexceptionulls.projectskullnbones.AppSettings;
 import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.R;
 
+import static com.theexceptionulls.projectskullnbones.AppSettings.getDrawable;
+
 public class CardsGridTileAdapter extends BaseAdapter {
 
     private Context context;
@@ -71,43 +73,11 @@ public class CardsGridTileAdapter extends BaseAdapter {
 
 
         final CardData cardData = AppSettings.getInstance().getCardDataList().get(position);
-        Drawable drawable = getDrawable(cardData.getRetailerName());
+        Drawable drawable = getDrawable(context, cardData.getRetailerName());
         holder.image.setImageDrawable(drawable);
         holder.text.setText(cardData.getRetailerName());
 
         return convertView;
-    }
-
-    private Drawable getDrawable(String retailerName){
-        if (retailerName.equals(AppSettings.getInstance().getStoreList()[0])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[0]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[1])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[1]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[2])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[2]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[3])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[3]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[4])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[4]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[5])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[5]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[6])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[6]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[7])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[7]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[8])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[8]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[9])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[9]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[10])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[10]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[11])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[11]);
-        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[12])){
-            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[12]);
-        }else {
-            return null;
-        }
     }
 
 }

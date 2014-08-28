@@ -1,12 +1,20 @@
 package com.theexceptionulls.projectskullnbones;
 
-/**
- * Created by rohithavatapally on 8/27/14.
- */
 public class CardData {
+
+    public static final String CARD_NUMBER = "cardNumber";
+    public static final String RETAILER_NAME = "retailerName";
 
     private String cardNumber;
     private String retailerName;
+
+    public CardData() {
+    }
+
+    public CardData(String cardNumber, String retailerName) {
+        this.cardNumber = cardNumber;
+        this.retailerName = retailerName;
+    }
 
     public String getCardNumber() {
         return cardNumber;
