@@ -36,13 +36,14 @@
                 />
 
         <TextView
+                android:id="@+id/scan_view_no_card_textview"
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="20sp"
                 android:padding="25dp"
-                android:background="@android:color/white"
+                android:background="@drawable/no_card_tap_textview"
                 android:alpha="0.5"
                 android:text="Tap if cannot scan or No Barcode"
                 android:textColor="@android:color/black"/>

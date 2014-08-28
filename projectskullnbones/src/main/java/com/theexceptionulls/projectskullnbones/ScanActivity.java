@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.catalinamarketing.mobile.enums.ResponseStatus;
 import com.catalinamarketing.scanner.BarcodeScanner;
@@ -25,7 +27,6 @@ import com.catalinamarketing.scanner.vo.ScannerDecodeResponse;
 public class ScanActivity extends Activity implements Handler.Callback {
 
     private static final int TIMEOUT_CANCEL_SCANNING = 45000;
-    public static final int SCAN_CARD_REQUEST = 121;
     private Drawable scanLines;
     private Drawable scanLinesFound;
     private ToneGenerator toneGenerator;
@@ -34,6 +35,9 @@ public class ScanActivity extends Activity implements Handler.Callback {
 
     public static final String BARCODE_VALUE_KEY = "barcode";
     public static final String SYMBOLOGY_VALUE_KEY = "symbology";
+    private int LOYALTY_CARD_POSITION = 0;
+    private TextView noCardTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,9 @@ public class ScanActivity extends Activity implements Handler.Callback {
         scanLines = getResources().getDrawable(R.drawable.g_scanlines_bkg);
         scanLinesFound = getResources().getDrawable(R.drawable.g_scanlinesfound_bkg);
 
+        final Intent intent = getIntent();
+        LOYALTY_CARD_POSITION = intent.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
+
         scanViewScanPanel = (ImageView) findViewById(R.id.scan_view_scan_panel);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             scanViewScanPanel.setBackground(scanLines);
@@ -60,6 +67,16 @@ public class ScanActivity extends Activity implements Handler.Callback {
         // Get SurfaceView that the scan preview will display on
         // This will be passed into the mCommerce library scan call
         surface = (SurfaceView) findViewById(R.id.scan_surface_view);
+        noCardTextView = (TextView) findViewById(R.id.scan_view_no_card_textview);
+        noCardTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent();
+                intent1.putExtra(Constants.LOYALTY_CARD_POSITION, LOYALTY_CARD_POSITION);
+                setResult(Constants.RESULT_SCAN_NO_BARCODE, intent1);
+                finish();
+            }
+        });
 
         if(!BarcodeScanner.getInstance().isScannerReady()){
             Toast.makeText(getApplicationContext(), "Scanner not ready", Toast.LENGTH_LONG).show();
@@ -110,6 +127,7 @@ public class ScanActivity extends Activity implements Handler.Callback {
                 Intent i = getIntent();
                 i.putExtra(BARCODE_VALUE_KEY, scanResponse.getBarcode());
                 i.putExtra(SYMBOLOGY_VALUE_KEY, scanResponse.getSymbology().name());
+                i.putExtra(Constants.LOYALTY_CARD_POSITION, LOYALTY_CARD_POSITION);
                 setResult(RESULT_OK, i);
                 finish();
             }

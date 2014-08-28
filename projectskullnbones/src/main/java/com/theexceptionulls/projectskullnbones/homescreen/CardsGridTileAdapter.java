@@ -9,23 +9,25 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.theexceptionulls.projectskullnbones.AppSettings;
+import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.R;
 
 public class CardsGridTileAdapter extends BaseAdapter {
 
     private Context context;
 
-    private String[] stores = {
-            "A&P",
-            "Family Express",
-            "Giant"
-    };
-
-    private int[] storeImages = {
-            R.drawable.i_aandp,
-            R.drawable.i_familyexpress,
-            R.drawable.i_gl,
-    };
+//    private String[] stores = {
+//            "A&P",
+//            "Family Express",
+//            "Giant"
+//    };
+//
+//    private int[] storeImages = {
+//            R.drawable.i_aandp,
+//            R.drawable.i_familyexpress,
+//            R.drawable.i_gl,
+//    };
 
     public CardsGridTileAdapter(Context context) {
         this.context = context;
@@ -33,7 +35,7 @@ public class CardsGridTileAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return stores.length;
+        return AppSettings.getInstance().getCardDataList().size();
     }
 
     @Override
@@ -67,12 +69,45 @@ public class CardsGridTileAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Drawable drawable = context.getResources().getDrawable(storeImages[position]);
 
+        final CardData cardData = AppSettings.getInstance().getCardDataList().get(position);
+        Drawable drawable = getDrawable(cardData.getRetailerName());
         holder.image.setImageDrawable(drawable);
-        holder.text.setText(stores[position]);
+        holder.text.setText(cardData.getRetailerName());
 
         return convertView;
+    }
+
+    private Drawable getDrawable(String retailerName){
+        if (retailerName.equals(AppSettings.getInstance().getStoreList()[0])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[0]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[1])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[1]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[2])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[2]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[3])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[3]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[4])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[4]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[5])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[5]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[6])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[6]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[7])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[7]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[8])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[8]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[9])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[9]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[10])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[10]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[11])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[11]);
+        }else if (retailerName.equals(AppSettings.getInstance().getStoreList()[12])){
+            return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[12]);
+        }else {
+            return null;
+        }
     }
 
 }

@@ -57,20 +57,34 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"/>
 
-                <Button
-                        android:id="@+id/card_fragment_card_image_flip"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_alignBottom="@+id/card_fragment_card_image"
-                        android:layout_alignRight="@+id/card_fragment_card_image"/>
-
-                <Button
-                        android:id="@+id/card_fragment_card_image_edit"
+                <LinearLayout
                         android:layout_below="@+id/card_fragment_card_image"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:text="Edit"/>
+                        android:layout_height="wrap_content">
+
+                    <Button
+                            android:id="@+id/card_fragment_card_image_flip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/holo_blue_dark"
+                            style="@android:style/Widget.Holo.Light.Button"
+                            android:text="Flip"
+                            android:layout_weight="1"/>
+
+                    <Button
+                            android:id="@+id/card_fragment_card_image_edit"
+                            android:layout_below="@+id/card_fragment_card_image"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:drawableRight="@android:drawable/ic_menu_edit"
+                            style="@android:style/Widget.Holo.Light.Button"
+                            android:text="Edit"/>
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 

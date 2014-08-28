@@ -11,10 +11,13 @@ import android.widget.GridView;
 import android.widget.Toast;
 import com.theexceptionulls.projectskullnbones.AppController;
 import com.theexceptionulls.projectskullnbones.Card.CardActivity;
+import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.addcard.StoreListActivity;
 
 public class CardsGridActivity extends Activity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class CardsGridActivity extends Activity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = new Intent(CardsGridActivity.this, CardActivity.class);
+                intent.putExtra(Constants.LOYALTY_CARD_POSITION, position);
                 startActivity(intent);
             }
         });
@@ -46,8 +50,6 @@ public class CardsGridActivity extends Activity {
         int id = item.getItemId();
 
         switch (id) {
-//            case R.id.action_settings:
-//                return true;
             case R.id.action_add:
                 Intent intent = new Intent(this, StoreListActivity.class);
                 startActivity(intent);

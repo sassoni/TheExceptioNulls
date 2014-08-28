@@ -5,42 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import com.theexceptionulls.projectskullnbones.AppSettings;
 import com.theexceptionulls.projectskullnbones.Card.CardActivity;
+import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.ScanActivity;
 
 public class StoreListActivity extends ListActivity {
-
-    private String[] storeList = {
-            "A&P",
-            "Family Express",
-            "Giant",
-            "Giant BONUSCARD",
-            "Harris Teeter",
-            "Kroger",
-            "Marsh",
-            "Martin's",
-            "Safeway",
-            "ShopRite",
-            "Stop & Shop",
-            "Walmart",
-            "Weis"
-    };
-    private int[] storeListThumbnailsID = {
-            R.drawable.i_aandp,
-            R.drawable.i_familyexpress,
-            R.drawable.i_gl,
-            R.drawable.i_gc,
-            R.drawable.i_harristeeter,
-            R.drawable.i_kroger,
-            R.drawable.i_marsh,
-            R.drawable.i_martins,
-            R.drawable.i_safeway,
-            R.drawable.i_shoprite,
-            R.drawable.i_stopandshop,
-            R.drawable.i_walmart,
-            R.drawable.i_weis
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +20,40 @@ public class StoreListActivity extends ListActivity {
 
         setTitle("Add Card");
 
-        StoreListAdapter storeListAdapter = new StoreListAdapter(this, storeList, storeListThumbnailsID);
+        StoreListAdapter storeListAdapter = new StoreListAdapter(this, AppSettings.getInstance().getStoreList(), AppSettings.getInstance().getStoreListThumbnailsID());
         setListAdapter(storeListAdapter);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
-                startActivityForResult(intent, ScanActivity.SCAN_CARD_REQUEST);
+                intent.putExtra(Constants.LOYALTY_CARD_POSITION, position);
+                startActivityForResult(intent, Constants.SCAN_CARD_REQUEST);
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ScanActivity.SCAN_CARD_REQUEST && resultCode == RESULT_OK){
-            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-            startActivity(intent);
-            finish();
+
+        if (requestCode == Constants.SCAN_CARD_REQUEST){
+
+            if (resultCode == RESULT_OK){
+                int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
+                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                intent.putExtra(Constants.LOYALTY_CARD_POSITION, loyaltyCardPosition);
+                startActivity(intent);
+                finish();
+            }
+
+            if (resultCode == Constants.RESULT_SCAN_NO_BARCODE){
+                int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
+                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                intent.putExtra(Constants.LOYALTY_CARD_POSITION, loyaltyCardPosition);
+                startActivity(intent);
+                finish();
+            }
+
         }
+
     }
 }
