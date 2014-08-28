@@ -1,5 +1,7 @@
 package com.theexceptionulls.projectskullnbones;
 
+import android.net.Uri;
+
 public class CardData {
 
     public static final String CARD_NUMBER = "cardNumber";
@@ -7,13 +9,15 @@ public class CardData {
 
     private String cardNumber;
     private String retailerName;
+    private Uri photoUri;
 
     public CardData() {
     }
 
-    public CardData(String cardNumber, String retailerName) {
+    public CardData(String cardNumber, String retailerName, Uri photoUri) {
         this.cardNumber = cardNumber;
         this.retailerName = retailerName;
+        this.photoUri = photoUri;
     }
 
     public String getCardNumber() {
@@ -30,5 +34,13 @@ public class CardData {
 
     public void setRetailerName(String retailerName) {
         this.retailerName = retailerName;
+    }
+
+    public Uri getPhotoUri() {
+        return photoUri;
+    }
+
+    public void setPhotoUri(Uri uri) {
+        this.photoUri = uri;
     }
 }

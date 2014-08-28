@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,7 +16,9 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.catalinamarketing.scanner.BarcodeScanner;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -51,6 +50,7 @@ public class CardFragment extends Fragment {
     private LinearLayout logoLinearLayout;
     private ImageView logoImage;
     private ImageView cardPhoto;
+    private Uri photoURI;
 
     private File photoFile = null;
 
@@ -74,8 +74,8 @@ public class CardFragment extends Fragment {
             fromRegistration = true;
             barcode = getArguments().getString(CardData.CARD_NUMBER);
             retailer = getArguments().getString(CardData.RETAILER_NAME);
-            AppSettings.getInstance().addToCardDataList(new CardData(barcode, retailer));
-            actionBar.setTitle(retailer+" Card");
+            AppSettings.getInstance().addToCardDataList(new CardData(barcode, retailer, null));
+            actionBar.setTitle(retailer + " Card");
             //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
             actionBar.setDisplayHomeAsUpEnabled(true);
         } else {
@@ -83,7 +83,9 @@ public class CardFragment extends Fragment {
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
             barcode = AppSettings.getInstance().getCardDataList().get(gridPosition).getCardNumber();
             retailer = AppSettings.getInstance().getCardDataList().get(gridPosition).getRetailerName();
-            actionBar.setTitle(retailer+" Card");
+            photoURI = AppSettings.getInstance().getCardDataList().get(gridPosition).getPhotoUri();
+
+            actionBar.setTitle(retailer + " Card");
             //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -111,15 +113,6 @@ public class CardFragment extends Fragment {
             }
         });
 
-//        Button button = (Button) view.findViewById(R.id.card_fragment_card_image_edit);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), ScanActivity.class);
-//                startActivityForResult(intent, REQUEST_BARCODE_CAPTURE);
-//            }
-//        });
-
         if (fromRegistration) {
             credentialNumber.setText(barcode);
             Bitmap bitmap = null;
@@ -138,6 +131,10 @@ public class CardFragment extends Fragment {
                 credentialBarcode.setImageBitmap(bitmap);
             } catch (WriterException e) {
                 e.printStackTrace();
+            }
+            if (photoURI != null) {
+                Bitmap scaledBitmap = scaledBitmapFromUri(photoURI);
+                cardPhoto.setImageBitmap(scaledBitmap);
             }
         }
 
@@ -164,29 +161,24 @@ public class CardFragment extends Fragment {
 //            cardPhoto.setImageBitmap(imageBitmap);
 //            cardPhoto.setClickable(false);
 
-
             Uri uri = Uri.fromFile(photoFile);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // We assume nothing wrong happens. Just because
-            }
-            int nh = (int) ( bitmap.getHeight() * (640.0 / bitmap.getWidth()) );
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 640, nh, true);
 
 
-//            ImageView iv  = (ImageView)waypointListView.findViewById(R.id.waypoint_picker_photo);
-//            Bitmap d = new BitmapDrawable(ctx.getResources() , w.photo.getAbsolutePath()).getBitmap();
-//            int nh = (int) ( d.getHeight() * (512.0 / d.getWidth()) );
-//            Bitmap scaled = Bitmap.createScaledBitmap(d, 512, nh, true);
-//            iv.setImageBitmap(scaled);
-//
-//            Bitmap bitmap = BitmapFactory.decodeFile(photoFile);
+//            Bitmap bitmap = null;
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                // We assume nothing wrong happens. Just because
+//            }
+//            int nh = (int) (bitmap.getHeight() * (640.0 / bitmap.getWidth()));
+//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 640, nh, true);
+            Bitmap scaledBitmap = scaledBitmapFromUri(uri);
 
-//            cardPhoto.setImageURI(uri);
             cardPhoto.setImageBitmap(scaledBitmap);
+
+            // save it
+            AppSettings.getInstance().setPhotoUriInCardDataWithName(retailer, uri);
         }
 
 //        if (requestCode == REQUEST_BARCODE_CAPTURE && resultCode == getActivity().RESULT_OK) {
@@ -299,7 +291,18 @@ public class CardFragment extends Fragment {
         return image;
     }
 
-
+    private Bitmap scaledBitmapFromUri(Uri uri) {
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // We assume nothing wrong happens. Just because
+        }
+        int nh = (int) (bitmap.getHeight() * (640.0 / bitmap.getWidth()));
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 640, nh, true);
+        return scaledBitmap;
+    }
 
 
 }
