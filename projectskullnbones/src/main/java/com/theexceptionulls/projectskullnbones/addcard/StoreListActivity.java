@@ -32,13 +32,12 @@ public class StoreListActivity extends ListActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.SCAN_CARD_REQUEST) {
-            int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
-            String retailerName = AppSettings.getInstance().getStoreList()[loyaltyCardPosition];
-
-            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-            intent.putExtra(CardData.RETAILER_NAME, retailerName);
-
             if (resultCode == RESULT_OK) {
+                int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
+                String retailerName = AppSettings.getInstance().getStoreList()[loyaltyCardPosition];
+                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_REGISTRATION);
+                intent.putExtra(CardData.RETAILER_NAME, retailerName);
                 String barcode = data.getStringExtra(ScanActivity.BARCODE_VALUE_KEY);
                 intent.putExtra(CardData.CARD_NUMBER, barcode);
                 startActivity(intent);
@@ -46,6 +45,11 @@ public class StoreListActivity extends ListActivity {
             }
 
             if (resultCode == Constants.RESULT_SCAN_NO_BARCODE) {
+                int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
+                String retailerName = AppSettings.getInstance().getStoreList()[loyaltyCardPosition];
+                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_REGISTRATION);
+                intent.putExtra(CardData.RETAILER_NAME, retailerName);
                 startActivity(intent);
                 finish();
             }

@@ -3,6 +3,7 @@ package com.theexceptionulls.projectskullnbones.homescreen;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class CardsGridTileAdapter extends BaseAdapter {
 
 
         final CardData cardData = AppSettings.getInstance().getCardDataList().get(position);
+
         Drawable drawable = getDrawable(context, cardData.getRetailerName());
         holder.image.setImageDrawable(drawable);
         holder.text.setText(cardData.getRetailerName());

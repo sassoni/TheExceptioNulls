@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.theexceptionulls.projectskullnbones.CardData;
+import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 
 public class OffersFragment extends Fragment {
@@ -17,16 +18,26 @@ public class OffersFragment extends Fragment {
     private LinearLayout offerListParentLayout;
     String barcode;
     String retailer;
+    int gridPosition;
+    static boolean fromRegistration = false;
 
     public OffersFragment() {
     }
 
-    public static final OffersFragment newInstance(CardData cardData) {
+    public static final OffersFragment newInstance(Bundle dataBundle) {
         OffersFragment fragment = new OffersFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString(CardData.CARD_NUMBER, cardData.getCardNumber());
-        bundle.putString(CardData.RETAILER_NAME, cardData.getRetailerName());
+
+        String intentFrom = dataBundle.getString(Constants.INTENT_FROM);
+        bundle.putString(Constants.INTENT_FROM, dataBundle.getString(Constants.INTENT_FROM));
+
+        if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
+            bundle.putString(CardData.CARD_NUMBER, dataBundle.getString(CardData.CARD_NUMBER));
+            bundle.putString(CardData.RETAILER_NAME, dataBundle.getString(CardData.RETAILER_NAME));
+        } else {
+            bundle.putInt(Constants.LOYALTY_CARD_POSITION, dataBundle.getInt(Constants.LOYALTY_CARD_POSITION));
+        }
 
         fragment.setArguments(bundle);
         return fragment;
@@ -36,8 +47,15 @@ public class OffersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        barcode = getArguments().getString(CardData.CARD_NUMBER);
-        retailer = getArguments().getString(CardData.RETAILER_NAME);
+        String intentFrom = getArguments().getString(Constants.INTENT_FROM);
+
+        if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
+            fromRegistration = true;
+            barcode = getArguments().getString(CardData.CARD_NUMBER);
+            retailer = getArguments().getString(CardData.RETAILER_NAME);
+        } else {
+            gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
+        }
     }
 
     @Override

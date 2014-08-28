@@ -9,13 +9,11 @@ import com.theexceptionulls.projectskullnbones.CardData;
 public class TabPagerAdapter extends FragmentPagerAdapter {
 
     private int pagerCount;
-    private CardData cardData;
     private Bundle bundle;
 
-    public TabPagerAdapter(int pagerCount, FragmentManager fm, CardData cardData, Bundle bundle) {
+    public TabPagerAdapter(int pagerCount, FragmentManager fm, Bundle bundle) {
         super(fm);
         this.pagerCount = pagerCount;
-        this.cardData = cardData;
         this.bundle = bundle;
     }
 
@@ -25,9 +23,9 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return CardFragment.newInstance(bundle);
             case 1:
-                return OffersFragment.newInstance(cardData);
+                return OffersFragment.newInstance(bundle);
             case 2:
-                return SavingsFragment.newInstance(cardData);
+                return SavingsFragment.newInstance(bundle);
             default:
                 return null;
         }

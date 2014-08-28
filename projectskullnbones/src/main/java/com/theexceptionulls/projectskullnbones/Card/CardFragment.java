@@ -42,19 +42,19 @@ public class CardFragment extends Fragment {
     public static final CardFragment newInstance(Bundle dataBundle) {
         CardFragment fragment = new CardFragment();
 
-        Bundle bundle = new Bundle();
+//        Bundle bundle = new Bundle();
+//
+//        String intentFrom = dataBundle.getString(Constants.INTENT_FROM);
+//        bundle.putString(Constants.INTENT_FROM, dataBundle.getString(Constants.INTENT_FROM));
+//
+//        if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
+//            bundle.putString(CardData.CARD_NUMBER, dataBundle.getString(CardData.CARD_NUMBER));
+//            bundle.putString(CardData.RETAILER_NAME, dataBundle.getString(CardData.RETAILER_NAME));
+//        } else {
+//            bundle.putInt(Constants.LOYALTY_CARD_POSITION, dataBundle.getInt(Constants.LOYALTY_CARD_POSITION));
+//        }
 
-        String intentFrom = dataBundle.getString(Constants.INTENT_FROM);
-        bundle.putString(Constants.INTENT_FROM, dataBundle.getString(Constants.INTENT_FROM));
-
-        if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
-            bundle.putString(CardData.CARD_NUMBER, dataBundle.getString(CardData.CARD_NUMBER));
-            bundle.putString(CardData.RETAILER_NAME, dataBundle.getString(CardData.RETAILER_NAME));
-        } else {
-            bundle.putInt(Constants.LOYALTY_CARD_POSITION, dataBundle.getInt(Constants.LOYALTY_CARD_POSITION));
-        }
-
-        fragment.setArguments(bundle);
+        fragment.setArguments(dataBundle);
         return fragment;
     }
 
@@ -68,11 +68,11 @@ public class CardFragment extends Fragment {
             fromRegistration = true;
             barcode = getArguments().getString(CardData.CARD_NUMBER);
             retailer = getArguments().getString(CardData.RETAILER_NAME);
+            AppSettings.getInstance().addToCardDataList(new CardData(barcode, retailer));
         } else {
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
         }
 
-        AppSettings.getInstance().addToCardDataList(new CardData(barcode, retailer));
     }
 
     @Override
