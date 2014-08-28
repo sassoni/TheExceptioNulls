@@ -5,11 +5,22 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/card_fragment_retailer_logo"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="#791d7e"/>
+    <LinearLayout
+            android:id="@+id/card_fragment_retailer_logo"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:id="@+id/card_fragment_retailer_logo_imageview"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                />
+
+
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/card_fragment_scroll_view"

@@ -28,6 +28,38 @@ public class AppSettings {
             "Weis"
     };
 
+    private String[] storeOpcos = {
+            "ap",
+            "fe",
+            "gl",
+            "gc",
+            "ht",
+            "kg",
+            "ms",
+            "mr",
+            "sw",
+            "sr",
+            "ss",
+            "wm",
+            "ws"
+    };
+
+    private String[] colorCodes = {
+            "#ed1b24",
+            "#34b6d6",
+            "#702076",
+            "#ee3a43",
+            "#1b8644",
+            "#0066b0",
+            "#e31a30",
+            "#b23239",
+            "#e03d3f",
+            "#ed1b2e",
+            "#702076",
+            "#007ecb",
+            "#ff0000"
+    };
+
     private int[] storeListThumbnailsID = {
             R.drawable.i_aandp,
             R.drawable.i_familyexpress,
@@ -86,6 +118,14 @@ public class AppSettings {
         cardDataList.add(cardData);
     }
 
+    public String[] getStoreOpcos() {
+        return storeOpcos;
+    }
+
+    public String[] getColorCodes() {
+        return colorCodes;
+    }
+
     public static Drawable getDrawable(Context context, String retailerName){
         if (retailerName.equals(AppSettings.getInstance().getStoreList()[0])){
             return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[0]);
@@ -115,6 +155,38 @@ public class AppSettings {
             return context.getResources().getDrawable(AppSettings.getInstance().getStoreListThumbnailsID()[12]);
         }else {
             return null;
+        }
+    }
+
+    public static String getColorRetailerColor(String retailerString){
+        if (retailerString.equals(getInstance().getStoreList()[0])){
+            return getInstance().getColorCodes()[0];
+        }else if (retailerString.equals(getInstance().getStoreList()[1])){
+            return getInstance().getColorCodes()[1];
+        }else if (retailerString.equals(getInstance().getStoreList()[2])){
+            return getInstance().getColorCodes()[2];
+        }else if (retailerString.equals(getInstance().getStoreList()[3])){
+            return getInstance().getColorCodes()[3];
+        }else if (retailerString.equals(getInstance().getStoreList()[4])){
+            return getInstance().getColorCodes()[4];
+        }else if (retailerString.equals(getInstance().getStoreList()[5])){
+            return getInstance().getColorCodes()[5];
+        }else if (retailerString.equals(getInstance().getStoreList()[6])){
+            return getInstance().getColorCodes()[6];
+        }else if (retailerString.equals(getInstance().getStoreList()[7])){
+            return getInstance().getColorCodes()[7];
+        }else if (retailerString.equals(getInstance().getStoreList()[8])){
+            return getInstance().getColorCodes()[8];
+        }else if (retailerString.equals(getInstance().getStoreList()[9])){
+            return getInstance().getColorCodes()[9];
+        }else if (retailerString.equals(getInstance().getStoreList()[10])){
+            return getInstance().getColorCodes()[10];
+        }else if (retailerString.equals(getInstance().getStoreList()[11])){
+            return getInstance().getColorCodes()[11];
+        }else if (retailerString.equals(getInstance().getStoreList()[12])){
+            return getInstance().getColorCodes()[12];
+        }else {
+            return getInstance().getColorCodes()[12];
         }
     }
 

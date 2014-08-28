@@ -71,12 +71,10 @@
     <orderEntry type="jdk" jdkName="Android API 19 Platform (1)" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="quickmarksdk" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="core-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="CatalinaMobile" level="project" />
-    <orderEntry type="library" name="quickmarksdk" level="project" />
-    <orderEntry type="library" name="core" level="project" />
-    <orderEntry type="library" name="OnBarcode.AndroidBarcode" level="project" />
-    <orderEntry type="library" name="core-3.1.0" level="project" />
   </component>
 </module>
 

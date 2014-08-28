@@ -23,34 +23,26 @@
             android:name="com.theexceptionulls.projectskullnbones.AppController"
             android:allowBackup="true"
             android:icon="@drawable/ic_launcher"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme">
         <activity
             android:name=".homescreen.CardsGridActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_cards_grid" >
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".addcard.AddCardActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_add_card" >
-        </activity>
         <activity android:name=".Card.CardActivity"
                 android:screenOrientation="portrait"/>
         <activity
             android:name=".addcard.StoreListActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_store_list" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
                 android:name=".ScanActivity"
                 android:screenOrientation="portrait"
-                android:label="@string/title_activity_add_card">
+>
         </activity>
     </application>
 

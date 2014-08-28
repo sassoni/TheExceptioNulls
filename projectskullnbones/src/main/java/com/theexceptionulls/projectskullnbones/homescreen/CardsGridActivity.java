@@ -1,5 +1,6 @@
 package com.theexceptionulls.projectskullnbones.homescreen;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,9 @@ public class CardsGridActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards_grid);
 
+        ActionBar actionBar = getActionBar();
+        actionBar.setLogo(getResources().getDrawable(R.drawable.g_apptitlelogo));
+        actionBar.setTitle("");
         gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new CardsGridTileAdapter(this));
 

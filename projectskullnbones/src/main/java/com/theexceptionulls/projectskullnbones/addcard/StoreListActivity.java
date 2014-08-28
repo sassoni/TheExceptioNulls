@@ -15,7 +15,7 @@ public class StoreListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_list);
 
-        setTitle("Add Card");
+        setTitle("Select Retailer");
 
         StoreListAdapter storeListAdapter = new StoreListAdapter(this, AppSettings.getInstance().getStoreList(), AppSettings.getInstance().getStoreListThumbnailsID());
         setListAdapter(storeListAdapter);

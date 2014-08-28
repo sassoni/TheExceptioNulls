@@ -19,12 +19,12 @@
                 android:alpha="0.5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
                 android:paddingLeft="20dp"
                 android:textSize="18sp"
-                android:gravity="center_vertical"
-                android:text="SCAN CARD"
+                android:gravity="center"
+                android:text="Center the barcode between the arrows.\nAllow the camera to focus for quicker scans."
                 android:textColor="@android:color/white"
                 android:background="@android:color/black"/>
 
@@ -45,7 +45,7 @@
                 android:padding="25dp"
                 android:background="@drawable/no_card_tap_textview"
                 android:alpha="0.5"
-                android:text="Tap if cannot scan or No Barcode"
+                android:text="No barcode? or Problem scanning?"
                 android:textColor="@android:color/black"/>
 
     </LinearLayout>

@@ -1,18 +1,19 @@
 package com.theexceptionulls.projectskullnbones.Card;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -35,6 +36,9 @@ public class CardFragment extends Fragment {
 
     int REQUEST = 11;
 
+    private LinearLayout logoLinearLayout;
+    private ImageView logoImage;
+
     public CardFragment() {
     }
 
@@ -49,22 +53,38 @@ public class CardFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         String intentFrom = getArguments().getString(Constants.INTENT_FROM);
+        ActionBar actionBar = getActivity().getActionBar();
 
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
             fromRegistration = true;
             barcode = getArguments().getString(CardData.CARD_NUMBER);
             retailer = getArguments().getString(CardData.RETAILER_NAME);
             AppSettings.getInstance().addToCardDataList(new CardData(barcode, retailer));
+            actionBar.setTitle(retailer+" Card");
+            //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
+            actionBar.setDisplayHomeAsUpEnabled(true);
         } else {
             fromRegistration = false;
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
+            barcode = AppSettings.getInstance().getCardDataList().get(gridPosition).getCardNumber();
+            retailer = AppSettings.getInstance().getCardDataList().get(gridPosition).getRetailerName();
+            actionBar.setTitle(retailer+" Card");
+            //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.card_fragment, container, false);
+
+        logoLinearLayout = (LinearLayout) view.findViewById(R.id.card_fragment_retailer_logo);
+        logoImage = (ImageView) view.findViewById(R.id.card_fragment_retailer_logo_imageview);
+
+        logoImage.setImageDrawable(AppSettings.getDrawable(getActivity().getApplicationContext(), retailer));
+        logoLinearLayout.setBackgroundColor(Color.parseColor(AppSettings.getColorRetailerColor(retailer)));
 
         credentialBarcode = (ImageView) view.findViewById(R.id.card_fragment_barcode_image);
         credentialNumber = (TextView) view.findViewById(R.id.card_fragment_card_number);

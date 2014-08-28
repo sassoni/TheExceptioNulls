@@ -1,5 +1,6 @@
 package com.theexceptionulls.projectskullnbones;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -49,6 +50,9 @@ public class ScanActivity extends Activity implements Handler.Callback {
         mainLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         setContentView(mainLayout);
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle("Scan Card");
 
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, ToneGenerator.MAX_VOLUME);
         scanLines = getResources().getDrawable(R.drawable.g_scanlines_bkg);
