@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -156,23 +155,8 @@ public class CardFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == getActivity().RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            cardPhoto.setImageBitmap(imageBitmap);
-//            cardPhoto.setClickable(false);
 
             Uri uri = Uri.fromFile(photoFile);
-
-
-//            Bitmap bitmap = null;
-//            try {
-//                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                // We assume nothing wrong happens. Just because
-//            }
-//            int nh = (int) (bitmap.getHeight() * (640.0 / bitmap.getWidth()));
-//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 640, nh, true);
             Bitmap scaledBitmap = scaledBitmapFromUri(uri);
 
             cardPhoto.setImageBitmap(scaledBitmap);
@@ -180,12 +164,6 @@ public class CardFragment extends Fragment {
             // save it
             AppSettings.getInstance().setPhotoUriInCardDataWithName(retailer, uri);
         }
-
-//        if (requestCode == REQUEST_BARCODE_CAPTURE && resultCode == getActivity().RESULT_OK) {
-//            String barcode = data.getStringExtra(ScanActivity.BARCODE_VALUE_KEY);
-//            Toast.makeText(getActivity().getApplicationContext(), "Barcode " + barcode, Toast.LENGTH_LONG).show();
-//
-//        }
     }
 
     Bitmap encodeAsBitmap(String contents, com.google.zxing.BarcodeFormat format, int img_width, int img_height) throws WriterException {
@@ -238,13 +216,6 @@ public class CardFragment extends Fragment {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, resources.getDisplayMetrics());
     }
 
-//    private void dispatchTakePictureIntent(Context context) {
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
-//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//        }
-//    }
-
     private void dispatchTakePictureIntent(Context context) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -259,12 +230,10 @@ public class CardFragment extends Fragment {
 
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Log.i("*********************", "photoFile not null");
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             } else {
-                Log.i("*********************", "photoFile null");
             }
         }
     }
@@ -286,8 +255,6 @@ public class CardFragment extends Fragment {
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-
-
         return image;
     }
 
@@ -303,6 +270,5 @@ public class CardFragment extends Fragment {
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 640, nh, true);
         return scaledBitmap;
     }
-
 
 }
