@@ -9,8 +9,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,9 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.theexceptionulls.projectskullnbones.*;
+import com.theexceptionulls.projectskullnbones.webservices.BaseWebService;
+import com.theexceptionulls.projectskullnbones.webservices.RegisterUser;
+import com.theexceptionulls.projectskullnbones.webservices.RegisterUserResponse;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +38,7 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements Handler.Callback {
 
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
@@ -79,6 +85,10 @@ public class CardFragment extends Fragment {
             actionBar.setTitle(retailer+" Card");
             //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            RegisterUser registerUser = new RegisterUser(getActivity().getApplicationContext(), new Handler(this), barcode, retailerOpco);
+            registerUser.execute();
+
         } else {
             fromRegistration = false;
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
@@ -274,4 +284,22 @@ public class CardFragment extends Fragment {
         return scaledBitmap;
     }
 
+    @Override
+    public boolean handleMessage(Message msg) {
+
+        if (msg.what == BaseWebService.WEB_SERVICE_SUCCESS){
+
+            if (msg.obj instanceof RegisterUserResponse){
+
+                RegisterUserResponse registerUserResponse = (RegisterUserResponse) msg.obj;
+                if (registerUserResponse.isSuccess()){
+                    Intent intent = new Intent(Constants.REGISTRATION_BROADCAST_INTENT);
+                    LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
+                }
+            }
+
+        }
+
+        return true;
+    }
 }

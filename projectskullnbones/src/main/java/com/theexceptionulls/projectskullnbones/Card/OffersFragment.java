@@ -1,6 +1,10 @@
 package com.theexceptionulls.projectskullnbones.Card;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +35,10 @@ public class OffersFragment extends Fragment implements Handler.Callback {
     private String barcode;
     private String retailer;
     private int gridPosition;
-    private static boolean fromRegistration = false;
+    private boolean fromRegistration = false;
+    private boolean shouldFetchOffers;
     private List<Offers> offersList;
+    private RegisterBroadcastReceiver registerBroadcastReceiver;
 
     public OffersFragment() {
     }
@@ -50,15 +57,19 @@ public class OffersFragment extends Fragment implements Handler.Callback {
 
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
             fromRegistration = true;
+            shouldFetchOffers = false;
             barcode = getArguments().getString(CardData.CARD_NUMBER);
             retailer = getArguments().getString(CardData.RETAILER_NAME);
 
         } else {
             fromRegistration = false;
+            shouldFetchOffers = true;
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
             barcode = AppSettings.getInstance().getCardDataList().get(gridPosition).getCardNumber();
             retailer = AppSettings.getInstance().getCardDataList().get(gridPosition).getRetailerName();
         }
+
+        registerBroadcastReceiver = new RegisterBroadcastReceiver();
     }
 
     @Override
@@ -73,8 +84,19 @@ public class OffersFragment extends Fragment implements Handler.Callback {
     @Override
     public void onResume() {
         super.onResume();
-        GetOffers getOffers = new GetOffers(getActivity().getApplicationContext(), new Handler(this), barcode, AppSettings.getRetailerOpco(retailer));
-        getOffers.execute();
+        if (shouldFetchOffers){
+            GetOffers getOffers = new GetOffers(getActivity().getApplicationContext(), new Handler(this), barcode, AppSettings.getRetailerOpco(retailer));
+            getOffers.execute();
+        }
+
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(registerBroadcastReceiver, new IntentFilter(Constants.REGISTRATION_BROADCAST_INTENT));
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(registerBroadcastReceiver);
     }
 
     private void addOfferToParent(List<Offers> offersList) {
@@ -151,4 +173,16 @@ public class OffersFragment extends Fragment implements Handler.Callback {
 
         return false;
     }
+
+    private class RegisterBroadcastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            shouldFetchOffers = true;
+            GetOffers getOffers = new GetOffers(getActivity().getApplicationContext(), new Handler(OffersFragment.this), barcode, AppSettings.getRetailerOpco(retailer));
+            getOffers.execute();
+            Toast.makeText(getActivity().getApplicationContext(), "Received registration event", Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

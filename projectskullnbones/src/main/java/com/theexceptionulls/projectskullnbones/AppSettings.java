@@ -80,18 +80,21 @@ public class AppSettings {
     private AppSettings() {
 
         CardData cardData = new CardData();
-        cardData.setCardNumber("334053486291");
-        cardData.setRetailerName(storeList[0]);
+        cardData.setCardNumber("401766980986");
+        cardData.setRetailerName(storeList[4]);
+        cardData.setRetailerOpco(storeOpcos[4]);
         cardDataList.add(cardData);
 
         CardData cardData1 = new CardData();
-        cardData1.setCardNumber("5027369230");
-        cardData1.setRetailerName(storeList[1]);
+        cardData1.setCardNumber("402015810528");
+        cardData1.setRetailerName(storeList[12]);
+        cardData.setRetailerOpco(storeOpcos[12]);
         cardDataList.add(cardData1);
 
         CardData cardData2 = new CardData();
-        cardData2.setCardNumber("440089052802");
-        cardData2.setRetailerName(storeList[2]);
+        cardData2.setCardNumber("502342349313");
+        cardData2.setRetailerName(storeList[1]);
+        cardData2.setRetailerOpco(storeOpcos[1]);
         cardDataList.add(cardData2);
     }
 

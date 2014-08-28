@@ -85,6 +85,7 @@ public class CardActivity extends FragmentActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.home) {
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
