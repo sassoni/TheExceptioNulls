@@ -17,10 +17,6 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.catalinamarketing.mobile.enums.ResponseStatus;
-import com.catalinamarketing.scanner.BarcodeScanner;
-import com.catalinamarketing.scanner.vo.ScannerDecodeResponse;
 
 /**
  * Created by rohithavatapally on 8/27/14.
@@ -82,24 +78,24 @@ public class ScanActivity extends Activity implements Handler.Callback {
             }
         });
 
-        if(!BarcodeScanner.getInstance().isScannerReady()){
+        /*if(!BarcodeScanner.getInstance().isScannerReady()){
             Toast.makeText(getApplicationContext(), "Scanner not ready", Toast.LENGTH_LONG).show();
         }else {
             // Activate the scan engine and begin trying to decode a barcode
             BarcodeScanner.getInstance().startScanner(this, surface, new Handler(this));
-        }
+        }*/
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!BarcodeScanner.getInstance().isScannerReady()){
+        /*if(!BarcodeScanner.getInstance().isScannerReady()){
             Toast.makeText(getApplicationContext(), "Scanner not loaded", Toast.LENGTH_LONG).show();
         }else {
             // Activate the scan engine and begin trying to decode a barcode
             BarcodeScanner.getInstance().startScanner(this, surface, new Handler(this));
-        }
+        }*/
 
     }
 
@@ -107,13 +103,13 @@ public class ScanActivity extends Activity implements Handler.Callback {
     protected void onPause() {
         super.onPause();
         // Stop the scan engine
-        BarcodeScanner.getInstance().stopScanner();
+        //BarcodeScanner.getInstance().stopScanner();
     }
 
     @Override
     public boolean handleMessage(Message msg) {
 
-        if (msg.obj != null && msg.obj instanceof ScannerDecodeResponse){
+        /*if (msg.obj != null && msg.obj instanceof ScannerDecodeResponse){
             ScannerDecodeResponse scanResponse = (ScannerDecodeResponse)msg.obj;
             if(scanResponse.getResponseStatus() == ResponseStatus.SUCCESS){
                 // Make a scan beep sound
@@ -135,7 +131,7 @@ public class ScanActivity extends Activity implements Handler.Callback {
                 setResult(RESULT_OK, i);
                 finish();
             }
-        }
+        }*/
 
         return true;
     }

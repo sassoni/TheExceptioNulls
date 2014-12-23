@@ -3,6 +3,7 @@ package com.theexceptionulls.projectskullnbones.homescreen;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,8 +24,11 @@ public class CardsGridActivity extends Activity {
         setContentView(R.layout.activity_cards_grid);
 
         ActionBar actionBar = getActionBar();
-        actionBar.setLogo(getResources().getDrawable(R.drawable.g_apptitlelogo));
-        actionBar.setTitle("");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
+            actionBar.setLogo(getResources().getDrawable(R.drawable.g_apptitlelogo));
+        }
+        actionBar.setTitle(getResources().getString(R.string.actionbar_home_title));
+
         gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new CardsGridTileAdapter(this));
 
@@ -41,7 +45,6 @@ public class CardsGridActivity extends Activity {
             }
         });
 
-        AppController.loadBarcodeScanner();
     }
 
     @Override

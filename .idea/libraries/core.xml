@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="quickmarksdk">
+  <library name="core">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/projectskullnbones/libs/quickmarksdk.jar!/" />
+      <root url="jar://$PROJECT_DIR$/projectskullnbones/libs/core.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

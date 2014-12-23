@@ -2,8 +2,12 @@ package com.theexceptionulls.projectskullnbones;
 
 import android.net.Uri;
 
-public class CardData {
+import java.io.Serializable;
 
+public class CardData implements Serializable {
+
+    private static final long serialVersionUID = 564971333;
+    public static final String OUTPUT_FILE_NAME = "catCardDataList";
     public static final String CARD_NUMBER = "cardNumber";
     public static final String RETAILER_NAME = "retailerName";
 

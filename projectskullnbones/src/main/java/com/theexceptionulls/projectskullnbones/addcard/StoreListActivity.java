@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import com.theexceptionulls.projectskullnbones.*;
 import com.theexceptionulls.projectskullnbones.Card.CardActivity;
+import com.theexceptionulls.projectskullnbones.zxing.CaptureActivity;
 
 public class StoreListActivity extends ListActivity {
 
@@ -22,7 +23,7 @@ public class StoreListActivity extends ListActivity {
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CaptureActivity.class);
                 intent.putExtra(Constants.LOYALTY_CARD_POSITION, position);
                 startActivityForResult(intent, Constants.SCAN_CARD_REQUEST);
             }
@@ -38,7 +39,7 @@ public class StoreListActivity extends ListActivity {
                 Intent intent = new Intent(getApplicationContext(), CardActivity.class);
                 intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_REGISTRATION);
                 intent.putExtra(CardData.RETAILER_NAME, retailerName);
-                String barcode = data.getStringExtra(ScanActivity.BARCODE_VALUE_KEY);
+                String barcode = data.getStringExtra(CaptureActivity.BARCODE_VALUE_KEY);
                 intent.putExtra(CardData.CARD_NUMBER, barcode);
                 startActivity(intent);
                 finish();

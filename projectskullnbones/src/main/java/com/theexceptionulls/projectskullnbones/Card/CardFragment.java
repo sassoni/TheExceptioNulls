@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.catalinamarketing.scanner.BarcodeScanner;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -156,13 +155,11 @@ public class CardFragment extends Fragment implements Handler.Callback {
     @Override
     public void onResume() {
         super.onResume();
-        BarcodeScanner.getInstance().releaseScanner();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        AppController.loadBarcodeScanner();
     }
 
     @Override
