@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/home_background"
-    tools:context="com.theexceptionulls.projectskullnbones.homescreen.CardsGridActivity">
+    android:background="@color/home_background">
 
     <TextView
-        android:id="@+id/activity_cards_grid_empty_cards"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:layout_centerInParent="true"
         android:textSize="18sp"
-        android:text="@string/empty_cards_message"
-        android:padding="16dp"/>
+        android:text="@string/empty_offers_message"
+        android:padding="16dp"
+        android:visibility="gone"/>
 
     <GridView
         android:id="@+id/gridview"
@@ -28,9 +25,6 @@
         android:numColumns="2"
         android:padding="16dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp"
-        android:visibility="gone"/>
+        android:verticalSpacing="10dp" />
 
 </RelativeLayout>
-
-

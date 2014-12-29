@@ -25,6 +25,7 @@ import com.theexceptionulls.projectskullnbones.AppSettings;
 import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
+import com.theexceptionulls.projectskullnbones.homescreen.CardsListManager;
 import com.theexceptionulls.projectskullnbones.webservices.*;
 
 import java.util.List;
@@ -65,8 +66,9 @@ public class OffersFragment extends Fragment implements Handler.Callback {
             fromRegistration = false;
             shouldFetchOffers = true;
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
-            barcode = AppSettings.getInstance().getCardDataList().get(gridPosition).getCardNumber();
-            retailer = AppSettings.getInstance().getCardDataList().get(gridPosition).getRetailerName();
+            CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
+            barcode = cardData.getCardNumber();
+            retailer = cardData.getRetailerName();
         }
 
         registerBroadcastReceiver = new RegisterBroadcastReceiver();

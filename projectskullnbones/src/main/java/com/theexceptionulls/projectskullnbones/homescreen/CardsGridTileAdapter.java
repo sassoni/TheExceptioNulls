@@ -18,31 +18,21 @@ import static com.theexceptionulls.projectskullnbones.AppSettings.getDrawable;
 public class CardsGridTileAdapter extends BaseAdapter {
 
     private Context context;
-
-//    private String[] stores = {
-//            "A&P",
-//            "Family Express",
-//            "Giant"
-//    };
-//
-//    private int[] storeImages = {
-//            R.drawable.i_aandp,
-//            R.drawable.i_familyexpress,
-//            R.drawable.i_gl,
-//    };
+    private boolean isEditing;
 
     public CardsGridTileAdapter(Context context) {
         this.context = context;
+        isEditing = false;
     }
 
     @Override
     public int getCount() {
-        return AppSettings.getInstance().getCardDataList().size();
+        return CardsListManager.getInstance().getCardDataListSize();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return CardsListManager.getInstance().getCardDataAtIndex(position);
     }
 
     @Override
@@ -52,11 +42,12 @@ public class CardsGridTileAdapter extends BaseAdapter {
 
     private class ViewHolder {
         ImageView image;
+        ImageView remove;
         TextView text;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
 
         if (convertView == null) {
@@ -66,18 +57,48 @@ public class CardsGridTileAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.text = (TextView) convertView.findViewById(R.id.grid_tile_text);
             holder.image = (ImageView) convertView.findViewById(R.id.grid_tile_image);
+            holder.remove = (ImageView) convertView.findViewById(R.id.grid_tile_remove);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-
-        final CardData cardData = AppSettings.getInstance().getCardDataList().get(position);
+        final CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(position);
         Drawable drawable = AppSettings.getDrawable(context, cardData.getRetailerName());
         holder.image.setImageDrawable(drawable);
         holder.text.setText(cardData.getRetailerName());
+        holder.remove.setTag(position);
+
+        if (isEditing){
+            holder.remove.setVisibility(View.VISIBLE);
+            holder.remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int cardPosition = (Integer) v.getTag();
+                    CardsListManager.getInstance().removeCardDataAtIndex(cardPosition);
+                    CardsListManager.getInstance().saveList(context);
+                    notifyDataSetChanged();
+                }
+            });
+        }else {
+            holder.remove.setVisibility(View.INVISIBLE);
+        }
 
         return convertView;
+    }
+
+    public void startEditing(){
+        if (isEditing)
+            return;
+        isEditing = true;
+        notifyDataSetChanged();
+    }
+
+    public void stopEditing(){
+        if (!isEditing)
+            return;
+        isEditing = false;
+        notifyDataSetChanged();
     }
 
 }

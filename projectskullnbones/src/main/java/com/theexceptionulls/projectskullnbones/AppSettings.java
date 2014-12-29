@@ -10,8 +10,6 @@ import java.util.List;
 public class AppSettings {
 
     private static AppSettings instance;
-    public static final String SCAN_ENGINE_READY_INTENT = "com.catalinamarketing.scanengineready";
-    private static List<CardData> cardDataList = new ArrayList<CardData>();
 
     private String[] storeList = {
             "A&P",
@@ -79,23 +77,6 @@ public class AppSettings {
 
     private AppSettings() {
 
-        CardData cardData = new CardData();
-        cardData.setCardNumber("401766980986");
-        cardData.setRetailerName(storeList[4]);
-        cardData.setRetailerOpco(storeOpcos[4]);
-        cardDataList.add(cardData);
-
-        CardData cardData1 = new CardData();
-        cardData1.setCardNumber("402015810528");
-        cardData1.setRetailerName(storeList[12]);
-        cardData.setRetailerOpco(storeOpcos[12]);
-        cardDataList.add(cardData1);
-
-        CardData cardData2 = new CardData();
-        cardData2.setCardNumber("502342349313");
-        cardData2.setRetailerName(storeList[1]);
-        cardData2.setRetailerOpco(storeOpcos[1]);
-        cardDataList.add(cardData2);
     }
 
     public static AppSettings getInstance() {
@@ -112,14 +93,6 @@ public class AppSettings {
 
     public int[] getStoreListThumbnailsID() {
         return storeListThumbnailsID;
-    }
-
-    public List<CardData> getCardDataList() {
-        return cardDataList;
-    }
-
-    public void addToCardDataList(CardData cardData) {
-        cardDataList.add(cardData);
     }
 
     public String[] getStoreOpcos() {
@@ -227,23 +200,5 @@ public class AppSettings {
         }
 
     }
-
-    public static CardData getCardDataByName(String retailerName) {
-        for (CardData cardData : cardDataList) {
-            if (cardData.getRetailerName().equals(retailerName)) {
-                return cardData;
-            }
-        }
-        return null;
-    }
-
-    public static void setPhotoUriInCardDataWithName(String retailerName, Uri uri) {
-        for (CardData cardData : cardDataList) {
-            if (cardData.getRetailerName().equals(retailerName)) {
-                cardData.setPhotoUri(uri);
-            }
-        }
-    }
-
 
 }

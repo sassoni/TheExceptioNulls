@@ -26,6 +26,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.theexceptionulls.projectskullnbones.*;
+import com.theexceptionulls.projectskullnbones.homescreen.CardsListManager;
 import com.theexceptionulls.projectskullnbones.webservices.BaseWebService;
 import com.theexceptionulls.projectskullnbones.webservices.RegisterUser;
 import com.theexceptionulls.projectskullnbones.webservices.RegisterUserResponse;
@@ -80,8 +81,11 @@ public class CardFragment extends Fragment implements Handler.Callback {
             barcode = getArguments().getString(CardData.CARD_NUMBER);
             retailer = getArguments().getString(CardData.RETAILER_NAME);
             retailerOpco = AppSettings.getRetailerOpco(retailer);
-            AppSettings.getInstance().addToCardDataList(new CardData(barcode, null, retailer, retailerOpco));
             actionBar.setTitle(retailer+" Card");
+
+            CardsListManager.getInstance().addNewCard(new CardData(barcode, null, retailer, retailerOpco));
+            CardsListManager.getInstance().saveList(getActivity());
+
             //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
             actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -91,9 +95,10 @@ public class CardFragment extends Fragment implements Handler.Callback {
         } else {
             fromRegistration = false;
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
-            barcode = AppSettings.getInstance().getCardDataList().get(gridPosition).getCardNumber();
-            retailer = AppSettings.getInstance().getCardDataList().get(gridPosition).getRetailerName();
-            photoURI = AppSettings.getInstance().getCardDataList().get(gridPosition).getPhotoUri();
+            CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
+            barcode = cardData.getCardNumber();
+            retailer = cardData.getRetailerName();
+            photoURI = cardData.getPhotoUri();
 
             actionBar.setTitle(retailer + " Card");
             //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
@@ -134,7 +139,7 @@ public class CardFragment extends Fragment implements Handler.Callback {
                 e.printStackTrace();
             }
         } else {
-            CardData cardData = AppSettings.getInstance().getCardDataList().get(gridPosition);
+            CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
             credentialNumber.setText(cardData.getCardNumber());
             Bitmap bitmap = null;
             try {
@@ -172,7 +177,8 @@ public class CardFragment extends Fragment implements Handler.Callback {
             cardPhoto.setImageBitmap(scaledBitmap);
 
             // save it
-            AppSettings.getInstance().setPhotoUriInCardDataWithName(retailer, uri);
+            //TODO Fix adding image to your card
+            //AppSettings.getInstance().setPhotoUriInCardDataWithName(retailer, uri);
         }
     }
 

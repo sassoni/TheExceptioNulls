@@ -23,10 +23,6 @@ public class CardsListManager {
     private static CardsListManager instance;
     private List<CardData> cardDataList;
 
-    private CardsListManager(){
-        cardDataList = new ArrayList<>();
-    }
-
     public static CardsListManager getInstance(){
         if (instance == null){
             instance = new CardsListManager();
@@ -48,7 +44,12 @@ public class CardsListManager {
         }
     }
 
-    private synchronized void saveList(Context context) {
+    public synchronized void saveList(Context context) {
+
+        if (cardDataList == null || cardDataList.size() == 0){
+            return;
+        }
+
         try {
             FileOutputStream fileOutputStream = context.openFileOutput(CardData.OUTPUT_FILE_NAME, Context.MODE_PRIVATE);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -72,6 +73,10 @@ public class CardsListManager {
     public void addNewCard(CardData cardData){
         if (cardData == null){
             return;
+        }
+
+        if (cardDataList == null){
+            cardDataList = new ArrayList<>();
         }
         cardDataList.add(cardData);
     }

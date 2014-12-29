@@ -10,13 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
+
 import com.theexceptionulls.projectskullnbones.*;
 import com.theexceptionulls.projectskullnbones.Card.CardActivity;
 import com.theexceptionulls.projectskullnbones.addcard.StoreListActivity;
 
 public class CardsGridActivity extends Activity {
 
-    GridView gridview;
+    private GridView gridview;
+    private TextView emptyCardsMessage;
+    private CardsGridTileAdapter cardsGridTileAdapter;
+    private boolean inCardDeleteMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +29,15 @@ public class CardsGridActivity extends Activity {
         setContentView(R.layout.activity_cards_grid);
 
         ActionBar actionBar = getActionBar();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
-            actionBar.setLogo(getResources().getDrawable(R.drawable.g_apptitlelogo));
-        }
         actionBar.setTitle(getResources().getString(R.string.actionbar_home_title));
 
+        emptyCardsMessage = (TextView) findViewById(R.id.activity_cards_grid_empty_cards);
         gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new CardsGridTileAdapter(this));
+        cardsGridTileAdapter = new CardsGridTileAdapter(CardsGridActivity.this);
 
+        CardsListManager.getInstance().loadCardsList(getApplicationContext());
+
+        gridview.setAdapter(cardsGridTileAdapter);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = new Intent(CardsGridActivity.this, CardActivity.class);
@@ -50,13 +56,36 @@ public class CardsGridActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        gridview.invalidateViews();
+        inCardDeleteMode = false;
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cardsGridTileAdapter.stopEditing();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.cards_grid, menu);
+
+        if (inCardDeleteMode){
+            getMenuInflater().inflate(R.menu.cards_grid_delete_done, menu);
+            return true;
+        }
+
+        if (CardsListManager.getInstance().getCardDataListSize()>0){
+            getMenuInflater().inflate(R.menu.cards_grid, menu);
+            emptyCardsMessage.setVisibility(View.GONE);
+            gridview.setVisibility(View.VISIBLE);
+            cardsGridTileAdapter.notifyDataSetChanged();
+        }else
+        {
+            getMenuInflater().inflate(R.menu.cards_grid_empty, menu);
+            emptyCardsMessage.setVisibility(View.VISIBLE);
+            gridview.setVisibility(View.GONE);
+        }
+
         return true;
     }
 
@@ -68,6 +97,16 @@ public class CardsGridActivity extends Activity {
             case R.id.action_add:
                 Intent intent = new Intent(this, StoreListActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.action_delete:
+                inCardDeleteMode = true;
+                invalidateOptionsMenu();
+                cardsGridTileAdapter.startEditing();
+                return true;
+            case R.id.action_delete_done:
+                inCardDeleteMode = false;
+                invalidateOptionsMenu();
+                cardsGridTileAdapter.stopEditing();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
