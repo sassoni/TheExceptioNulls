@@ -5,18 +5,18 @@ package com.theexceptionulls.projectskullnbones.webservices;
  */
 public class Offers {
 
-    private String id;
+    private int id;
     private String imageUrl;
     private String heading;
     private String description;
     private String expiration;
     private String opco;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -2,6 +2,7 @@ package com.theexceptionulls.projectskullnbones.Card;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.theexceptionulls.projectskullnbones.R;
+import com.theexceptionulls.projectskullnbones.webservices.Offers;
+
+import java.util.List;
 
 /**
  * Created by Avatapally on 12/27/14.
@@ -18,14 +22,16 @@ import com.theexceptionulls.projectskullnbones.R;
 public class OffersGridAdapter extends BaseAdapter {
 
     private Context context;
+    private List<Offers> offerList;
 
-    public OffersGridAdapter(Context context){
+    public OffersGridAdapter(Context context, List<Offers> offersList){
         this.context = context;
+        this.offerList = offersList;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return offerList.size();
     }
 
     @Override
@@ -57,6 +63,8 @@ public class OffersGridAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        Offers offers = offerList.get(position);
+
         holder.offerClip.setTag(position);
         holder.offerClip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +80,65 @@ public class OffersGridAdapter extends BaseAdapter {
 
             }
         });
+
+        holder.offerDescription.setText("Save $1.50");
+
+        Drawable drawable = null;
+        switch (offers.getId()){
+
+            case 1:
+                drawable = context.getResources().getDrawable(R.drawable.i_allnaturaleggs);
+                break;
+            case 2:
+                drawable = context.getResources().getDrawable(R.drawable.i_breakstones);
+                break;
+            case 3:
+                drawable = context.getResources().getDrawable(R.drawable.i_cheerios);
+                break;
+            case 4:
+                drawable = context.getResources().getDrawable(R.drawable.i_chichi);
+                break;
+            case 5:
+                drawable = context.getResources().getDrawable(R.drawable.i_chobani);
+                break;
+            case 6:
+                drawable = context.getResources().getDrawable(R.drawable.i_floridasnaturals);
+                break;
+            case 7:
+                drawable = context.getResources().getDrawable(R.drawable.i_generalmills);
+                break;
+            case 8:
+                drawable = context.getResources().getDrawable(R.drawable.i_gerberorganicfood);
+                break;
+            case 9:
+                drawable = context.getResources().getDrawable(R.drawable.i_gladeexpressions);
+                break;
+            case 10:
+                drawable = context.getResources().getDrawable(R.drawable.i_highperformancedetergent);
+                break;
+            case 11:
+                drawable = context.getResources().getDrawable(R.drawable.i_lobsterseafood);
+                break;
+            case 12:
+                drawable = context.getResources().getDrawable(R.drawable.i_macandcheese);
+                break;
+            case 13:
+                drawable = context.getResources().getDrawable(R.drawable.i_minutemaidlemonade);
+                break;
+            case 14:
+                drawable = context.getResources().getDrawable(R.drawable.i_peperagefarms);
+                break;
+            case 15:
+                drawable = context.getResources().getDrawable(R.drawable.i_perduechicken);
+                break;
+            case 16:
+                drawable = context.getResources().getDrawable(R.drawable.i_puffs);
+                break;
+            default:
+                drawable = context.getResources().getDrawable(R.drawable.i_puffs);
+                break;
+        }
+        holder.offerImage.setImageDrawable(drawable);
 
         return convertView;
     }

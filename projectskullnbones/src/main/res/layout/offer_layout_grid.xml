@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/offer_layout_offer_image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:src="@drawable/i_allnaturaleggs" />
 
@@ -15,22 +15,38 @@
         android:id="@+id/offer_description"
         android:background="@android:color/black"
         android:alpha="0.5"
-        android:layout_width="120dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save $1.50"
+        android:textSize="16sp"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:layout_alignBottom="@+id/offer_layout_offer_image"/>
 
+    <TextView
+        android:id="@+id/offer_savings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:text="$2.50"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:background="@drawable/savings_notification"/>
+
     <ImageView
         android:id="@+id/offer_layout_divider"
-        android:layout_width="120dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/offer_layout_offer_image"
         android:background="@android:color/darker_gray" />
 
     <LinearLayout
-        android:layout_width="120dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/offer_layout_divider"
         android:orientation="horizontal">

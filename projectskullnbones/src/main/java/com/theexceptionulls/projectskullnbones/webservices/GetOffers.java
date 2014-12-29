@@ -61,7 +61,7 @@ public class GetOffers extends BaseWebService {
                 offers.setDescription(jsonObject.getString("description"));
                 offers.setExpiration(jsonObject.getString("expiration"));
                 offers.setHeading(jsonObject.getString("heading"));
-                offers.setId(jsonObject.getString("id"));
+                offers.setId(Integer.valueOf(jsonObject.getString("id")));
                 offers.setImageUrl(jsonObject.getString("url"));
                 offersList.add(offers);
             }
