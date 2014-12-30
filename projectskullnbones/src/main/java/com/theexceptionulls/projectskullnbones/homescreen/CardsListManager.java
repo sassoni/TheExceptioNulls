@@ -1,10 +1,9 @@
 package com.theexceptionulls.projectskullnbones.homescreen;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.net.Uri;
 
 import com.theexceptionulls.projectskullnbones.CardData;
-import com.theexceptionulls.projectskullnbones.R;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -95,9 +94,8 @@ public class CardsListManager {
         cardDataList.remove(index);
     }
 
-    public void getRandomStuff(Context context){
-        Resources resources = context.getResources();
-        resources.getStringArray(R.array.retailer_color_codes);
+    public void setPhotoUriInCardDataWithName(int cardIndex, Uri uri) {
+        cardDataList.get(cardIndex).setPhotoUri(uri);
     }
 
 }

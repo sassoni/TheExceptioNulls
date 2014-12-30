@@ -55,7 +55,7 @@ public class ScanActivity extends Activity implements Handler.Callback {
         scanLinesFound = getResources().getDrawable(R.drawable.g_scanlinesfound_bkg);
 
         final Intent intent = getIntent();
-        LOYALTY_CARD_POSITION = intent.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
+        //LOYALTY_CARD_POSITION = intent.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
 
         scanViewScanPanel = (ImageView) findViewById(R.id.scan_view_scan_panel);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -72,7 +72,7 @@ public class ScanActivity extends Activity implements Handler.Callback {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent();
-                intent1.putExtra(Constants.LOYALTY_CARD_POSITION, LOYALTY_CARD_POSITION);
+                //intent1.putExtra(Constants.LOYALTY_CARD_POSITION, LOYALTY_CARD_POSITION);
                 setResult(Constants.RESULT_SCAN_NO_BARCODE, intent1);
                 finish();
             }

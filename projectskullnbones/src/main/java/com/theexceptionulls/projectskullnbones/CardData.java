@@ -9,21 +9,23 @@ public class CardData implements Serializable {
     private static final long serialVersionUID = 564971333;
     public static final String OUTPUT_FILE_NAME = "catCardDataList";
     public static final String CARD_NUMBER = "cardNumber";
-    public static final String RETAILER_NAME = "retailerName";
+    public static final String RETAILER_ID = "retailerId";
 
     private String cardNumber;
-    private String retailerName;
+    private int retailerId;
     private Uri photoUri;
-    private String retailerOpco;
 
-    public CardData() {
+    private CardData(){
+
     }
 
-    public CardData(String cardNumber, Uri photoUri, String retailerName, String retailerOpco) {
+    public CardData(int retailerId) {
+        this.retailerId = retailerId;
+    }
+
+    public CardData(String cardNumber, int retailerId) {
         this.cardNumber = cardNumber;
-        this.retailerName = retailerName;
-        this.photoUri = photoUri;
-        this.retailerOpco = retailerOpco;
+        this.retailerId = retailerId;
     }
 
     public String getCardNumber() {
@@ -34,14 +36,6 @@ public class CardData implements Serializable {
         this.cardNumber = cardNumber;
     }
 
-    public String getRetailerName() {
-        return retailerName;
-    }
-
-    public void setRetailerName(String retailerName) {
-        this.retailerName = retailerName;
-    }
-
     public Uri getPhotoUri() {
         return photoUri;
     }
@@ -50,11 +44,8 @@ public class CardData implements Serializable {
         this.photoUri = uri;
     }
 
-    public String getRetailerOpco() {
-        return retailerOpco;
+    public int getRetailerId() {
+        return retailerId;
     }
 
-    public void setRetailerOpco(String retailerOpco) {
-        this.retailerOpco = retailerOpco;
-    }
 }

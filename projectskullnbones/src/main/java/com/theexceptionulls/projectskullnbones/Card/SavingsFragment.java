@@ -34,7 +34,7 @@ public class SavingsFragment extends Fragment {
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
             fromRegistration = true;
             barcode = getArguments().getString(CardData.CARD_NUMBER);
-            retailer = getArguments().getString(CardData.RETAILER_NAME);
+            //retailer = getArguments().getString(CardData.RETAILER_NAME);
         } else {
             fromRegistration = false;
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);

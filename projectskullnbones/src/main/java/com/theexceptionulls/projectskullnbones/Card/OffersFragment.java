@@ -72,7 +72,7 @@ public class OffersFragment extends Fragment {
             fromRegistration = true;
             shouldFetchOffers = false;
             barcode = getArguments().getString(CardData.CARD_NUMBER);
-            retailer = getArguments().getString(CardData.RETAILER_NAME);
+            //retailer = getArguments().getString(CardData.RETAILER_NAME);
 
         } else {
             fromRegistration = false;
@@ -80,7 +80,7 @@ public class OffersFragment extends Fragment {
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
             CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
             barcode = cardData.getCardNumber();
-            retailer = cardData.getRetailerName();
+            //retailer = cardData.getRetailerName();
         }
 
         //registerBroadcastReceiver = new RegisterBroadcastReceiver();

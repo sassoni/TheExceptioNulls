@@ -19,10 +19,12 @@ public class CardsGridTileAdapter extends BaseAdapter {
 
     private Context context;
     private boolean isEditing;
+    private String[] retailerNames;
 
     public CardsGridTileAdapter(Context context) {
         this.context = context;
         isEditing = false;
+        retailerNames = context.getResources().getStringArray(R.array.retailer_names);
     }
 
     @Override
@@ -64,9 +66,9 @@ public class CardsGridTileAdapter extends BaseAdapter {
         }
 
         final CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(position);
-        Drawable drawable = AppSettings.getDrawable(context, cardData.getRetailerName());
+        Drawable drawable = AppSettings.getDrawable(context, cardData.getRetailerId());
         holder.image.setImageDrawable(drawable);
-        holder.text.setText(cardData.getRetailerName());
+        holder.text.setText(retailerNames[cardData.getRetailerId()]);
         holder.remove.setTag(position);
 
         if (isEditing){

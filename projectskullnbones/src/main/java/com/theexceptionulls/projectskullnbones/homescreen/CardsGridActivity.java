@@ -41,12 +41,8 @@ public class CardsGridActivity extends Activity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = new Intent(CardsGridActivity.this, CardActivity.class);
-
-                String retailerName = AppSettings.getInstance().getStoreList()[position];
                 intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_GRID);
-                intent.putExtra(Constants.LOYALTY_CARD_POSITION, position);
-//                intent.putExtra(CardData.RETAILER_NAME, retailerName);
-
+                intent.putExtra(Constants.RETAILER_ID, CardsListManager.getInstance().getCardDataAtIndex(position));
                 startActivity(intent);
             }
         });

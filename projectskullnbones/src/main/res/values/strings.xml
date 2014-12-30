@@ -10,6 +10,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_cards_grid">CardsGridActivity</string>
     <string name="title_activity_add_card">AddCardActivity</string>
+    <string name="card_manual_entry">Type in your loyalty card number below</string>
 
     <!--Static String Resources-->
     <string-array name="retailer_names">

@@ -21,14 +21,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.theexceptionulls.projectskullnbones.*;
+import com.theexceptionulls.projectskullnbones.AppSettings;
+import com.theexceptionulls.projectskullnbones.CardData;
+import com.theexceptionulls.projectskullnbones.Constants;
+import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.homescreen.CardsListManager;
 import com.theexceptionulls.projectskullnbones.webservices.BaseWebService;
-import com.theexceptionulls.projectskullnbones.webservices.RegisterUser;
 import com.theexceptionulls.projectskullnbones.webservices.RegisterUserResponse;
 
 import java.io.File;
@@ -38,15 +41,14 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class CardFragment extends Fragment implements Handler.Callback {
+public class CardFragment extends Fragment {
 
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
     private ImageView credentialBarcode;
     private TextView credentialNumber;
     private String barcode;
-    private String retailer;
-    private String retailerOpco;
+    private int retailerId;
     private int gridPosition;
     private static boolean fromRegistration = false;
 
@@ -79,29 +81,26 @@ public class CardFragment extends Fragment implements Handler.Callback {
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
             fromRegistration = true;
             barcode = getArguments().getString(CardData.CARD_NUMBER);
-            retailer = getArguments().getString(CardData.RETAILER_NAME);
-            retailerOpco = AppSettings.getRetailerOpco(retailer);
-            actionBar.setTitle(retailer+" Card");
+            retailerId = getArguments().getInt(CardData.RETAILER_ID);
+            actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId]+" Card");
 
-            CardsListManager.getInstance().addNewCard(new CardData(barcode, null, retailer, retailerOpco));
-            CardsListManager.getInstance().saveList(getActivity());
+            if (barcode == null){
+                CardsListManager.getInstance().addNewCard(new CardData(retailerId));
+            }else {
+                CardsListManager.getInstance().saveList(getActivity());
+            }
 
-            //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
             actionBar.setDisplayHomeAsUpEnabled(true);
-
-            RegisterUser registerUser = new RegisterUser(getActivity().getApplicationContext(), new Handler(this), barcode, retailerOpco);
-            registerUser.execute();
 
         } else {
             fromRegistration = false;
             gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
-            CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
+            final CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
             barcode = cardData.getCardNumber();
-            retailer = cardData.getRetailerName();
+            retailerId = cardData.getRetailerId();
             photoURI = cardData.getPhotoUri();
 
-            actionBar.setTitle(retailer + " Card");
-            //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(AppSettings.getColorRetailerColor(retailer))));
+            actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId]+" Card");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -115,8 +114,8 @@ public class CardFragment extends Fragment implements Handler.Callback {
         logoLinearLayout = (LinearLayout) view.findViewById(R.id.card_fragment_retailer_logo);
         logoImage = (ImageView) view.findViewById(R.id.card_fragment_retailer_logo_imageview);
 
-        logoImage.setImageDrawable(AppSettings.getDrawable(getActivity().getApplicationContext(), retailer));
-        logoLinearLayout.setBackgroundColor(Color.parseColor(AppSettings.getColorRetailerColor(retailer)));
+        logoImage.setImageDrawable(AppSettings.getDrawable(getActivity(), retailerId));
+        logoLinearLayout.setBackgroundColor(Color.parseColor(getResources().getStringArray(R.array.retailer_color_codes)[retailerId]));
 
         credentialBarcode = (ImageView) view.findViewById(R.id.card_fragment_barcode_image);
         credentialNumber = (TextView) view.findViewById(R.id.card_fragment_card_number);
@@ -177,8 +176,8 @@ public class CardFragment extends Fragment implements Handler.Callback {
             cardPhoto.setImageBitmap(scaledBitmap);
 
             // save it
-            //TODO Fix adding image to your card
-            //AppSettings.getInstance().setPhotoUriInCardDataWithName(retailer, uri);
+            CardsListManager.getInstance().setPhotoUriInCardDataWithName(gridPosition, uri);
+            CardsListManager.getInstance().saveList(getActivity());
         }
     }
 
@@ -287,22 +286,22 @@ public class CardFragment extends Fragment implements Handler.Callback {
         return scaledBitmap;
     }
 
-    @Override
-    public boolean handleMessage(Message msg) {
-
-        if (msg.what == BaseWebService.WEB_SERVICE_SUCCESS){
-
-            if (msg.obj instanceof RegisterUserResponse){
-
-                RegisterUserResponse registerUserResponse = (RegisterUserResponse) msg.obj;
-                if (registerUserResponse.isSuccess()){
-                    Intent intent = new Intent(Constants.REGISTRATION_BROADCAST_INTENT);
-                    LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
-                }
-            }
-
-        }
-
-        return true;
-    }
+//    @Override
+//    public boolean handleMessage(Message msg) {
+//
+//        if (msg.what == BaseWebService.WEB_SERVICE_SUCCESS){
+//
+//            if (msg.obj instanceof RegisterUserResponse){
+//
+//                RegisterUserResponse registerUserResponse = (RegisterUserResponse) msg.obj;
+//                if (registerUserResponse.isSuccess()){
+//                    Intent intent = new Intent(Constants.REGISTRATION_BROADCAST_INTENT);
+//                    LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
+//                }
+//            }
+//
+//        }
+//
+//        return true;
+//    }
 }

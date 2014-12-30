@@ -36,7 +36,6 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
-    private static final int TIMEOUT_CANCEL_SCANNING = 45000;
     private Drawable scanLines;
     private Drawable scanLinesFound;
     private ToneGenerator toneGenerator;
@@ -45,7 +44,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 
     public static final String BARCODE_VALUE_KEY = "barcode";
     public static final String SYMBOLOGY_VALUE_KEY = "symbology";
-    private int LOYALTY_CARD_POSITION = 0;
+    private int retailerId = 0;
     private TextView noCardTextView;
 
     private CameraManager cameraManager;
@@ -79,7 +78,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
         scanLinesFound = getResources().getDrawable(R.drawable.g_scanlinesfound_bkg);
 
         final Intent intent = getIntent();
-        LOYALTY_CARD_POSITION = intent.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
+        retailerId = intent.getIntExtra(Constants.RETAILER_ID, 0);
 
         scanViewScanPanel = (ImageView) findViewById(R.id.scan_view_scan_panel);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -95,7 +94,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent();
-                intent1.putExtra(Constants.LOYALTY_CARD_POSITION, LOYALTY_CARD_POSITION);
+                intent1.putExtra(Constants.RETAILER_ID, retailerId);
                 setResult(Constants.RESULT_SCAN_NO_BARCODE, intent1);
                 finish();
             }
@@ -204,7 +203,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
         Intent i = getIntent();
         i.putExtra(BARCODE_VALUE_KEY, result.getText());
         i.putExtra(SYMBOLOGY_VALUE_KEY, result.getBarcodeFormat());
-        i.putExtra(Constants.LOYALTY_CARD_POSITION, LOYALTY_CARD_POSITION);
+        i.putExtra(Constants.RETAILER_ID, retailerId);
         setResult(RESULT_OK, i);
         finish();
 

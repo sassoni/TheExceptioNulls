@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import com.theexceptionulls.projectskullnbones.*;
 import com.theexceptionulls.projectskullnbones.Card.CardActivity;
+import com.theexceptionulls.projectskullnbones.Card.CardManualEntry;
 import com.theexceptionulls.projectskullnbones.zxing.CaptureActivity;
 
 public class StoreListActivity extends ListActivity {
@@ -18,13 +19,13 @@ public class StoreListActivity extends ListActivity {
 
         setTitle("Select Retailer");
 
-        StoreListAdapter storeListAdapter = new StoreListAdapter(this, AppSettings.getInstance().getStoreList(), AppSettings.getInstance().getStoreListThumbnailsID());
+        StoreListAdapter storeListAdapter = new StoreListAdapter(this, getResources().getStringArray(R.array.retailer_names), AppSettings.getStoreListThumbnailsID());
         setListAdapter(storeListAdapter);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), CaptureActivity.class);
-                intent.putExtra(Constants.LOYALTY_CARD_POSITION, position);
+                Intent intent = new Intent(StoreListActivity.this, CaptureActivity.class);
+                intent.putExtra(Constants.RETAILER_ID, position);
                 startActivityForResult(intent, Constants.SCAN_CARD_REQUEST);
             }
         });
@@ -34,23 +35,30 @@ public class StoreListActivity extends ListActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.SCAN_CARD_REQUEST) {
             if (resultCode == RESULT_OK) {
-                int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
-                String retailerName = AppSettings.getInstance().getStoreList()[loyaltyCardPosition];
-                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-                intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_REGISTRATION);
-                intent.putExtra(CardData.RETAILER_NAME, retailerName);
                 String barcode = data.getStringExtra(CaptureActivity.BARCODE_VALUE_KEY);
+                int retailerId = data.getIntExtra(Constants.RETAILER_ID, 0);
+                Intent intent = new Intent(StoreListActivity.this, CardActivity.class);
+                intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_REGISTRATION);
+                intent.putExtra(CardData.RETAILER_ID, retailerId);
                 intent.putExtra(CardData.CARD_NUMBER, barcode);
                 startActivity(intent);
                 finish();
             }
 
             if (resultCode == Constants.RESULT_SCAN_NO_BARCODE) {
-                int loyaltyCardPosition = data.getIntExtra(Constants.LOYALTY_CARD_POSITION, 0);
-                String retailerName = AppSettings.getInstance().getStoreList()[loyaltyCardPosition];
-                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                int retailerId = data.getIntExtra(Constants.RETAILER_ID, 0);
+                Intent intent = new Intent(StoreListActivity.this, CardManualEntry.class);
+                intent.putExtra(Constants.RETAILER_ID, retailerId);
+                startActivityForResult(intent, Constants.SCAN_CARD_REQUEST);
+            }
+
+            if (resultCode == Constants.RESULT_MANUAL_ENTRY) {
+                String barcode = data.getStringExtra(CaptureActivity.BARCODE_VALUE_KEY);
+                int retailerId = data.getIntExtra(Constants.RETAILER_ID, 0);
+                Intent intent = new Intent(StoreListActivity.this, CardActivity.class);
                 intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_REGISTRATION);
-                intent.putExtra(CardData.RETAILER_NAME, retailerName);
+                intent.putExtra(CardData.CARD_NUMBER, barcode);
+                intent.putExtra(CardData.RETAILER_ID, retailerId);
                 startActivity(intent);
                 finish();
             }
