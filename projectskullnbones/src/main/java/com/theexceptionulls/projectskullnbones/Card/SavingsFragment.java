@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.theexceptionulls.projectskullnbones.CardData;
+
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 
@@ -33,11 +33,11 @@ public class SavingsFragment extends Fragment {
 
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
             fromRegistration = true;
-            barcode = getArguments().getString(CardData.CARD_NUMBER);
+            barcode = getArguments().getString(Constants.CARD_NUMBER);
             //retailer = getArguments().getString(CardData.RETAILER_NAME);
         } else {
             fromRegistration = false;
-            gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
+            gridPosition = getArguments().getInt(Constants.CARD_POSITION);
         }
     }
 

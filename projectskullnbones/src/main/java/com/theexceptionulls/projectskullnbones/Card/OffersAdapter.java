@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,21 +16,21 @@ import com.theexceptionulls.projectskullnbones.webservices.Offers;
 import java.util.List;
 
 /**
- * Created by Avatapally on 12/27/14.
+ * Created by Avatapally on 12/30/14.
  */
-public class OffersGridAdapter extends BaseAdapter {
+public class OffersAdapter extends BaseAdapter {
 
+    private List<Offers> offersList;
     private Context context;
-    private List<Offers> offerList;
 
-    public OffersGridAdapter(Context context, List<Offers> offersList){
+    public OffersAdapter(Context context, List<Offers> offersList){
+        this.offersList = offersList;
         this.context = context;
-        this.offerList = offersList;
     }
 
     @Override
     public int getCount() {
-        return offerList.size();
+        return offersList.size();
     }
 
     @Override
@@ -47,41 +46,26 @@ public class OffersGridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final ViewHolder holder;
+        final ViewHolder viewHolder;
 
-        if (convertView == null) {
+        if (convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.offer_layout_grid, null, false);
+            convertView = inflater.inflate(R.layout.offer_layout, null, false);
 
-            holder = new ViewHolder();
-            holder.offerImage = (ImageView) convertView.findViewById(R.id.offer_layout_offer_image);
-            holder.offerClip = (Button) convertView.findViewById(R.id.offer_clip);
-            holder.offerDislike = (Button) convertView.findViewById(R.id.offer_dislike);
-            holder.offerDescription = (TextView) convertView.findViewById(R.id.offer_description);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+            viewHolder = new ViewHolder();
+            viewHolder.description = (TextView) convertView.findViewById(R.id.offer_layout_offer_description);
+            viewHolder.heading = (TextView) convertView.findViewById(R.id.offer_layout_offer_heading);
+            viewHolder.expiration = (TextView) convertView.findViewById(R.id.offer_layout_offer_expiration);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.offer_layout_offer_image);
+            convertView.setTag(viewHolder);
+        }else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Offers offers = offerList.get(position);
-
-        holder.offerClip.setTag(position);
-        holder.offerClip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        holder.offerDislike.setTag(position);
-        holder.offerDislike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        holder.offerDescription.setText("Save $1.50");
+        final Offers offers = offersList.get(position);
+        viewHolder.expiration.setText(offers.getExpiration());
+        viewHolder.description.setText(offers.getDescription());
+        viewHolder.heading.setText(offers.getHeading());
 
         Drawable drawable = null;
         switch (offers.getId()){
@@ -137,15 +121,16 @@ public class OffersGridAdapter extends BaseAdapter {
                 drawable = context.getResources().getDrawable(R.drawable.i_puffs);
                 break;
         }
-        holder.offerImage.setImageDrawable(drawable);
+        viewHolder.imageView.setImageDrawable(drawable);
 
         return convertView;
     }
 
-    private class ViewHolder {
-        ImageView offerImage;
-        Button offerDislike;
-        Button offerClip;
-        TextView offerDescription;
+    private class ViewHolder{
+        ImageView imageView;
+        TextView heading;
+        TextView description;
+        TextView expiration;
     }
+
 }

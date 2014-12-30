@@ -8,20 +8,10 @@ public class CardData implements Serializable {
 
     private static final long serialVersionUID = 564971333;
     public static final String OUTPUT_FILE_NAME = "catCardDataList";
-    public static final String CARD_NUMBER = "cardNumber";
-    public static final String RETAILER_ID = "retailerId";
 
     private String cardNumber;
     private int retailerId;
-    private Uri photoUri;
-
-    private CardData(){
-
-    }
-
-    public CardData(int retailerId) {
-        this.retailerId = retailerId;
-    }
+    private String photoUri;
 
     public CardData(String cardNumber, int retailerId) {
         this.cardNumber = cardNumber;
@@ -32,15 +22,11 @@ public class CardData implements Serializable {
         return cardNumber;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public Uri getPhotoUri() {
+    public String getPhotoUri() {
         return photoUri;
     }
 
-    public void setPhotoUri(Uri uri) {
+    public void setPhotoUri(String uri) {
         this.photoUri = uri;
     }
 

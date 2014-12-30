@@ -9,11 +9,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +28,6 @@ import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.homescreen.CardsListManager;
-import com.theexceptionulls.projectskullnbones.webservices.BaseWebService;
-import com.theexceptionulls.projectskullnbones.webservices.RegisterUserResponse;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,9 +42,9 @@ public class CardFragment extends Fragment {
     private static final int BLACK = 0xFF000000;
     private ImageView credentialBarcode;
     private TextView credentialNumber;
-    private String barcode;
+    private String cardNumber;
     private int retailerId;
-    private int gridPosition;
+    private int cardPosition;
     private static boolean fromRegistration = false;
 
     static final int REQUEST_BARCODE_CAPTURE = 11;
@@ -80,25 +75,26 @@ public class CardFragment extends Fragment {
 
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
             fromRegistration = true;
-            barcode = getArguments().getString(CardData.CARD_NUMBER);
-            retailerId = getArguments().getInt(CardData.RETAILER_ID);
+            retailerId = getArguments().getInt(Constants.RETAILER_ID);
+            cardNumber = getArguments().getString(Constants.CARD_NUMBER);
+
             actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId]+" Card");
 
-            if (barcode == null){
-                CardsListManager.getInstance().addNewCard(new CardData(retailerId));
-            }else {
-                CardsListManager.getInstance().saveList(getActivity());
-            }
-
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            CardsListManager.getInstance().addNewCard(new CardData(cardNumber, retailerId));
+            cardPosition = CardsListManager.getInstance().getCardDataListSize() - 1;
+            CardsListManager.getInstance().saveList(getActivity());
 
         } else {
+
             fromRegistration = false;
-            gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
-            final CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
-            barcode = cardData.getCardNumber();
+            cardPosition = getArguments().getInt(Constants.CARD_POSITION);
+            final CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(cardPosition);
+            cardNumber = cardData.getCardNumber();
             retailerId = cardData.getRetailerId();
-            photoURI = cardData.getPhotoUri();
+
+            if (cardData.getPhotoUri() != null){
+                photoURI = Uri.parse(cardData.getPhotoUri());
+            }
 
             actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId]+" Card");
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -129,20 +125,19 @@ public class CardFragment extends Fragment {
         });
 
         if (fromRegistration) {
-            credentialNumber.setText(barcode);
+            credentialNumber.setText(cardNumber);
             Bitmap bitmap = null;
             try {
-                bitmap = encodeAsBitmap(barcode, com.google.zxing.BarcodeFormat.CODE_128, dpToPx(400), dpToPx(100));
+                bitmap = encodeAsBitmap(cardNumber, com.google.zxing.BarcodeFormat.CODE_128, dpToPx(400), dpToPx(100));
                 credentialBarcode.setImageBitmap(bitmap);
             } catch (WriterException e) {
                 e.printStackTrace();
             }
         } else {
-            CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
-            credentialNumber.setText(cardData.getCardNumber());
+            credentialNumber.setText(cardNumber);
             Bitmap bitmap = null;
             try {
-                bitmap = encodeAsBitmap(cardData.getCardNumber(), com.google.zxing.BarcodeFormat.CODE_128, dpToPx(400), dpToPx(100));
+                bitmap = encodeAsBitmap(cardNumber, com.google.zxing.BarcodeFormat.CODE_128, dpToPx(400), dpToPx(100));
                 credentialBarcode.setImageBitmap(bitmap);
             } catch (WriterException e) {
                 e.printStackTrace();
@@ -176,7 +171,7 @@ public class CardFragment extends Fragment {
             cardPhoto.setImageBitmap(scaledBitmap);
 
             // save it
-            CardsListManager.getInstance().setPhotoUriInCardDataWithName(gridPosition, uri);
+            CardsListManager.getInstance().setPhotoUriInCardDataWithName(cardPosition, uri);
             CardsListManager.getInstance().saveList(getActivity());
         }
     }

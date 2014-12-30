@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
+import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.zxing.camera.CameraManager;
@@ -78,7 +79,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
         scanLinesFound = getResources().getDrawable(R.drawable.g_scanlinesfound_bkg);
 
         final Intent intent = getIntent();
-        retailerId = intent.getIntExtra(Constants.RETAILER_ID, 0);
+        retailerId = intent.getIntExtra(Constants.RETAILER_ID, Constants.DEFAULT_RETAILER_ID);
 
         scanViewScanPanel = (ImageView) findViewById(R.id.scan_view_scan_panel);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

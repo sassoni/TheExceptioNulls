@@ -95,7 +95,7 @@ public class CardsListManager {
     }
 
     public void setPhotoUriInCardDataWithName(int cardIndex, Uri uri) {
-        cardDataList.get(cardIndex).setPhotoUri(uri);
+        cardDataList.get(cardIndex).setPhotoUri(uri.toString());
     }
 
 }

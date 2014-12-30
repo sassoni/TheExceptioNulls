@@ -1,30 +1,16 @@
 package com.theexceptionulls.projectskullnbones.Card;
 
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.theexceptionulls.projectskullnbones.AppSettings;
+
 import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
@@ -71,13 +57,13 @@ public class OffersFragment extends Fragment {
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
             fromRegistration = true;
             shouldFetchOffers = false;
-            barcode = getArguments().getString(CardData.CARD_NUMBER);
+            barcode = getArguments().getString(Constants.CARD_NUMBER);
             //retailer = getArguments().getString(CardData.RETAILER_NAME);
 
         } else {
             fromRegistration = false;
             shouldFetchOffers = true;
-            gridPosition = getArguments().getInt(Constants.LOYALTY_CARD_POSITION);
+            gridPosition = getArguments().getInt(Constants.CARD_POSITION);
             CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
             barcode = cardData.getCardNumber();
             //retailer = cardData.getRetailerName();
@@ -119,7 +105,7 @@ public class OffersFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
 
-            for (int i = 1; i<= 16 ;i++){
+            for (int i = 0; i< 16 ;i++){
                 Offers offers = new Offers();
                 offers.setDescription("Save $" + i);
                 offers.setId(i);

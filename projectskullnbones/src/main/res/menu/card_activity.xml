@@ -3,13 +3,8 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.theexceptionulls.projectskullnbones.homescreen.CardsGridActivity">
     <item
-        android:id="@+id/action_edit"
+        android:id="@+id/action_checkout"
         android:orderInCategory="100"
-        android:title="Edit"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_delete"
-        android:orderInCategory="100"
-        android:title="Delete"
-        app:showAsAction="never"/>
+        android:title="CHECKOUT"
+        android:showAsAction="always"/>
 </menu>

@@ -80,8 +80,8 @@
     <string name="scanner_license_key">3DBD4170-AB9B-11E2-BE6C-ADC68976D761</string>
 
     <!--Offer Notification-->
-    <string name="offer_notification_thanks">Thanks for shopping at</string>
+    <string name="offer_notification_thanks">Thanks for shopping at </string>
     <string name="offer_notification_savings">You have saved </string>
-    <string name="offer_notification_newoffers">Below are your new offers!</string>
+    <string name="offer_notification_newoffers">Checkout your new offers below!</string>
 
 </resources>

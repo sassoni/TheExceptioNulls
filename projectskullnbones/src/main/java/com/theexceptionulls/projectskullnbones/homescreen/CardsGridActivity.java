@@ -35,15 +35,18 @@ public class CardsGridActivity extends Activity {
         gridview = (GridView) findViewById(R.id.gridview);
         cardsGridTileAdapter = new CardsGridTileAdapter(CardsGridActivity.this);
 
-        CardsListManager.getInstance().loadCardsList(getApplicationContext());
-
         gridview.setAdapter(cardsGridTileAdapter);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(position);
+
                 Intent intent = new Intent(CardsGridActivity.this, CardActivity.class);
                 intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_GRID);
-                intent.putExtra(Constants.RETAILER_ID, CardsListManager.getInstance().getCardDataAtIndex(position));
-                startActivity(intent);
+                intent.putExtra(Constants.RETAILER_ID, cardData.getRetailerId());
+                intent.putExtra(Constants.CARD_NUMBER, cardData.getCardNumber());
+                intent.putExtra(Constants.CARD_POSITION, position);
+                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_CARD);
             }
         });
 
@@ -60,6 +63,17 @@ public class CardsGridActivity extends Activity {
     protected void onPause() {
         super.onPause();
         cardsGridTileAdapter.stopEditing();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.INTENT_REQUEST_CODE_CARD){
+            if (resultCode == Constants.INTENT_RESULT_FINISH_HOME){
+                finish();
+                return;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

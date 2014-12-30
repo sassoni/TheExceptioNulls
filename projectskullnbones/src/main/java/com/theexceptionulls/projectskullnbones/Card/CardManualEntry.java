@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.theexceptionulls.projectskullnbones.AppSettings;
+import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.zxing.CaptureActivity;
@@ -34,7 +35,7 @@ public class CardManualEntry extends Activity {
         setContentView(R.layout.activity_card_manual_entry);
 
         Intent intent = getIntent();
-        retailerId = intent.getIntExtra(Constants.RETAILER_ID, 0);
+        retailerId = intent.getIntExtra(Constants.RETAILER_ID, Constants.DEFAULT_RETAILER_ID);
 
         linearLayout = (LinearLayout) findViewById(R.id.card_manual_entry_retailer_logo);
         retailerLogo = (ImageView) findViewById(R.id.card_manual_entry_retailer_logo_imageview);

@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/offer_notification_thanks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/offer_notification_thanks"/>
+        android:text= "@string/offer_notification_thanks" />
 
     <TextView
         android:id="@+id/offer_notification_savings"
-        android:layout_below="@+id/offer_notification_thanks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/offer_notification_savings"/>
+        android:layout_below="@+id/offer_notification_thanks"
+        android:text="@string/offer_notification_savings" />
 
     <TextView
         android:id="@+id/offer_notification_newoffers"
-        android:layout_below="@+id/offer_notification_savings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/offer_notification_newoffers"/>
+        android:layout_below="@+id/offer_notification_savings"
+        android:text="@string/offer_notification_newoffers" />
 
-    <GridView
-        android:layout_below="@id/offer_notification_newoffers"
+    <ListView
+        android:id="@+id/offer_notification_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="200dp"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="2"
-        android:padding="16dp"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp"/>
+        android:layout_below="@+id/offer_notification_newoffers"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>
