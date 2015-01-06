@@ -1,6 +1,5 @@
 package com.theexceptionulls.projectskullnbones.Card;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -45,9 +44,7 @@ public class CardFragment extends Fragment {
     private String cardNumber;
     private int retailerId;
     private int cardPosition;
-    private static boolean fromRegistration = false;
 
-    static final int REQUEST_BARCODE_CAPTURE = 11;
     static final int REQUEST_IMAGE_CAPTURE = 12;
 
     private LinearLayout logoLinearLayout;
@@ -71,22 +68,13 @@ public class CardFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         String intentFrom = getArguments().getString(Constants.INTENT_FROM);
-        ActionBar actionBar = getActivity().getActionBar();
-
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
-            fromRegistration = true;
             retailerId = getArguments().getInt(Constants.RETAILER_ID);
             cardNumber = getArguments().getString(Constants.CARD_NUMBER);
-
-            actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId]+" Card");
-
-            CardsListManager.getInstance().addNewCard(new CardData(cardNumber, retailerId));
             cardPosition = CardsListManager.getInstance().getCardDataListSize() - 1;
             CardsListManager.getInstance().saveList(getActivity());
 
         } else {
-
-            fromRegistration = false;
             cardPosition = getArguments().getInt(Constants.CARD_POSITION);
             final CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(cardPosition);
             cardNumber = cardData.getCardNumber();
@@ -95,9 +83,6 @@ public class CardFragment extends Fragment {
             if (cardData.getPhotoUri() != null){
                 photoURI = Uri.parse(cardData.getPhotoUri());
             }
-
-            actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId]+" Card");
-            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
     }
@@ -124,28 +109,19 @@ public class CardFragment extends Fragment {
             }
         });
 
-        if (fromRegistration) {
-            credentialNumber.setText(cardNumber);
-            Bitmap bitmap = null;
-            try {
-                bitmap = encodeAsBitmap(cardNumber, com.google.zxing.BarcodeFormat.CODE_128, dpToPx(400), dpToPx(100));
-                credentialBarcode.setImageBitmap(bitmap);
-            } catch (WriterException e) {
-                e.printStackTrace();
-            }
-        } else {
-            credentialNumber.setText(cardNumber);
-            Bitmap bitmap = null;
-            try {
-                bitmap = encodeAsBitmap(cardNumber, com.google.zxing.BarcodeFormat.CODE_128, dpToPx(400), dpToPx(100));
-                credentialBarcode.setImageBitmap(bitmap);
-            } catch (WriterException e) {
-                e.printStackTrace();
-            }
-            if (photoURI != null) {
-                Bitmap scaledBitmap = scaledBitmapFromUri(photoURI);
-                cardPhoto.setImageBitmap(scaledBitmap);
-            }
+        credentialNumber.setText(cardNumber);
+
+        Bitmap bitmap = null;
+        try {
+            bitmap = encodeAsBitmap(cardNumber, com.google.zxing.BarcodeFormat.CODE_128, dpToPx(400), dpToPx(100));
+            credentialBarcode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+        if (photoURI != null) {
+            Bitmap scaledBitmap = scaledBitmapFromUri(photoURI);
+            cardPhoto.setImageBitmap(scaledBitmap);
         }
 
         return view;

@@ -77,11 +77,135 @@
     <string name="add_card_take_photo_label">Take a picture of your card</string>
     <string name="title_activity_store_list">StoreListActivity</string>
 
-    <string name="scanner_license_key">3DBD4170-AB9B-11E2-BE6C-ADC68976D761</string>
-
+    <!--Capture Activity-->
+    <string name="scan_hint">Center the barcode between the arrows.\nAllow the camera to focus for quicker scans.</string>
+    <string name="scan_manual_entry">No barcode? or Problem scanning?</string>
+    
     <!--Offer Notification-->
     <string name="offer_notification_thanks">Thanks for shopping at </string>
     <string name="offer_notification_savings">You have saved </string>
     <string name="offer_notification_newoffers">Checkout your new offers below!</string>
+
+    <!-- Clip Button String-->
+    <string name="offer_clip_unclipped">Add\nCoupon</string>
+    <string name="offer_clip_clipped">Saved</string>
+
+    <!--Offer JSON String-->
+    <string name="offer_data_json">[
+    {
+        \"offerId\": 1,
+        \"description\": \"All Natural Eggs Grade-A\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 25¢\"
+    },
+    {
+        \"offerId\": 2,
+        \"description\": \"Breakstone\'s Cottage Cheese Doubles\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 50¢\"
+    },
+    {
+        \"offerId\": 3,
+        \"description\": \"General Mills Cheerios Strawberry\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 50¢\"
+    },
+    {
+        \"offerId\": 4,
+        \"description\": \"Pair of Chi Chis\",
+        \"expiration\": \"\",
+        \"heading\": \"Save $1.00\"
+    },
+    {
+        \"offerId\": 5,
+        \"description\": \"Chobani Greek Yogurt\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 75¢\"
+    },
+    {
+        \"offerId\": 6,
+        \"description\": \"Pair of Florida Naturals\",
+        \"expiration\": \"\",
+        \"heading\": \"Save $1.00\"
+    },
+    {
+        \"offerId\": 7,
+        \"description\": \"Pack of three General Mills Cheerios\",
+        \"expiration\": \"\",
+        \"heading\": \"Save $1.50\"
+    },
+    {
+        \"offerId\": 8,
+        \"description\": \"Gerber Oranges\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 40¢\"
+    },
+    {
+        \"offerId\": 9,
+        \"description\": \"Glade Expression\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 75¢\"
+    },
+    {
+        \"offerId\": 10,
+        \"description\": \"High Performance Detergent\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 50¢\"
+    },
+    {
+        \"offerId\": 11,
+        \"description\": \"Lobster and Seafood\",
+        \"expiration\": \"\",
+        \"heading\": \"Save $1.25\"
+    },
+    {
+        \"offerId\": 12,
+        \"description\": \"Goldfish Mac and Cheese 3 pac\",
+        \"expiration\": \"\",
+        \"heading\": \"One Free\"
+    },
+    {
+        \"offerId\": 13,
+        \"description\": \"Minute Maide Lemonade\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 25¢\"
+    },
+    {
+        \"offerId\": 14,
+        \"description\": \"Peperage Farms Wheat Bread\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 25¢\"
+    },
+    {
+        \"offerId\": 15,
+        \"description\": \"Perdue Chicken\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 50¢\"
+    },
+    {
+        \"offerId\": 16,
+        \"description\": \"Puffs Plus Lotion\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 75¢\"
+    },
+    {
+        \"offerId\": 17,
+        \"description\": \"Scott 12 Rolls\",
+        \"expiration\": \"\",
+        \"heading\": \"Save $1.00\"
+    },
+    {
+        \"offerId\": 18,
+        \"description\": \"Cranberry Juice\",
+        \"expiration\": \"\",
+        \"heading\": \"Save 25¢\"
+    },
+    {
+        \"offerId\": 19,
+        \"description\": \"Kellogs Special Pack\",
+        \"expiration\": \"\",
+        \"heading\": \"Buy 3 Get 1\"
+    }
+]</string>
 
 </resources>

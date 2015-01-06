@@ -1,16 +1,21 @@
 package com.theexceptionulls.projectskullnbones.webservices;
 
+import java.io.Serializable;
+
 /**
  * Created by rohithavatapally on 8/28/14.
  */
-public class Offers {
+public class Offers implements Serializable {
+
+    private static final long serialVersionUID = 564971444;
 
     private int id;
-    private String imageUrl;
     private String heading;
     private String description;
     private String expiration;
-    private String opco;
+    private boolean isClipped = false;
+    private boolean isDisliked = false;
+    private boolean isLiked = false;
 
     public int getId() {
         return id;
@@ -18,14 +23,6 @@ public class Offers {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public String getHeading() {
@@ -52,11 +49,27 @@ public class Offers {
         this.expiration = expiration;
     }
 
-    public String getOpco() {
-        return opco;
+    public boolean isClipped() {
+        return isClipped;
     }
 
-    public void setOpco(String opco) {
-        this.opco = opco;
+    public void setClipped(boolean isClipped) {
+        this.isClipped = isClipped;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean isLiked) {
+        this.isLiked = isLiked;
+    }
+
+    public boolean isDisliked() {
+        return isDisliked;
+    }
+
+    public void setDisliked(boolean isDisliked) {
+        this.isDisliked = isDisliked;
     }
 }

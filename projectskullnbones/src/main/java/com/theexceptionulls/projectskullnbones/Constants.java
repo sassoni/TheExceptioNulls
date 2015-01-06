@@ -2,11 +2,13 @@ package com.theexceptionulls.projectskullnbones;
 
 public class Constants {
 
+    public static final String OFFERS_FILE_PREFIX = "cardOffers";
     public static final String CARD_POSITION = "cardPosition";
     public static final String CARD_NUMBER = "cardNumber";
     public static final String RETAILER_ID = "retailerId";
     public static final int DEFAULT_RETAILER_ID = -1;
     public static final int DEFAULT_CARD_POSITION = -1;
+    public static final int OFFERS_LIST_SIZE = 10;
 
     public static final int NOTIFICATION_NEW_OFFERS = 1321;
 

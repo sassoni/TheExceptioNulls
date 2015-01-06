@@ -6,49 +6,37 @@
 
     <ImageView
         android:id="@+id/offer_layout_offer_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:src="@drawable/i_allnaturaleggs" />
+        android:src="@drawable/i_allnaturaleggs"/>
 
     <TextView
         android:id="@+id/offer_description"
-        android:background="@android:color/black"
-        android:alpha="0.5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save $1.50"
+        android:padding="5dp"
+        android:text="All Natural Eggs - Grade A"
         android:textSize="16sp"
-        android:textColor="@android:color/white"
         android:gravity="center"
-        android:layout_alignBottom="@+id/offer_layout_offer_image"/>
+        android:layout_below="@+id/offer_layout_offer_image"/>
 
     <TextView
         android:id="@+id/offer_savings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:padding="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:text="$2.50"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:background="@drawable/savings_notification"/>
-
-    <ImageView
-        android:id="@+id/offer_layout_divider"
+        android:background="#00ddff"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/offer_layout_offer_image"
-        android:background="@android:color/darker_gray" />
+        android:layout_height="wrap_content"
+        android:text="Save $1.50"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:layout_below="@+id/offer_description"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/offer_layout_divider"
+        android:layout_below="@+id/offer_savings"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -73,10 +61,26 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/offer_clip"
+                android:id="@+id/offer_like"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/ic_action_new_label" />
+                android:background="@drawable/ic_action_good" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/offer_clip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="5dp"/>
         </LinearLayout>
 
     </LinearLayout>

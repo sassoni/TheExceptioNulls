@@ -11,10 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.Result;
 import com.theexceptionulls.projectskullnbones.AppSettings;
-import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.zxing.CaptureActivity;

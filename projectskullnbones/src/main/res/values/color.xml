@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="home_background">#efefef</color>
+    <color name="card_grid_selector_pressed">#00ddff</color>
+    <color name="card_grid_selector_unpressed">#ffffff</color>
+    <color name="offer_clipped_state">#39b54a</color>
+    <color name="offer_unclipped_state">#cdcccc</color>
 </resources>

@@ -11,26 +11,26 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.theexceptionulls.projectskullnbones.CardData;
+import com.theexceptionulls.projectskullnbones.AppSettings;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.homescreen.CardsListManager;
-import com.theexceptionulls.projectskullnbones.webservices.*;
+import com.theexceptionulls.projectskullnbones.webservices.Offers;
 
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
-public class OffersFragment extends Fragment {
+public class OffersFragment extends Fragment implements OffersGridAdapter.OffersGridEventListener {
 
-    //private LinearLayout offerListParentLayout;
-    private String barcode;
-    private String retailer;
-    private int gridPosition;
-    private boolean fromRegistration = false;
-    private boolean shouldFetchOffers;
+    private int cardPosition;
     private List<Offers> offersList;
-    //private RegisterBroadcastReceiver registerBroadcastReceiver;
-
+    private String cardNumber;
+    private int retailerId;
     private GridView gridView;
     private ProgressBar progressBar;
     private TextView errorMessage;
@@ -55,28 +55,17 @@ public class OffersFragment extends Fragment {
         String intentFrom = getArguments().getString(Constants.INTENT_FROM);
 
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
-            fromRegistration = true;
-            shouldFetchOffers = false;
-            barcode = getArguments().getString(Constants.CARD_NUMBER);
-            //retailer = getArguments().getString(CardData.RETAILER_NAME);
-
+            retailerId = getArguments().getInt(Constants.RETAILER_ID);
+            cardNumber = getArguments().getString(Constants.CARD_NUMBER);
+            cardPosition = CardsListManager.getInstance().getCardDataListSize() - 1;
         } else {
-            fromRegistration = false;
-            shouldFetchOffers = true;
-            gridPosition = getArguments().getInt(Constants.CARD_POSITION);
-            CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(gridPosition);
-            barcode = cardData.getCardNumber();
-            //retailer = cardData.getRetailerName();
+            cardPosition = getArguments().getInt(Constants.CARD_POSITION);
         }
-
-        //registerBroadcastReceiver = new RegisterBroadcastReceiver();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.offers_fragment_grid, container, false);
-
-        //offerListParentLayout = (LinearLayout) view.findViewById(R.id.offers_linear_layout);
         gridView = (GridView) view.findViewById(R.id.offer_fragment_gridview);
         progressBar = (ProgressBar) view.findViewById(R.id.offers_fragment_grid_progress_bar);
         errorMessage = (TextView) view.findViewById(R.id.offers_fragment_grid_error_message);
@@ -99,22 +88,19 @@ public class OffersFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             setUpScreen(UIOptions.LOADING_OFFERS);
-            offersList = new ArrayList<>();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
 
-            for (int i = 0; i< 16 ;i++){
-                Offers offers = new Offers();
-                offers.setDescription("Save $" + i);
-                offers.setId(i);
-                offersList.add(offers);
+            loadOffersList(getActivity());
+            if (offersList == null){
+                offersList = AppSettings.getInstance().getRandomOffers(Constants.OFFERS_LIST_SIZE);
+                saveOffersList(getActivity());
             }
 
-            OffersGridAdapter offersGridAdapter = new OffersGridAdapter(context, offersList);
+            OffersGridAdapter offersGridAdapter = new OffersGridAdapter(context, offersList, OffersFragment.this);
             gridView.setAdapter(offersGridAdapter);
-
             return null;
         }
 
@@ -122,6 +108,39 @@ public class OffersFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             setUpScreen(UIOptions.OFFERS_AVAILABLE);
+        }
+
+    }
+
+    private void loadOffersList(Context context){
+        try {
+            String fileName = Constants.OFFERS_FILE_PREFIX+cardPosition;
+            FileInputStream fileInputStream = context.openFileInput(fileName);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            offersList = (List<Offers>) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private synchronized void saveOffersList(Context context){
+        if (offersList != null){
+            try {
+                String fileName = Constants.OFFERS_FILE_PREFIX+cardPosition;
+                FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                objectOutputStream.writeObject(offersList);
+                fileOutputStream.close();
+                objectOutputStream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -147,7 +166,22 @@ public class OffersFragment extends Fragment {
         }
     }
 
-//    @Override
+    @Override
+    public void offerClipped() {
+        saveOffersList(getActivity());
+    }
+
+    @Override
+    public void offerLiked() {
+        saveOffersList(getActivity());
+    }
+
+    @Override
+    public void offerDisliked() {
+        saveOffersList(getActivity());
+    }
+
+    //    @Override
 //    public void onResume() {
 //        super.onResume();
 ////        if (shouldFetchOffers){

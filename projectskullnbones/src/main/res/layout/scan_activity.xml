@@ -24,7 +24,7 @@
                 android:paddingLeft="20dp"
                 android:textSize="18sp"
                 android:gravity="center"
-                android:text="Center the barcode between the arrows.\nAllow the camera to focus for quicker scans."
+                android:text="@string/scan_hint"
                 android:textColor="@android:color/white"
                 android:background="@android:color/black"/>
 
@@ -45,7 +45,7 @@
                 android:padding="25dp"
                 android:background="@drawable/no_card_tap_textview"
                 android:alpha="0.5"
-                android:text="No barcode? or Problem scanning?"
+                android:text="@string/scan_manual_entry"
                 android:textColor="@android:color/black"/>
 
     </LinearLayout>

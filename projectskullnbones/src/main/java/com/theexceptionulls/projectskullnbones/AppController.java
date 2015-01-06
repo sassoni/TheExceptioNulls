@@ -13,5 +13,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         CardsListManager.getInstance().loadCardsList(getApplicationContext());
+        AppSettings.getInstance().loadOffersList(getResources().getString(R.string.offer_data_json));
     }
+
 }

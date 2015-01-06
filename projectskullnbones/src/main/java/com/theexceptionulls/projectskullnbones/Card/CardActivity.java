@@ -2,7 +2,6 @@ package com.theexceptionulls.projectskullnbones.Card;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -15,8 +14,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.theexceptionulls.projectskullnbones.*;
+
+import com.theexceptionulls.projectskullnbones.CardData;
+import com.theexceptionulls.projectskullnbones.Constants;
+import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.homescreen.CardsGridActivity;
+import com.theexceptionulls.projectskullnbones.homescreen.CardsListManager;
 
 public class CardActivity extends FragmentActivity {
 
@@ -24,21 +27,39 @@ public class CardActivity extends FragmentActivity {
     TabPagerAdapter tabPagerAdapter;
     private static final int TAB_COUNT = 3;
     private String[] tabStrings = new String[]{"Card", "Offers", "Savings"};
+
     private String intentFrom;
     private int retailerId;
+    private String cardNumber;
+    private int cardPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_activity);
+
+        Intent intent = getIntent();
+        intentFrom = intent.getStringExtra(Constants.INTENT_FROM);
+        retailerId = intent.getIntExtra(Constants.RETAILER_ID, Constants.DEFAULT_RETAILER_ID);
+        cardNumber = intent.getStringExtra(Constants.CARD_NUMBER);
+        String intentFrom = intent.getStringExtra(Constants.INTENT_FROM);
+
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId]+" Card");
 
-        Intent intent = getIntent();
+        if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
+            CardsListManager.getInstance().addNewCard(new CardData(cardNumber, retailerId));
+            cardPosition = CardsListManager.getInstance().getCardDataListSize() - 1;
+            CardsListManager.getInstance().saveList(this);
 
-        intentFrom = intent.getStringExtra(Constants.INTENT_FROM);
-        retailerId = intent.getIntExtra(Constants.RETAILER_ID, Constants.DEFAULT_RETAILER_ID);
+        } else {
+            cardPosition = intent.getIntExtra(Constants.CARD_POSITION, Constants.DEFAULT_CARD_POSITION);
+            final CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(cardPosition);
+            cardNumber = cardData.getCardNumber();
+            retailerId = cardData.getRetailerId();
+        }
 
         tabPagerAdapter = new TabPagerAdapter(TAB_COUNT, getSupportFragmentManager(), getIntent().getExtras());
         viewPager = (ViewPager) findViewById(R.id.view_pager);

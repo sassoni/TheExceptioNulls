@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.theexceptionulls.projectskullnbones.AppSettings;
 import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.R;
-
-import static com.theexceptionulls.projectskullnbones.AppSettings.getDrawable;
 
 public class CardsGridTileAdapter extends BaseAdapter {
 
