@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TheExceptioNulls</string>
+    <string name="app_name">PRINT2PHONE</string>
     <string name="empty_cards_message">No Loyalty cards added.\nTap Add on the top right corner to get started</string>
     <string name="empty_offers_message">Offers not available, check your network connection and try again</string>
     <string name="action_add">Add New Card</string>
@@ -11,6 +11,8 @@
     <string name="title_activity_cards_grid">CardsGridActivity</string>
     <string name="title_activity_add_card">AddCardActivity</string>
     <string name="card_manual_entry">Type in your loyalty card number below</string>
+    <string name="opt_in_title">Thanks for going green!</string>
+    <string name="opt_in_message">All of your in store print coupons will now be sent to your phone.</string>
 
     <!--Static String Resources-->
     <string-array name="retailer_names">
@@ -62,7 +64,7 @@
     </string-array>
 
     <!--Action Bar Strings-->
-    <string name="actionbar_home_title">Home</string>
+    <string name="actionbar_home_title">PRINT2PHONE</string>
 
     <!-- Add new card strings -->
     <string-array name="store_list">
@@ -79,8 +81,8 @@
 
     <!--Capture Activity-->
     <string name="scan_hint">Center the barcode between the arrows.\nAllow the camera to focus for quicker scans.</string>
-    <string name="scan_manual_entry">No barcode? or Problem scanning?</string>
-    
+    <string name="scan_manual_entry">No barcode? Or problem scanning?</string>
+
     <!--Offer Notification-->
     <string name="offer_notification_thanks">Thanks for shopping at </string>
     <string name="offer_notification_savings">You have saved </string>
