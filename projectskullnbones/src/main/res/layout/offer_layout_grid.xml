@@ -14,7 +14,8 @@
     <TextView
         android:id="@+id/offer_description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:maxLines="2"
         android:padding="5dp"
         android:text="All Natural Eggs - Grade A"
         android:textSize="16sp"

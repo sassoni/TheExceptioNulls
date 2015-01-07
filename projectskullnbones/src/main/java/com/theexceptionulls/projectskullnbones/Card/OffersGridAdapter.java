@@ -134,6 +134,7 @@ public class OffersGridAdapter extends BaseAdapter {
             }
         });
 
+        holder.offerDescription.setText(offers.getDescription());
         holder.offerSaving.setText(offers.getHeading());
 
         Drawable drawable = null;
