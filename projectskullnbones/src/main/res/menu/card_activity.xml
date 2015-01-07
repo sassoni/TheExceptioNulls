@@ -5,6 +5,6 @@
     <item
         android:id="@+id/action_checkout"
         android:orderInCategory="100"
-        android:title="CHECKOUT"
+        android:title="FAKE CHECKOUT"
         android:showAsAction="always"/>
 </menu>
