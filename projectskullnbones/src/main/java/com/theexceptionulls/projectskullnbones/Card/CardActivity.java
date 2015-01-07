@@ -1,10 +1,12 @@
 package com.theexceptionulls.projectskullnbones.Card;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.Bundle;
@@ -47,12 +49,13 @@ public class CardActivity extends FragmentActivity {
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId]+" Card");
+        actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId] + " Card");
 
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
             CardsListManager.getInstance().addNewCard(new CardData(cardNumber, retailerId));
             cardPosition = CardsListManager.getInstance().getCardDataListSize() - 1;
             CardsListManager.getInstance().saveList(this);
+            showOptInDialog();
 
         } else {
             cardPosition = intent.getIntExtra(Constants.CARD_POSITION, Constants.DEFAULT_CARD_POSITION);
@@ -115,15 +118,14 @@ public class CardActivity extends FragmentActivity {
         return true;
     }
 
-
     @Override
-         public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            if (intentFrom.equals(Constants.INTENT_FROM_NOTIFICATION)){
+            if (intentFrom.equals(Constants.INTENT_FROM_NOTIFICATION)) {
                 Intent intent = new Intent(CardActivity.this, CardsGridActivity.class);
                 startActivity(intent);
             }
@@ -131,7 +133,7 @@ public class CardActivity extends FragmentActivity {
             return true;
         }
 
-        if (id == R.id.action_checkout){
+        if (id == R.id.action_checkout) {
             buildNotification();
             setResult(Constants.INTENT_RESULT_FINISH_HOME);
             finish();
@@ -140,7 +142,19 @@ public class CardActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void buildNotification(){
+    public void showOptInDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.opt_in_title)
+                .setMessage(R.string.opt_in_message)
+                .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void buildNotification() {
 
         Intent intent = new Intent(CardActivity.this, OfferNotification.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -154,7 +168,7 @@ public class CardActivity extends FragmentActivity {
         builder.setContentText("You saved $2.50. Tap to check your new offers");
         builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         builder.setContentTitle("New Offers!");
-        builder.setStyle(new NotificationCompat.BigTextStyle().bigText("You saved $2.50 at "+getResources().getStringArray(R.array.retailer_names)[retailerId]+". Tap to check out your new offers!"));
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText("You saved $2.50 at " + getResources().getStringArray(R.array.retailer_names)[retailerId] + ". Tap to check out your new offers!"));
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_NEW_OFFERS, builder.build());
