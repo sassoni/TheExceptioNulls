@@ -14,6 +14,7 @@ import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -52,12 +53,14 @@ public class CardActivity extends FragmentActivity {
         actionBar.setTitle(getResources().getStringArray(R.array.retailer_names)[retailerId] + " Card");
 
         if (intentFrom.equals(Constants.INTENT_FROM_REGISTRATION)) {
+            Log.i("CARD-REGI", "from registration");
             CardsListManager.getInstance().addNewCard(new CardData(cardNumber, retailerId));
             cardPosition = CardsListManager.getInstance().getCardDataListSize() - 1;
             CardsListManager.getInstance().saveList(this);
             showOptInDialog();
 
         } else {
+            Log.i("CARD-REGI", "not from registration");
             cardPosition = intent.getIntExtra(Constants.CARD_POSITION, Constants.DEFAULT_CARD_POSITION);
             final CardData cardData = CardsListManager.getInstance().getCardDataAtIndex(cardPosition);
             cardNumber = cardData.getCardNumber();
@@ -134,6 +137,7 @@ public class CardActivity extends FragmentActivity {
         }
 
         if (id == R.id.action_checkout) {
+            Log.i("CARD", "pressed!");
             buildNotification();
             setResult(Constants.INTENT_RESULT_FINISH_HOME);
             finish();
@@ -159,6 +163,7 @@ public class CardActivity extends FragmentActivity {
         Intent intent = new Intent(CardActivity.this, OfferNotification.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtras(getIntent().getExtras());
+        intent.putExtra(Constants.CARD_POSITION, cardPosition);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(CardActivity.this, Constants.NOTIFICATION_NEW_OFFERS, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(CardActivity.this);

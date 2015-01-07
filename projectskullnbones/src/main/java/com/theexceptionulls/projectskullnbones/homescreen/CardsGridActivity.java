@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,8 +68,11 @@ public class CardsGridActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.INTENT_REQUEST_CODE_CARD){
-            if (resultCode == Constants.INTENT_RESULT_FINISH_HOME){
+        Log.i("HOME", "onActivityResult");
+        if (requestCode == Constants.INTENT_REQUEST_CODE_CARD) {
+            Log.i("HOME", "requestCode");
+            if (resultCode == Constants.INTENT_RESULT_FINISH_HOME) {
+                Log.i("HOME", "resultCode");
                 finish();
                 return;
             }
@@ -79,18 +83,17 @@ public class CardsGridActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if (inCardDeleteMode){
+        if (inCardDeleteMode) {
             getMenuInflater().inflate(R.menu.cards_grid_delete_done, menu);
             return true;
         }
 
-        if (CardsListManager.getInstance().getCardDataListSize()>0){
+        if (CardsListManager.getInstance().getCardDataListSize() > 0) {
             getMenuInflater().inflate(R.menu.cards_grid, menu);
             emptyCardsMessage.setVisibility(View.GONE);
             gridview.setVisibility(View.VISIBLE);
             cardsGridTileAdapter.notifyDataSetChanged();
-        }else
-        {
+        } else {
             getMenuInflater().inflate(R.menu.cards_grid_empty, menu);
             emptyCardsMessage.setVisibility(View.VISIBLE);
             gridview.setVisibility(View.GONE);
@@ -105,8 +108,9 @@ public class CardsGridActivity extends Activity {
 
         switch (id) {
             case R.id.action_add:
+                Log.i("CARDSGRID", "start store for result");
                 Intent intent = new Intent(this, StoreListActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_CARD);
                 return true;
             case R.id.action_delete:
                 inCardDeleteMode = true;

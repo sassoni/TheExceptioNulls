@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,8 +46,8 @@ public class StoreListActivity extends ListActivity {
                 intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_REGISTRATION);
                 intent.putExtra(Constants.RETAILER_ID, retailerId);
                 intent.putExtra(Constants.CARD_NUMBER, barcode);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_CARD);
+                //finish();
             }
 
             if (resultCode == Constants.RESULT_SCAN_NO_BARCODE) {
@@ -63,7 +64,17 @@ public class StoreListActivity extends ListActivity {
                 intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_REGISTRATION);
                 intent.putExtra(Constants.CARD_NUMBER, barcode);
                 intent.putExtra(Constants.RETAILER_ID, retailerId);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_CARD);
+               // finish();
+            }
+        }
+
+        Log.i("STORES", "activity");
+        if (requestCode == Constants.INTENT_REQUEST_CODE_CARD) {
+            Log.i("STORES", "request");
+            if (resultCode == Constants.INTENT_RESULT_FINISH_HOME) {
+                Log.i("STORES", "result");
+                setResult(Constants.INTENT_RESULT_FINISH_HOME);
                 finish();
             }
         }
