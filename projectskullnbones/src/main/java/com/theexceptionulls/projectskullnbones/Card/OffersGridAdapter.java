@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class OffersGridAdapter extends BaseAdapter {
     public interface OffersGridEventListener{
         public void offerClipped();
         public void offerLiked();
-        public void offerDisliked();
+        public void offerDisliked(int position);
     }
 
     private OffersGridEventListener offersGridEventListener;
@@ -39,6 +40,11 @@ public class OffersGridAdapter extends BaseAdapter {
         this.offerList = offersList;
         resources = context.getResources();
         this.offersGridEventListener = offersGridEventListener;
+    }
+
+    public void updateAdapter(List<Offers> offerList) {
+        this.offerList = offerList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -109,12 +115,12 @@ public class OffersGridAdapter extends BaseAdapter {
                 }else {
                     offersData.setDisliked(true);
                 }
-                offersGridEventListener.offerDisliked();
+                offersGridEventListener.offerDisliked(position);
             }
         });
 
-        holder.offerDislike.setTag(position);
-        holder.offerDislike.setOnClickListener(new View.OnClickListener() {
+        holder.offerLike.setTag(position);
+        holder.offerLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = (Integer) v.getTag();

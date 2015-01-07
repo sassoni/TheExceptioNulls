@@ -1,9 +1,12 @@
 package com.theexceptionulls.projectskullnbones.Card;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,11 +80,11 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
         return view;
     }
 
-    private class LoadOffers extends AsyncTask<Void, Void, Void>{
+    private class LoadOffers extends AsyncTask<Void, Void, Void> {
 
         private Context context;
 
-        public LoadOffers(Context context){
+        public LoadOffers(Context context) {
             this.context = context;
         }
 
@@ -95,7 +98,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
         protected Void doInBackground(Void... params) {
 
             loadOffersList(getActivity());
-            if (offersList == null){
+            if (offersList == null) {
                 offersList = AppSettings.getInstance().getRandomOffers(Constants.OFFERS_LIST_SIZE);
                 saveOffersList(getActivity());
             }
@@ -113,9 +116,9 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
 
     }
 
-    private void loadOffersList(Context context){
+    private void loadOffersList(Context context) {
         try {
-            String fileName = Constants.OFFERS_FILE_PREFIX+cardPosition;
+            String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
             FileInputStream fileInputStream = context.openFileInput(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             offersList = (List<Offers>) objectInputStream.readObject();
@@ -128,10 +131,10 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
         }
     }
 
-    private synchronized void saveOffersList(Context context){
-        if (offersList != null){
+    private synchronized void saveOffersList(Context context) {
+        if (offersList != null) {
             try {
-                String fileName = Constants.OFFERS_FILE_PREFIX+cardPosition;
+                String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
                 FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(offersList);
@@ -145,25 +148,25 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
         }
     }
 
-    private void setUpScreen(UIOptions uiOptions){
-        switch (uiOptions){
+    private void setUpScreen(UIOptions uiOptions) {
+        switch (uiOptions) {
             case EMPTY_OFFERS:
-                                gridView.setVisibility(View.GONE);
-                                progressBar.setVisibility(View.GONE);
-                                errorMessage.setVisibility(View.VISIBLE);
-                                break;
+                gridView.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
+                errorMessage.setVisibility(View.VISIBLE);
+                break;
 
             case OFFERS_AVAILABLE:
-                                gridView.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
-                                errorMessage.setVisibility(View.VISIBLE);
-                                break;
+                gridView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                errorMessage.setVisibility(View.VISIBLE);
+                break;
 
             case LOADING_OFFERS:
-                                gridView.setVisibility(View.GONE);
-                                progressBar.setVisibility(View.VISIBLE);
-                                errorMessage.setVisibility(View.GONE);
-                                break;
+                gridView.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+                errorMessage.setVisibility(View.GONE);
+                break;
         }
     }
 
@@ -178,8 +181,39 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
     }
 
     @Override
-    public void offerDisliked() {
+    public void offerDisliked(int position) {
         saveOffersList(getActivity());
+        showDislikeDialog(position);
+    }
+
+    public void showDislikeDialog(final int offerPosition) {
+        new AlertDialog.Builder(this.getActivity())
+                .setTitle(R.string.dislike_feedback)
+                .setSingleChoiceItems(R.array.dislike_excuses, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // position is which
+                    }
+                })
+                .setPositiveButton(R.string.dislike_keep_offer, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.dislike_delete_offer, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //offersList = AppSettings.getInstance().getRandomOffers(Constants.OFFERS_LIST_SIZE);
+                        for (Offers offer: offersList) {
+                            Log.i("OFERSGRIDADAPTER", "id chosen: " + offer.getId());
+                        }
+                        Log.i("OFERSGRIDADAPTER", "position to remove: " + offerPosition);
+                        offersList.remove(offerPosition);
+//                        offersGridAdapter.notifyDataSetChanged();
+                        offersGridAdapter.updateAdapter(offersList);
+                        saveOffersList(getActivity());
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     //    @Override

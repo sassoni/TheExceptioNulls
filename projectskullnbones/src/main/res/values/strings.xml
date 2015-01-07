@@ -13,6 +13,9 @@
     <string name="card_manual_entry">Type in your loyalty card number below</string>
     <string name="opt_in_title">Thanks for going green!</string>
     <string name="opt_in_message">All of your in store print coupons will now be sent to your phone.</string>
+    <string name="dislike_feedback">Feedback</string>
+    <string name="dislike_keep_offer">Keep offer</string>
+    <string name="dislike_delete_offer">Delete offer</string>
 
     <!--Static String Resources-->
     <string-array name="retailer_names">
@@ -61,6 +64,12 @@
         <item>#702076</item>
         <item>#007ecb</item>
         <item>#ff0000</item>
+    </string-array>
+
+    <string-array name="dislike_excuses">
+        <item>I do not like the product.</item>
+        <item>I do not like the brand.</item>
+        <item>It does not offer enough savings.</item>
     </string-array>
 
     <!--Action Bar Strings-->
