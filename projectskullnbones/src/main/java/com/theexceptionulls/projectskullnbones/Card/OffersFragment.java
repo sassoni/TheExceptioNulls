@@ -34,6 +34,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
     private GridView gridView;
     private ProgressBar progressBar;
     private TextView errorMessage;
+    private OffersGridAdapter offersGridAdapter;
 
     private enum UIOptions {
         EMPTY_OFFERS, LOADING_OFFERS, OFFERS_AVAILABLE;
@@ -99,8 +100,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
                 saveOffersList(getActivity());
             }
 
-            OffersGridAdapter offersGridAdapter = new OffersGridAdapter(context, offersList, OffersFragment.this);
-            gridView.setAdapter(offersGridAdapter);
+            offersGridAdapter = new OffersGridAdapter(context, offersList, OffersFragment.this);
             return null;
         }
 
@@ -108,6 +108,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             setUpScreen(UIOptions.OFFERS_AVAILABLE);
+            gridView.setAdapter(offersGridAdapter);
         }
 
     }
