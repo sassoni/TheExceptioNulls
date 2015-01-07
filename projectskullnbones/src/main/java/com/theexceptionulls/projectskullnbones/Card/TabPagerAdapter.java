@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.theexceptionulls.projectskullnbones.CardData;
 
 public class TabPagerAdapter extends FragmentPagerAdapter {
 
@@ -25,7 +24,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return OffersFragment.newInstance(bundle);
             case 2:
-                return SavingsFragment.newInstance(bundle);
+                return HistoryFragment.newInstance(bundle);
             default:
                 return null;
         }
