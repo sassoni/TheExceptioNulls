@@ -17,8 +17,11 @@ import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.webservices.Offers;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +58,7 @@ public class OfferNotification extends Activity {
         for (Offers offer : offersList) {
             offer.setExpiration("Expires 09/12/2014");
         }
+        addNewOffers(offersList, this);
 
 //        List<Offers> offersList = new ArrayList<>();
 //        for (int i =0; i<3 ; i++){
@@ -69,6 +73,36 @@ public class OfferNotification extends Activity {
         OffersAdapter offersAdapter = new OffersAdapter(this, offersList);
         listView = (ListView) findViewById(R.id.offer_notification_listview);
         listView.setAdapter(offersAdapter);
+    }
+
+    public void addNewOffers(List<Offers> newOffers, Context context) {
+        List<Offers> offersList = null;
+        // read old list
+        try {
+            String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
+            FileInputStream fileInputStream = openFileInput(fileName);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            offersList = (List<Offers>) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // concatenate
+        offersList.addAll(newOffers);
+        // write new list
+        if (offersList != null) {
+            try {
+                String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
+                FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                objectOutputStream.writeObject(offersList);
+                fileOutputStream.close();
+                objectOutputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
