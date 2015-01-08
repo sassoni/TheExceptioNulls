@@ -27,15 +27,17 @@ public class OffersGridAdapter extends BaseAdapter {
     private List<Offers> offerList;
     private Resources resources;
 
-    public interface OffersGridEventListener{
+    public interface OffersGridEventListener {
         public void offerClipped();
+
         public void offerLiked();
-        public void offerDisliked(int position);
+
+        public void offerDisliked(int position, boolean dislikedWhenClicked);
     }
 
     private OffersGridEventListener offersGridEventListener;
 
-    public OffersGridAdapter(Context context, List<Offers> offersList, OffersGridEventListener offersGridEventListener){
+    public OffersGridAdapter(Context context, List<Offers> offersList, OffersGridEventListener offersGridEventListener) {
         this.context = context;
         this.offerList = offersList;
         resources = context.getResources();
@@ -67,7 +69,7 @@ public class OffersGridAdapter extends BaseAdapter {
 
         final ViewHolder holder;
 
-        if (convertView == null) {
+       if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.offer_layout_grid, null, false);
 
@@ -93,10 +95,10 @@ public class OffersGridAdapter extends BaseAdapter {
             public void onClick(View v) {
                 int position = (Integer) v.getTag();
                 Offers offersData = offerList.get(position);
-                if (offersData.isClipped()){
+                if (offersData.isClipped()) {
                     offersData.setClipped(false);
                     setClippedButtonState(holder.offerClip, false);
-                }else {
+                } else {
                     offersData.setClipped(true);
                     setClippedButtonState(holder.offerClip, true);
                 }
@@ -105,30 +107,54 @@ public class OffersGridAdapter extends BaseAdapter {
         });
 
         holder.offerDislike.setTag(position);
+        Offers offersData = offerList.get(position);
+        if (offersData.isDisliked()) {
+            holder.offerDislike.setBackgroundResource(R.drawable.i_dislike_);
+        } else {
+            holder.offerDislike.setBackgroundResource(R.drawable.i_dislike);
+        }
         holder.offerDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = (Integer) v.getTag();
                 Offers offersData = offerList.get(position);
-                if (offersData.isDisliked()){
+                if (offersData.isDisliked()) {  // un-dislike the offer
+                    holder.offerDislike.setBackgroundResource(R.drawable.i_dislike);
                     offersData.setDisliked(false);
-                }else {
+
+                    offersGridEventListener.offerDisliked(position, true);
+                } else {  // dislike the offer
+                    holder.offerDislike.setBackgroundResource(R.drawable.i_dislike_);
                     offersData.setDisliked(true);
+
+                    holder.offerLike.setBackgroundResource(R.drawable.i_like);
+                    offersData.setLiked(false);
+
+                    offersGridEventListener.offerDisliked(position, false);
                 }
-                offersGridEventListener.offerDisliked(position);
             }
         });
 
         holder.offerLike.setTag(position);
+        if (offersData.isLiked()) {
+            holder.offerLike.setBackgroundResource(R.drawable.i_like_);
+        } else {
+            holder.offerLike.setBackgroundResource(R.drawable.i_like);
+        }
         holder.offerLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = (Integer) v.getTag();
                 Offers offersData = offerList.get(position);
-                if (offersData.isLiked()){
+                if (offersData.isLiked()) { // un-like the offer
+                    holder.offerLike.setBackgroundResource(R.drawable.i_like);
                     offersData.setLiked(false);
-                }else {
+                } else {  // like the offer
+                    holder.offerLike.setBackgroundResource(R.drawable.i_like_);
                     offersData.setLiked(true);
+
+                    holder.offerDislike.setBackgroundResource(R.drawable.i_dislike);
+                    offersData.setDisliked(false);
                 }
                 offersGridEventListener.offerLiked();
             }
@@ -138,7 +164,7 @@ public class OffersGridAdapter extends BaseAdapter {
         holder.offerSaving.setText(offers.getHeading());
 
         Drawable drawable = null;
-        switch (offers.getId()){
+        switch (offers.getId()) {
             case 0:
                 drawable = context.getResources().getDrawable(R.drawable.i_puffs);
                 break;
@@ -205,12 +231,12 @@ public class OffersGridAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void setClippedButtonState(Button clippedButton, boolean isClipped){
-        if (isClipped){
+    private void setClippedButtonState(Button clippedButton, boolean isClipped) {
+        if (isClipped) {
             clippedButton.setText(resources.getString(R.string.offer_clip_clipped));
             clippedButton.setTextColor(resources.getColor(R.color.offer_clipped_state));
             clippedButton.setCompoundDrawablesWithIntrinsicBounds(null, null, resources.getDrawable(R.drawable.i_saved), null);
-        }else {
+        } else {
             clippedButton.setText(resources.getString(R.string.offer_clip_unclipped));
             clippedButton.setTextColor(resources.getColor(R.color.offer_unclipped_state));
             clippedButton.setCompoundDrawablesWithIntrinsicBounds(null, null, resources.getDrawable(R.drawable.i_addcoupon), null);

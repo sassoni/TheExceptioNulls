@@ -51,7 +51,7 @@
                 android:id="@+id/offer_dislike"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/ic_action_bad" />
+                android:background="@drawable/i_dislike" />
         </LinearLayout>
 
         <LinearLayout
@@ -65,7 +65,7 @@
                 android:id="@+id/offer_like"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/ic_action_good" />
+                android:background="@drawable/i_like" />
         </LinearLayout>
 
         <LinearLayout

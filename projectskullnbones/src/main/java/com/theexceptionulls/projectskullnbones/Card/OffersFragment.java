@@ -181,9 +181,11 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
     }
 
     @Override
-    public void offerDisliked(int position) {
+    public void offerDisliked(int position, boolean dislikedWhenClicked) {
         saveOffersList(getActivity());
-        showDislikeDialog(position);
+        if (!dislikedWhenClicked) {
+            showDislikeDialog(position);
+        }
     }
 
     public void showDislikeDialog(final int offerPosition) {
