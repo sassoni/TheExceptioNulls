@@ -82,7 +82,7 @@ public class AppSettings {
                 }
 
                 randomInt = randomInt%16;
-            }while (integerList.contains(randomInt) && randomInt ==0);
+            }while (integerList.contains(randomInt) || randomInt ==0);
             randomOfferList.add(offersList.get(randomInt));
             integerList.add(randomInt);
         }
