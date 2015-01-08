@@ -20,11 +20,11 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return CardFragment.newInstance(bundle);
-            case 1:
                 return OffersFragment.newInstance(bundle);
-            case 2:
+            case 1:
                 return HistoryFragment.newInstance(bundle);
+            case 2:
+                return CardFragment.newInstance(bundle);
             default:
                 return null;
         }
