@@ -2,6 +2,7 @@ package com.theexceptionulls.projectskullnbones;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.theexceptionulls.projectskullnbones.webservices.Offers;
 
@@ -85,6 +86,37 @@ public class AppSettings {
             }while (integerList.contains(randomInt) || randomInt ==0);
             randomOfferList.add(offersList.get(randomInt));
             integerList.add(randomInt);
+        }
+
+        Log.i("APPSETTINGS", "offers out!!!");
+        for (int i=0; i<randomOfferList.size(); i++) {
+            Log.i("APPSETTINGS", "id: " + randomOfferList.get(i).getId());
+        }
+
+        return randomOfferList;
+    }
+
+    public List<Offers> getNewRandomOffers(int size, List<Integer> existingOffers){
+        List<Integer> usedIds = new ArrayList<>();
+        List<Offers> randomOfferList = new ArrayList<>();
+
+        Random random = new Random();
+
+        for (Integer i: existingOffers) {
+            Log.i("APPSETTINGS", "existing: " + i);
+        }
+
+        while (randomOfferList.size() < size) {
+            int randInt = random.nextInt(18);
+            Log.i("APPSETTINGS", "randInt: " + randInt);
+            if (!usedIds.contains(randInt) && !existingOffers.contains(randInt)){
+                Log.i("APPSETTINGS", "adding");
+                randomOfferList.add(offersList.get(randInt));
+                Log.i("APPSETTINGS", "Getting offer: " + randInt + " with id: " + offersList.get(randInt).getId());
+                usedIds.add(randInt);
+            } else {
+                Log.i("APPSETTINGS", "not adding");
+            }
         }
 
         return randomOfferList;

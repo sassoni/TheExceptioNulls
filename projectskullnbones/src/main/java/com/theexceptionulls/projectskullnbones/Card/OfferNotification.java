@@ -2,6 +2,7 @@ package com.theexceptionulls.projectskullnbones.Card;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,11 +10,15 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.theexceptionulls.projectskullnbones.AppSettings;
 import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.webservices.Offers;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,15 +50,21 @@ public class OfferNotification extends Activity {
         thankyouMessage = (TextView) findViewById(R.id.offer_notification_thanks);
         savingsMessage = (TextView) findViewById(R.id.offer_notification_savings);
 
-        List<Offers> offersList = new ArrayList<>();
-        for (int i =0; i<3 ; i++){
-            Offers offers = new Offers();
-            offers.setId(i);
-            offers.setDescription("On any ONE(1) six pack or larger");
-            offers.setExpiration("Expires 09/12/2014");
-            offers.setHeading("Save $1.50");
-            offersList.add(offers);
+        List<Integer> offersListIds = loadOffersListIds();
+        List<Offers> offersList = AppSettings.getInstance().getNewRandomOffers(3, offersListIds);
+        for (Offers offer : offersList) {
+            offer.setExpiration("Expires 09/12/2014");
         }
+
+//        List<Offers> offersList = new ArrayList<>();
+//        for (int i =0; i<3 ; i++){
+//            Offers offers = new Offers();
+//            offers.setId(i);
+//            offers.setDescription("On any ONE(1) six pack or larger");
+//            offers.setExpiration("Expires 09/12/2014");
+//            offers.setHeading("Save $1.50");
+//            offersList.add(offers);
+//        }
 
         OffersAdapter offersAdapter = new OffersAdapter(this, offersList);
         listView = (ListView) findViewById(R.id.offer_notification_listview);
@@ -67,13 +78,13 @@ public class OfferNotification extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             backToCardActivity();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void backToCardActivity(){
+    private void backToCardActivity() {
         Intent intent = new Intent(OfferNotification.this, CardActivity.class);
         intent.putExtra(Constants.INTENT_FROM, Constants.INTENT_FROM_NOTIFICATION);
         intent.putExtra(Constants.RETAILER_ID, retailerId);
@@ -81,5 +92,26 @@ public class OfferNotification extends Activity {
         intent.putExtra(Constants.CARD_POSITION, cardPosition);
         startActivity(intent);
         finish();
+    }
+
+    private List<Integer> loadOffersListIds() {
+        List<Integer> offersIdsList = null;
+        try {
+            String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
+            FileInputStream fileInputStream = openFileInput(fileName);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            List<Offers> offersList = (List<Offers>) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+            offersIdsList = new ArrayList<>();
+            for (Offers offer : offersList) {
+                offersIdsList.add(offer.getId());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return offersIdsList;
     }
 }

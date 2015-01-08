@@ -70,55 +70,64 @@ public class OffersAdapter extends BaseAdapter {
         Drawable drawable = null;
         switch (offers.getId()){
             case 0:
-                drawable = context.getResources().getDrawable(R.drawable.i_puffs);
-                break;
-            case 1:
                 drawable = context.getResources().getDrawable(R.drawable.i_allnaturaleggs);
                 break;
-            case 2:
+            case 1:
                 drawable = context.getResources().getDrawable(R.drawable.i_breakstones);
                 break;
-            case 3:
+            case 2:
                 drawable = context.getResources().getDrawable(R.drawable.i_cheerios);
                 break;
-            case 4:
+            case 3:
                 drawable = context.getResources().getDrawable(R.drawable.i_chichi);
                 break;
-            case 5:
+            case 4:
                 drawable = context.getResources().getDrawable(R.drawable.i_chobani);
                 break;
-            case 6:
+            case 5:
                 drawable = context.getResources().getDrawable(R.drawable.i_floridasnaturals);
                 break;
-            case 7:
+            case 6:
                 drawable = context.getResources().getDrawable(R.drawable.i_generalmills);
                 break;
-            case 8:
+            case 7:
                 drawable = context.getResources().getDrawable(R.drawable.i_gerberorganicfood);
                 break;
-            case 9:
+            case 8:
                 drawable = context.getResources().getDrawable(R.drawable.i_gladeexpressions);
                 break;
-            case 10:
+            case 9:
                 drawable = context.getResources().getDrawable(R.drawable.i_highperformancedetergent);
                 break;
-            case 11:
+            case 10:
                 drawable = context.getResources().getDrawable(R.drawable.i_lobsterseafood);
                 break;
-            case 12:
+            case 11:
                 drawable = context.getResources().getDrawable(R.drawable.i_macandcheese);
                 break;
-            case 13:
+            case 12:
                 drawable = context.getResources().getDrawable(R.drawable.i_minutemaidlemonade);
                 break;
-            case 14:
+            case 13:
                 drawable = context.getResources().getDrawable(R.drawable.i_peperagefarms);
                 break;
-            case 15:
+            case 14:
                 drawable = context.getResources().getDrawable(R.drawable.i_perduechicken);
                 break;
-            default:
+            case 15:
                 drawable = context.getResources().getDrawable(R.drawable.i_puffs);
+                break;
+            case 16:
+                drawable = context.getResources().getDrawable(R.drawable.i_scott);
+                break;
+            case 17:
+                drawable = context.getResources().getDrawable(R.drawable.i_sscranberryjuice);
+                break;
+            case 18:
+                drawable = context.getResources().getDrawable(R.drawable.i_specialk);
+                break;
+            default:
+                drawable = context.getResources().getDrawable(R.drawable.i_scott);
                 break;
         }
         viewHolder.imageView.setImageDrawable(drawable);
