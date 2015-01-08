@@ -35,24 +35,24 @@ public class AppSettings {
 
     private static AppSettings instance;
 
-    private AppSettings(){
+    private AppSettings() {
 
     }
 
-    public static AppSettings getInstance(){
-        if (instance == null){
+    public static AppSettings getInstance() {
+        if (instance == null) {
             instance = new AppSettings();
         }
         return instance;
     }
 
-    public void loadOffersList(String jsonData){
+    public void loadOffersList(String jsonData) {
         offersList = new ArrayList<>();
 
         try {
             JSONArray jsonArray = new JSONArray(jsonData);
 
-            for (int i =0; i<jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Offers offers = new Offers();
                 offers.setDescription(jsonObject.getString("description"));
@@ -67,55 +67,21 @@ public class AppSettings {
         }
     }
 
-    public List<Offers> getRandomOffers(int size){
-
-        List<Offers> randomOfferList = new ArrayList<>();
-        List<Integer> integerList = new ArrayList<>();
-
-        Random random = new Random();
-
-        for (int i = 0;i<size; i++){
-            int randomInt;
-            do {
-                randomInt = random.nextInt();
-                if (randomInt < 0){
-                    randomInt = randomInt*-1;
-                }
-
-                randomInt = randomInt%16;
-            }while (integerList.contains(randomInt) || randomInt ==0);
-            randomOfferList.add(offersList.get(randomInt));
-            integerList.add(randomInt);
-        }
-
-        Log.i("APPSETTINGS", "offers out!!!");
-        for (int i=0; i<randomOfferList.size(); i++) {
-            Log.i("APPSETTINGS", "id: " + randomOfferList.get(i).getId());
-        }
-
-        return randomOfferList;
+    public List<Offers> getRandomOffers(int size) {
+        return getRandomOffers(size, new ArrayList<Integer>()) ;
     }
 
-    public List<Offers> getNewRandomOffers(int size, List<Integer> existingOffers){
+    public List<Offers> getRandomOffers(int size, List<Integer> idsToExclude) {
         List<Integer> usedIds = new ArrayList<>();
         List<Offers> randomOfferList = new ArrayList<>();
 
         Random random = new Random();
 
-        for (Integer i: existingOffers) {
-            Log.i("APPSETTINGS", "existing: " + i);
-        }
-
         while (randomOfferList.size() < size) {
             int randInt = random.nextInt(18);
-            Log.i("APPSETTINGS", "randInt: " + randInt);
-            if (!usedIds.contains(randInt) && !existingOffers.contains(randInt)){
-                Log.i("APPSETTINGS", "adding");
+            if (!usedIds.contains(randInt) && !idsToExclude.contains(randInt)) {
                 randomOfferList.add(offersList.get(randInt));
-                Log.i("APPSETTINGS", "Getting offer: " + randInt + " with id: " + offersList.get(randInt).getId());
                 usedIds.add(randInt);
-            } else {
-                Log.i("APPSETTINGS", "not adding");
             }
         }
 
@@ -126,11 +92,11 @@ public class AppSettings {
         return storeListThumbnailsID;
     }
 
-    public static Drawable getDrawable(Context context, int retailerId){
+    public static Drawable getDrawable(Context context, int retailerId) {
 
         Drawable drawable = null;
 
-        switch (retailerId){
+        switch (retailerId) {
             case 0:
                 drawable = context.getResources().getDrawable(getStoreListThumbnailsID()[0]);
                 break;

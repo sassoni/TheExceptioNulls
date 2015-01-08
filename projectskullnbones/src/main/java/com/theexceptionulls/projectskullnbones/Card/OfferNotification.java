@@ -6,18 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.theexceptionulls.projectskullnbones.AppSettings;
-import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
 import com.theexceptionulls.projectskullnbones.webservices.Offers;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -54,7 +51,7 @@ public class OfferNotification extends Activity {
         savingsMessage = (TextView) findViewById(R.id.offer_notification_savings);
 
         List<Integer> offersListIds = loadOffersListIds();
-        List<Offers> offersList = AppSettings.getInstance().getNewRandomOffers(3, offersListIds);
+        List<Offers> offersList = AppSettings.getInstance().getRandomOffers(3, offersListIds);
         for (Offers offer : offersList) {
             offer.setExpiration("Expires 09/12/2014");
         }
