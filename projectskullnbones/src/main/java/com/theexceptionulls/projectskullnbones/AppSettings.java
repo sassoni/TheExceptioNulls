@@ -16,7 +16,12 @@ import java.util.Random;
 
 public class AppSettings {
 
+    private static AppSettings instance;
+
     private List<Offers> offersList;
+
+    private boolean isPaypal = false;
+
     private static int[] storeListThumbnailsID = {
             R.drawable.i_aandp,
             R.drawable.i_familyexpress,
@@ -33,10 +38,16 @@ public class AppSettings {
             R.drawable.i_weis
     };
 
-    private static AppSettings instance;
-
     private AppSettings() {
 
+    }
+
+    public boolean isPaymentMethodPaypal() {
+        return isPaypal;
+    }
+
+    public void switchPaymentMethod() {
+        isPaypal = !isPaypal;
     }
 
     public static AppSettings getInstance() {

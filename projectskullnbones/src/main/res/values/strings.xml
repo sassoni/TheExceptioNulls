@@ -16,6 +16,8 @@
     <string name="dislike_feedback">Feedback</string>
     <string name="dislike_keep_offer">Keep offer</string>
     <string name="dislike_delete_offer">Delete offer</string>
+    <string name="savings_ltc">You\'ve just saved: &lt;b&gt;$2.50&lt;/b&gt;</string>
+    <string name="savings_paypal">You\'ve just earned &lt;b&gt;$2.50&lt;/b&gt; &lt;br&gt;towards your PayPal account.</string>
 
     <!--Static String Resources-->
     <string-array name="retailer_names">
@@ -95,7 +97,7 @@
     <!--Offer Notification-->
     <string name="offer_notification_thanks">Thanks for shopping at </string>
     <string name="offer_notification_savings">You have saved </string>
-    <string name="offer_notification_newoffers">Checkout your new offers below!</string>
+    <string name="offer_notification_newoffers">Your new offers:</string>
 
     <!-- Clip Button String-->
     <string name="offer_clip_unclipped">Add\nCoupon</string>

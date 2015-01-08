@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.theexceptionulls.projectskullnbones.AppSettings;
 import com.theexceptionulls.projectskullnbones.CardData;
 import com.theexceptionulls.projectskullnbones.Constants;
 import com.theexceptionulls.projectskullnbones.R;
@@ -137,8 +138,8 @@ public class CardActivity extends FragmentActivity {
         }
 
         if (id == R.id.action_checkout) {
-            Log.i("CARD", "pressed!");
             buildNotification();
+            AppSettings.getInstance().switchPaymentMethod();
             setResult(Constants.INTENT_RESULT_FINISH_HOME);
             finish();
             return true;

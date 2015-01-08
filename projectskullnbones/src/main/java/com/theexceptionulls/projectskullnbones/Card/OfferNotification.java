@@ -4,7 +4,10 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,8 +50,20 @@ public class OfferNotification extends Activity {
         cardNumber = intent.getStringExtra(Constants.CARD_NUMBER);
         cardPosition = intent.getIntExtra(Constants.CARD_POSITION, Constants.DEFAULT_CARD_POSITION);
 
+        // Thank you message setup
         thankyouMessage = (TextView) findViewById(R.id.offer_notification_thanks);
+        Resources res = getResources();
+        TypedArray icons = res.obtainTypedArray(R.array.retailer_names);
+        String retailerName = icons.getString(retailerId);
+        thankyouMessage.setText(Html.fromHtml("Thanks for shopping at <b>" + retailerName + "</b>!"));
+
+        // Saving message setup
         savingsMessage = (TextView) findViewById(R.id.offer_notification_savings);
+        if (AppSettings.getInstance().isPaymentMethodPaypal()) {
+            savingsMessage.setText(Html.fromHtml(getString(R.string.savings_paypal)));
+        } else {
+            savingsMessage.setText(Html.fromHtml(getString(R.string.savings_ltc)));
+        }
 
         List<Integer> offersListIds = loadOffersListIds();
         List<Offers> offersList = AppSettings.getInstance().getRandomOffers(3, offersListIds);
@@ -56,16 +71,6 @@ public class OfferNotification extends Activity {
             offer.setExpiration("Expires 09/12/2014");
         }
         addNewOffers(offersList, this);
-
-//        List<Offers> offersList = new ArrayList<>();
-//        for (int i =0; i<3 ; i++){
-//            Offers offers = new Offers();
-//            offers.setId(i);
-//            offers.setDescription("On any ONE(1) six pack or larger");
-//            offers.setExpiration("Expires 09/12/2014");
-//            offers.setHeading("Save $1.50");
-//            offersList.add(offers);
-//        }
 
         OffersAdapter offersAdapter = new OffersAdapter(this, offersList);
         listView = (ListView) findViewById(R.id.offer_notification_listview);
