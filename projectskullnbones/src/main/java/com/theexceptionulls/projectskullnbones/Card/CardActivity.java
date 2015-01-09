@@ -3,6 +3,7 @@ package com.theexceptionulls.projectskullnbones.Card;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -138,10 +139,15 @@ public class CardActivity extends FragmentActivity {
         }
 
         if (id == R.id.action_checkout) {
-            buildNotification();
+            notifyForOffers();
+
+            if (areAnyOffersClipped()) {
+                notifyForSavings();
+                deleteClippedOffers();
+            }
+
             AppSettings.getInstance().switchPaymentMethod();
             setResult(Constants.INTENT_RESULT_FINISH_HOME);
-            // Here delete the clipped offers too
             finish();
             return true;
         }
@@ -160,22 +166,61 @@ public class CardActivity extends FragmentActivity {
                 .show();
     }
 
-    private void buildNotification() {
+    private OffersFragment getOffersFragment() {
+        return (OffersFragment)
+                getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + tabPagerAdapter.getItemId(0));
+    }
 
+    private boolean areAnyOffersClipped() {
+        OffersFragment offersFragment = getOffersFragment();
+        if (offersFragment != null) {
+            return offersFragment.areAnyOffersClipped();
+        }
+        return false;
+    }
+
+    private void deleteClippedOffers() {
+        OffersFragment offersFragment = getOffersFragment();
+            if (offersFragment != null) {
+                offersFragment.deleteClippedOffers(this);
+            }
+        }
+
+    // ---------- Notifications ---------- //
+
+    private void notifyForSavings() {
+        Intent intent = new Intent(); // Notification does nothing for now
+        PendingIntent pendingIntent = PendingIntent.getActivity(CardActivity.this, Constants.NOTIFICATION_NEW_SAVINGS, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(CardActivity.this);
+        builder.setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentText("You saved $2.50 at " + getResources().getStringArray(R.array.retailer_names)[retailerId] + "!")
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentTitle("Your savings!");
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(Constants.NOTIFICATION_NEW_SAVINGS, builder.build());
+
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(2000);
+    }
+
+    private void notifyForOffers() {
         Intent intent = new Intent(CardActivity.this, OfferNotification.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtras(getIntent().getExtras());
         intent.putExtra(Constants.CARD_POSITION, cardPosition);
-
         PendingIntent pendingIntent = PendingIntent.getActivity(CardActivity.this, Constants.NOTIFICATION_NEW_OFFERS, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(CardActivity.this);
-        builder.setContentIntent(pendingIntent);
-        builder.setAutoCancel(true);
-        builder.setSmallIcon(R.drawable.ic_launcher);
-        builder.setContentText("You saved $2.50. Tap to check your new offers");
-        builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        builder.setContentTitle("New Offers!");
-        builder.setStyle(new NotificationCompat.BigTextStyle().bigText("You saved $2.50 at " + getResources().getStringArray(R.array.retailer_names)[retailerId] + ". Tap to check out your new offers!"));
+        builder.setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentText("You have new offers! Tap to view them.")
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentTitle("New offers!");
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_NEW_OFFERS, builder.build());

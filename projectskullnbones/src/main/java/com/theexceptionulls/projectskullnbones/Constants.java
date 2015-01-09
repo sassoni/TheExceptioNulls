@@ -11,6 +11,7 @@ public class Constants {
     public static final int OFFERS_LIST_SIZE = 2;
 
     public static final int NOTIFICATION_NEW_OFFERS = 1321;
+    public static final int NOTIFICATION_NEW_SAVINGS = 1322;
 
     public static final int INTENT_RESULT_FINISH_HOME = 12312;
     public static final int INTENT_REQUEST_CODE_CARD = 678;
