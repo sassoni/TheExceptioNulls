@@ -69,7 +69,7 @@ public class OffersGridAdapter extends BaseAdapter {
 
         final ViewHolder holder;
 
-       if (convertView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.offer_layout_grid, null, false);
 
