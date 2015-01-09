@@ -227,6 +227,9 @@
 
     <!--History Fragment-->
     <string name="bar_chart_month_help">Tap a bar for detailed view</string>
+    <string name="categories_pie_chart_description">Purchase by category</string>
+    <string name="savings_pie_chart_description">Used and Unused savings distribution</string>
+    <string name="savings_comparison_description">Savings Across 12 Months</string>
     <string-array name="months">
         <item>Jan</item>
         <item>Feb</item>
@@ -276,5 +279,12 @@
         <item>31</item>
     </string-array>
 
+    <string-array name="category_purchase_piechart_data">
+        <item>$200</item>
+        <item>$400</item>
+        <item>$200</item>
+        <item>$100</item>
+        <item>$100</item>
+    </string-array>
 
 </resources>
