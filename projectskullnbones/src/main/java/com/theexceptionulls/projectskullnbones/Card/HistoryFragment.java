@@ -197,7 +197,7 @@ public class HistoryFragment extends Fragment {
         yValues.add(new BarEntry(new float[]{13.35f, 124.9f}, 16));
         yValues.add(new BarEntry(new float[]{6.23f, 74.42f}, 25));
 
-        BarDataSet barDataSet = new BarDataSet(yValues, "E");
+        BarDataSet barDataSet = new BarDataSet(yValues, "");
         barDataSet.setBarShadowColor(Color.TRANSPARENT);
         barDataSet.setStackLabels(new String[]{"Saved","Spent"});
         ArrayList<Integer> integers = new ArrayList<>();
