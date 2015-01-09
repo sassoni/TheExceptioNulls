@@ -90,8 +90,9 @@ public class AppSettings {
         if (lastOffer + 1 >= offersList.size()) {
             lastOffer = -1;
         }
-        for (int i = 0; i < size; i++) {
-            offers.add(offersList.get(lastOffer + 1));
+        int end = lastOffer + size;
+        for (int i = lastOffer+1; i <= end; i++) {
+            offers.add(offersList.get(i));
         }
         return offers;
     }

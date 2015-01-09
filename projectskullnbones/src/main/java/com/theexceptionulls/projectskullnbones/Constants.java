@@ -8,7 +8,7 @@ public class Constants {
     public static final String RETAILER_ID = "retailerId";
     public static final int DEFAULT_RETAILER_ID = -1;
     public static final int DEFAULT_CARD_POSITION = -1;
-    public static final int OFFERS_LIST_SIZE = 2;
+    public static final int OFFERS_LIST_SIZE = 0;
 
     public static final int NOTIFICATION_NEW_OFFERS = 1321;
     public static final int NOTIFICATION_NEW_SAVINGS = 1322;

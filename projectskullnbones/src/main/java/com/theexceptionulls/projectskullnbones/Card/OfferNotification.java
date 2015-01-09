@@ -68,7 +68,7 @@ public class OfferNotification extends Activity {
 
         /*List<Integer>*/
         int offersListIds = loadOffersListIds();
-        List<Offers> offersList = AppSettings.getInstance().getNotificationOffers(1, offersListIds - 1);
+        List<Offers> offersList = AppSettings.getInstance().getNotificationOffers(2, offersListIds - 1);
         for (Offers offer : offersList) {
             offer.setExpiration("Expires 09/12/2014");
         }
