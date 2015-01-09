@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Iterator;
 import java.util.List;
 
 public class OffersFragment extends Fragment implements OffersGridAdapter.OffersGridEventListener {
@@ -38,6 +39,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
     private ProgressBar progressBar;
     private TextView errorMessage;
     private OffersGridAdapter offersGridAdapter;
+    private int offersSoFar = -1;
 
     private enum UIOptions {
         EMPTY_OFFERS, LOADING_OFFERS, OFFERS_AVAILABLE;
@@ -121,6 +123,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
             String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
             FileInputStream fileInputStream = context.openFileInput(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+           offersSoFar = objectInputStream.readInt();
             offersList = (List<Offers>) objectInputStream.readObject();
             objectInputStream.close();
             fileInputStream.close();
@@ -137,6 +140,11 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
                 String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
                 FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                if (offersSoFar == -1) {
+                    objectOutputStream.writeInt(Constants.OFFERS_LIST_SIZE);
+                } else {
+                    objectOutputStream.writeInt(offersSoFar);
+                }
                 objectOutputStream.writeObject(offersList);
                 fileOutputStream.close();
                 objectOutputStream.close();
@@ -198,9 +206,11 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
     }
 
     public void deleteClippedOffers(Context context) {
-        for (int i = 0; i < offersList.size(); i++) {
-            if (offersList.get(i).isClipped()) {
-                offersList.remove(i);
+        for (Iterator<Offers> iter = offersList.listIterator(); iter.hasNext(); ) {
+            Offers offer = iter.next();
+            if (offer.isClipped()) {
+                Log.i("OFFERSFRAGMENT", "Removing: " + offer.getDescription());
+                iter.remove();
             }
         }
         saveOffersList(context);

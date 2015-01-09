@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,8 +66,8 @@ public class OfferNotification extends Activity {
             savingsMessage.setText(Html.fromHtml(getString(R.string.savings_ltc)));
         }
 
-        List<Integer> offersListIds = loadOffersListIds();
-        List<Offers> offersList = AppSettings.getInstance().getNotificationOffers(1, offersListIds.size()-1);
+        /*List<Integer>*/int offersListIds = loadOffersListIds();
+        List<Offers> offersList = AppSettings.getInstance().getNotificationOffers(1, offersListIds - 1);
         for (Offers offer : offersList) {
             offer.setExpiration("Expires 09/12/2014");
         }
@@ -78,12 +79,15 @@ public class OfferNotification extends Activity {
     }
 
     public void addNewOffers(List<Offers> newOffers, Context context) {
+        int offersSoFar = 2;
         List<Offers> offersList = null;
         // read old list
         try {
             String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
             FileInputStream fileInputStream = openFileInput(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            offersSoFar = objectInputStream.readInt();
+            Log.i("OFFERNOTIFICATION", "read: " + offersSoFar);
             offersList = (List<Offers>) objectInputStream.readObject();
             objectInputStream.close();
             fileInputStream.close();
@@ -92,12 +96,15 @@ public class OfferNotification extends Activity {
         }
         // concatenate
         offersList.addAll(newOffers);
+        offersSoFar += newOffers.size();
         // write new list
         if (offersList != null) {
             try {
                 String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
                 FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                Log.i("OFFERNOTIFICATION", "write: " + offersSoFar);
+                objectOutputStream.writeInt(offersSoFar);
                 objectOutputStream.writeObject(offersList);
                 fileOutputStream.close();
                 objectOutputStream.close();
@@ -130,12 +137,14 @@ public class OfferNotification extends Activity {
         finish();
     }
 
-    private List<Integer> loadOffersListIds() {
+    private /*List<Integer>*/ int loadOffersListIds() {
+        int offers = 2;
         List<Integer> offersIdsList = null;
         try {
             String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
             FileInputStream fileInputStream = openFileInput(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            offers = objectInputStream.readInt();
             List<Offers> offersList = (List<Offers>) objectInputStream.readObject();
             objectInputStream.close();
             fileInputStream.close();
@@ -148,6 +157,6 @@ public class OfferNotification extends Activity {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return offersIdsList;
+        return offers;
     }
 }
