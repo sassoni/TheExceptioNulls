@@ -30,7 +30,7 @@ public class CardActivity extends FragmentActivity {
     ViewPager viewPager;
     TabPagerAdapter tabPagerAdapter;
     private static final int TAB_COUNT = 3;
-    private String[] tabStrings = new String[]{"Offers", "Savings", "Card"};
+    private String[] tabStrings = new String[]{"Offers", "Dashboard", "Card"};
 
     private String intentFrom;
     private int retailerId;

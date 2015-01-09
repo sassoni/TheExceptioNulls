@@ -65,7 +65,7 @@ public class HistoryFragment extends Fragment {
                 back.setVisibility(View.GONE);
                 barChartMonth.setVisibility(View.GONE);
                 barChart.setVisibility(View.VISIBLE);
-                barChartMonthHelpText.setVisibility(View.VISIBLE);
+                barChartMonthHelpText.setText(getString(R.string.bar_chart_month_help));
             }
         });
 
@@ -76,7 +76,7 @@ public class HistoryFragment extends Fragment {
                 barChartMonth.setVisibility(View.VISIBLE);
                 barChartMonth.setDescription("");
                 barChart.setVisibility(View.GONE);
-                barChartMonthHelpText.setText(getResources().getStringArray(R.array.months)[entry.getXIndex()]+" Purchase");
+                barChartMonthHelpText.setText(getResources().getStringArray(R.array.months_full)[entry.getXIndex()]+" Spending");
             }
 
             @Override
@@ -95,21 +95,20 @@ public class HistoryFragment extends Fragment {
     }
 
     private void setLineChart(){
-        lineChart.setDescription("Savings Across 12 Months");
+        lineChart.setDescription("");
         lineChart.setDescriptionTextSize(20);
-        lineChart.setDrawYValues(true);
-        lineChart.setValueTypeface(Typeface.DEFAULT);
+        lineChart.setDrawYValues(false);
         lineChart.setUnit(" $");
 
         ArrayList<String> xValues = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.months)));
 
         ArrayList<Entry> userValues = new ArrayList<>();
         userValues.add(new Entry(29.69f, 0));
-        userValues.add(new Entry(5.47f, 1));
+        userValues.add(new Entry(10.47f, 1));
         userValues.add(new Entry(26.95f, 2));
         userValues.add(new Entry(46.02f, 3));
         userValues.add(new Entry(32.3f, 4));
-        userValues.add(new Entry(6.08f, 5));
+        userValues.add(new Entry(12.08f, 5));
         userValues.add(new Entry(71.46f, 6));
         userValues.add(new Entry(39.53f, 7));
         userValues.add(new Entry(31.68f, 8));
@@ -133,18 +132,18 @@ public class HistoryFragment extends Fragment {
 
         ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
 
-        LineDataSet userDataSet = new LineDataSet(userValues, "Your Savings");
-        userDataSet.setCircleColor(Color.parseColor("#FE1930"));
+        LineDataSet userDataSet = new LineDataSet(userValues, "You");
+        userDataSet.setCircleColor(Color.parseColor("#FF6900"));
         userDataSet.setCircleSize(5);
         userDataSet.setLineWidth(2);
-        userDataSet.setColor(Color.parseColor("#F5AB2A"));
+        userDataSet.setColor(Color.parseColor("#00ADEF"));
         lineDataSets.add(userDataSet);
 
-        LineDataSet othersDataSet = new LineDataSet(otherValues, "Others Savings");
-        othersDataSet.setCircleColor(Color.parseColor("#68F3E8"));
+        LineDataSet othersDataSet = new LineDataSet(otherValues, "Shoppers like you");
+        othersDataSet.setCircleColor(Color.parseColor("#FF6900"));
         othersDataSet.setCircleSize(5);
         othersDataSet.setLineWidth(2);
-        othersDataSet.setColor(Color.parseColor("#3FFE19"));
+        othersDataSet.setColor(Color.parseColor("#274A80"));
         lineDataSets.add(othersDataSet);
 
         LineData lineData = new LineData(xValues, lineDataSets);
@@ -160,11 +159,11 @@ public class HistoryFragment extends Fragment {
 
         ArrayList<BarEntry> yValues = new ArrayList<>();
         yValues.add(new BarEntry(new float[]{29.69f, 166.81f}, 0));
-        yValues.add(new BarEntry(new float[]{5.47f, 68.97f}, 1));
+        yValues.add(new BarEntry(new float[]{10.47f, 68.97f}, 1));
         yValues.add(new BarEntry(new float[]{26.95f, 207.63f}, 2));
         yValues.add(new BarEntry(new float[]{46.02f, 309.62f}, 3));
         yValues.add(new BarEntry(new float[]{32.30f, 294.16f}, 4));
-        yValues.add(new BarEntry(new float[]{6.08f, 54.11f}, 5));
+        yValues.add(new BarEntry(new float[]{12.08f, 54.11f}, 5));
         yValues.add(new BarEntry(new float[]{71.46f, 417.9f}, 6));
         yValues.add(new BarEntry(new float[]{39.53f, 295.68f}, 7));
         yValues.add(new BarEntry(new float[]{31.68f, 246.76f}, 8));
@@ -172,9 +171,9 @@ public class HistoryFragment extends Fragment {
         yValues.add(new BarEntry(new float[]{46.02f, 326.75f}, 10));
         yValues.add(new BarEntry(new float[]{39.85f, 217.38f}, 11));
 
-        BarDataSet barDataSet = new BarDataSet(yValues, "Expenditure per Month");
+        BarDataSet barDataSet = new BarDataSet(yValues, "");
         barDataSet.setBarShadowColor(Color.TRANSPARENT);
-        barDataSet.setStackLabels(new String[]{"Without Savings","With Savings"});
+        barDataSet.setStackLabels(new String[]{"Saved","Spent"});
 
         ArrayList<Integer> integers = new ArrayList<>();
         integers.add(Color.parseColor("#FF6900"));
@@ -186,21 +185,25 @@ public class HistoryFragment extends Fragment {
     }
 
     private void setBarChartMonth(){
-        barChartMonth.setDescriptionTextSize(20);
-        barChartMonth.setDrawYValues(true);
+        barChartMonth.setDescription("");
+        barChartMonth.setDrawYValues(false);
         barChartMonth.setValueTypeface(Typeface.DEFAULT);
         barChartMonth.setUnit(" $");
 
         ArrayList<String> xValues = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.days)));
 
         ArrayList<BarEntry> yValues = new ArrayList<>();
-        yValues.add(new BarEntry(132, 5));
-        yValues.add(new BarEntry(265, 16));
-        yValues.add(new BarEntry(165, 25));
+        yValues.add(new BarEntry(new float[]{10.21f, 89.14f}, 5));
+        yValues.add(new BarEntry(new float[]{13.35f, 124.9f}, 16));
+        yValues.add(new BarEntry(new float[]{6.23f, 74.42f}, 25));
 
-        BarDataSet barDataSet = new BarDataSet(yValues, "Expenditure this Month");
+        BarDataSet barDataSet = new BarDataSet(yValues, "E");
         barDataSet.setBarShadowColor(Color.TRANSPARENT);
-        barDataSet.setColor(Color.parseColor("#2AE8F5"));
+        barDataSet.setStackLabels(new String[]{"Saved","Spent"});
+        ArrayList<Integer> integers = new ArrayList<>();
+        integers.add(Color.parseColor("#274A80"));
+        integers.add(Color.parseColor("#00ADEF"));
+        barDataSet.setColors(integers);
 
         BarData barData = new BarData(xValues, barDataSet);
         barChartMonth.setData(barData);
@@ -209,7 +212,7 @@ public class HistoryFragment extends Fragment {
     private void setPieChart(){
         pieChart.setDescription("");
         pieChart.setUnit(" %");
-        pieChart.setDescriptionTextSize(16);
+        pieChart.setDrawUnitsInChart(true);
         pieChart.setDrawYValues(true);
         pieChart.setValueTypeface(Typeface.DEFAULT);
         pieChart.setRotationEnabled(false);
@@ -256,24 +259,20 @@ public class HistoryFragment extends Fragment {
 
     private void setSavingsPieChart(){
 
-        savingsPieChart.setDescription("Used vs Un-used savings");
-        savingsPieChart.setDescriptionTextSize(20);
+        savingsPieChart.setDescription("");
         savingsPieChart.setDrawYValues(true);
         savingsPieChart.setValueTypeface(Typeface.DEFAULT);
-        savingsPieChart.setHoleColor(Color.rgb(235, 235, 235));
-        savingsPieChart.setUnit(" %");
-        savingsPieChart.setDrawUnitsInChart(true);
         savingsPieChart.setRotationEnabled(false);
 
         final ArrayList<String> xValues = new ArrayList<>();
-        xValues.add("Used");
-        xValues.add("Un-used");
+        xValues.add("Saved");
+        xValues.add("Missed");
 
         ArrayList<Entry> yValues = new ArrayList<>();
         yValues.add(new Entry(82,0));
         yValues.add(new Entry(18,1));
 
-        PieDataSet pieDataSet = new PieDataSet(yValues, "Categories");
+        PieDataSet pieDataSet = new PieDataSet(yValues, "");
         pieDataSet.setSliceSpace(3);
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(Color.parseColor("#A5DA00"));
@@ -286,7 +285,7 @@ public class HistoryFragment extends Fragment {
         savingsPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry entry, int i) {
-                savingsPieChart.setCenterText(xValues.get(entry.getXIndex())+" - "+"$250");
+                savingsPieChart.setCenterText(xValues.get(entry.getXIndex())+" - "+"$"+getResources().getStringArray(R.array.savings_pie_chart_data)[entry.getXIndex()]);
             }
 
             @Override

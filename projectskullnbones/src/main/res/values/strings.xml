@@ -226,10 +226,10 @@
 ]</string>
 
     <!--History Fragment-->
-    <string name="bar_chart_month_help">Tap a bar for detailed view</string>
-    <string name="categories_pie_chart_description">Purchase by category</string>
-    <string name="savings_pie_chart_description">Used and Unused savings distribution</string>
-    <string name="savings_comparison_description">Savings Across 12 Months</string>
+    <string name="bar_chart_month_help">Monthly Spending</string>
+    <string name="categories_pie_chart_description">Categories (12 Months)</string>
+    <string name="savings_pie_chart_description">Savings Utilization (12 Months)</string>
+    <string name="savings_comparison_description">Savings (12 Months)</string>
     <string-array name="months">
         <item>Jan</item>
         <item>Feb</item>
@@ -243,6 +243,21 @@
         <item>Oct</item>
         <item>Nov</item>
         <item>Dec</item>
+    </string-array>
+
+    <string-array name="months_full">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
     </string-array>
 
     <string-array name="days">
@@ -285,6 +300,11 @@
         <item>$200</item>
         <item>$100</item>
         <item>$100</item>
+    </string-array>
+
+    <string-array name="savings_pie_chart_data">
+        <item>362.12</item>
+        <item>77.34</item>
     </string-array>
 
 </resources>
