@@ -3,7 +3,6 @@ package com.theexceptionulls.projectskullnbones.Card;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -192,13 +191,23 @@ public class CardActivity extends FragmentActivity {
         Intent intent = new Intent(); // Notification does nothing for now
         PendingIntent pendingIntent = PendingIntent.getActivity(CardActivity.this, Constants.NOTIFICATION_NEW_SAVINGS, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
+        String savingsMessage;
+        if (retailerId % 2 == 0) {
+            savingsMessage = getString(R.string.savings_paypal);
+        } else {
+            savingsMessage = getString(R.string.savings_ltc);
+        }
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(CardActivity.this);
         builder.setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_launcher)
-                .setContentText("You saved $2.50 at " + getResources().getStringArray(R.array.retailer_names)[retailerId] + "!")
+                .setContentText(savingsMessage/*"You saved $2.50 at " + getResources().getStringArray(R.array.retailer_names)[retailerId] + "!"*/)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentTitle("Your savings!");
+                .setContentTitle("Your savings!")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(savingsMessage));
+
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_NEW_SAVINGS, builder.build());

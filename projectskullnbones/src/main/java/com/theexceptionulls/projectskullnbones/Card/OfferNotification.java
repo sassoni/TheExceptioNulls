@@ -54,19 +54,20 @@ public class OfferNotification extends Activity {
         // Thank you message setup
         thankyouMessage = (TextView) findViewById(R.id.offer_notification_thanks);
         Resources res = getResources();
-        TypedArray icons = res.obtainTypedArray(R.array.retailer_names);
-        String retailerName = icons.getString(retailerId);
+        TypedArray retailerNames = res.obtainTypedArray(R.array.retailer_names);
+        String retailerName = retailerNames.getString(retailerId);
         thankyouMessage.setText(Html.fromHtml("Thanks for shopping at <b>" + retailerName + "</b>!"));
 
-        // Saving message setup
-        savingsMessage = (TextView) findViewById(R.id.offer_notification_savings);
-        if (AppSettings.getInstance().isPaymentMethodPaypal()) {
-            savingsMessage.setText(Html.fromHtml(getString(R.string.savings_paypal)));
-        } else {
-            savingsMessage.setText(Html.fromHtml(getString(R.string.savings_ltc)));
-        }
+        // No savings message for now in the offers
+//        savingsMessage = (TextView) findViewById(R.id.offer_notification_savings);
+//        if (/*AppSettings.getInstance().isPaymentMethodPaypal()*/retailerId % 2 == 0) {
+//            savingsMessage.setText(Html.fromHtml(getString(R.string.savings_paypal)));
+//        } else {
+//            savingsMessage.setText(Html.fromHtml(getString(R.string.savings_ltc)));
+//        }
 
-        /*List<Integer>*/int offersListIds = loadOffersListIds();
+        /*List<Integer>*/
+        int offersListIds = loadOffersListIds();
         List<Offers> offersList = AppSettings.getInstance().getNotificationOffers(1, offersListIds - 1);
         for (Offers offer : offersList) {
             offer.setExpiration("Expires 09/12/2014");
