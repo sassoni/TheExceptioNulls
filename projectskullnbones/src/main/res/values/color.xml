@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="catalina_blue">#00adef</color>
+    <color name="catalina_green">#a5da00</color>
+    <color name="catalina_orange">#ff6900</color>
+    <color name="catalina_magenta">#e6266c</color>
     <color name="home_background">#efefef</color>
     <color name="card_grid_selector_pressed">#00ddff</color>
     <color name="card_grid_selector_unpressed">#ffffff</color>

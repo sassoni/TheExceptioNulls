@@ -9,7 +9,6 @@
         android:id="@+id/offer_layout_offer_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/i_generalmills" />
@@ -18,7 +17,6 @@
         android:id="@+id/offer_description"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/offer_layout_offer_image"
         android:gravity="center"
         android:maxLines="2"
         android:padding="5dp"
@@ -29,8 +27,7 @@
         android:id="@+id/offer_savings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/offer_description"
-        android:background="#00ddff"
+        android:background="@color/catalina_orange"
         android:gravity="center"
         android:text="Save $1.50"
         android:textColor="@android:color/white"
@@ -52,8 +49,8 @@
 
             <Button
                 android:id="@+id/offer_dislike"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@drawable/i_dislike" />
         </LinearLayout>
 
@@ -66,8 +63,8 @@
 
             <Button
                 android:id="@+id/offer_like"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@drawable/i_like" />
         </LinearLayout>
 
