@@ -9,29 +9,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:src="@drawable/i_allnaturaleggs"/>
+        android:src="@drawable/i_generalmills" />
 
     <TextView
         android:id="@+id/offer_description"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_below="@+id/offer_layout_offer_image"
+        android:gravity="center"
         android:maxLines="2"
         android:padding="5dp"
         android:text="All Natural Eggs - Grade A"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:layout_below="@+id/offer_layout_offer_image"/>
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/offer_savings"
-        android:background="#00ddff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save $1.50"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
+        android:layout_below="@+id/offer_description"
+        android:background="#00ddff"
         android:gravity="center"
-        android:layout_below="@+id/offer_description"/>
+        android:text="Save $1.50"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,9 +79,10 @@
                 android:id="@+id/offer_clip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
                 android:background="@android:color/transparent"
-                android:drawablePadding="5dp"/>
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical|right"
+                android:textSize="10sp" />
         </LinearLayout>
 
     </LinearLayout>

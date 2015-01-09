@@ -2,7 +2,9 @@
 <resources>
 
     <string name="app_name">PRINT2PHONE</string>
-    <string name="empty_cards_message">No Loyalty cards added.\nTap Add on the top right corner to get started</string>
+    <string name="empty_cards_message">To start receiving offers to your phone,\n
+        tap the Add (+) button to\n add all your loyalty cards today!
+    </string>
     <string name="empty_offers_message">Offers not available, check your network connection and try again</string>
     <string name="action_add">Add New Card</string>
     <string name="action_delete">Delete Card</string>
@@ -100,8 +102,8 @@
     <string name="offer_notification_newoffers">Your new offers:</string>
 
     <!-- Clip Button String-->
-    <string name="offer_clip_unclipped">Add\nCoupon</string>
-    <string name="offer_clip_clipped">Saved</string>
+    <string name="offer_clip_unclipped">Clip\nCoupon</string>
+    <string name="offer_clip_clipped">Clipped</string>
 
     <!--Offer JSON String-->
     <string name="offer_data_json">[

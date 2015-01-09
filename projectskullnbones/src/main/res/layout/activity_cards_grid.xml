@@ -11,11 +11,12 @@
         android:id="@+id/activity_cards_grid_empty_cards"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_centerInParent="true"
-        android:textSize="18sp"
+        android:gravity="center"
+        android:lineSpacingExtra="8sp"
+        android:padding="16dp"
         android:text="@string/empty_cards_message"
-        android:padding="16dp"/>
+        android:textSize="18sp" />
 
     <GridView
         android:id="@+id/gridview"
@@ -29,7 +30,7 @@
         android:padding="16dp"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>
 
