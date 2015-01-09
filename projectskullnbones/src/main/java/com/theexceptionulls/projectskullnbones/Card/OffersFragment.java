@@ -38,6 +38,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
     private GridView gridView;
     private ProgressBar progressBar;
     private TextView errorMessage;
+    private TextView noOffersMessage;
     private OffersGridAdapter offersGridAdapter;
     private int offersSoFar = -1;
 
@@ -76,6 +77,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
         gridView = (GridView) view.findViewById(R.id.offer_fragment_gridview);
         progressBar = (ProgressBar) view.findViewById(R.id.offers_fragment_grid_progress_bar);
         errorMessage = (TextView) view.findViewById(R.id.offers_fragment_grid_error_message);
+        noOffersMessage = (TextView) view.findViewById(R.id.no_offers_msg);
 
         LoadOffers loadOffers = new LoadOffers(getActivity());
         loadOffers.execute();
@@ -115,6 +117,12 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
             super.onPostExecute(aVoid);
             setUpScreen(UIOptions.OFFERS_AVAILABLE);
             gridView.setAdapter(offersGridAdapter);
+
+            if (offersList.size() == 0) {
+                noOffersMessage.setVisibility(View.VISIBLE);
+            } else {
+                noOffersMessage.setVisibility(View.GONE);
+            }
         }
 
     }
