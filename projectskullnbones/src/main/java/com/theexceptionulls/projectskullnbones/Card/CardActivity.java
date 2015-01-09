@@ -141,6 +141,7 @@ public class CardActivity extends FragmentActivity {
             buildNotification();
             AppSettings.getInstance().switchPaymentMethod();
             setResult(Constants.INTENT_RESULT_FINISH_HOME);
+            // Here delete the clipped offers too
             finish();
             return true;
         }

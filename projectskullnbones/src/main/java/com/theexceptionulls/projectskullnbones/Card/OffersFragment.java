@@ -99,7 +99,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
 
             loadOffersList(getActivity());
             if (offersList == null) {
-                offersList = AppSettings.getInstance().getRandomOffers(Constants.OFFERS_LIST_SIZE);
+                offersList = AppSettings.getInstance().getInitialOffers(Constants.OFFERS_LIST_SIZE);
                 saveOffersList(getActivity());
             }
 

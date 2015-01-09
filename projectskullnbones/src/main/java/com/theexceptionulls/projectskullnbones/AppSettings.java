@@ -2,7 +2,6 @@ package com.theexceptionulls.projectskullnbones;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import com.theexceptionulls.projectskullnbones.webservices.Offers;
 
@@ -12,7 +11,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class AppSettings {
 
@@ -78,25 +76,24 @@ public class AppSettings {
         }
     }
 
-    public List<Offers> getRandomOffers(int size) {
-        return getRandomOffers(size, new ArrayList<Integer>()) ;
+    public List<Offers> getInitialOffers(int size) {
+        List<Offers> offers = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            offers.add(offersList.get(i));
+        }
+        return offers;
     }
 
-    public List<Offers> getRandomOffers(int size, List<Integer> idsToExclude) {
-        List<Integer> usedIds = new ArrayList<>();
-        List<Offers> randomOfferList = new ArrayList<>();
-
-        Random random = new Random();
-
-        while (randomOfferList.size() < size) {
-            int randInt = random.nextInt(18);
-            if (!usedIds.contains(randInt) && !idsToExclude.contains(randInt)) {
-                randomOfferList.add(offersList.get(randInt));
-                usedIds.add(randInt);
-            }
+    public List<Offers> getNotificationOffers(int size, int lastOffer) {
+        List<Offers> offers = new ArrayList<>();
+        // If we reached the end, start again and get the first one
+        if (lastOffer + 1 >= offersList.size()) {
+            lastOffer = -1;
         }
-
-        return randomOfferList;
+        for (int i = 0; i < size; i++) {
+            offers.add(offersList.get(lastOffer + 1));
+        }
+        return offers;
     }
 
     public static int[] getStoreListThumbnailsID() {
