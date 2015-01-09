@@ -83,7 +83,8 @@ public class OfferNotification extends Activity {
         List<Offers> offersList = null;
         // read old list
         try {
-            String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
+            String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition + cardNumber;
+            Log.i("FILENAME1", fileName);
             FileInputStream fileInputStream = openFileInput(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             offersSoFar = objectInputStream.readInt();
@@ -103,7 +104,8 @@ public class OfferNotification extends Activity {
         // write new list
         if (offersList != null) {
             try {
-                String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
+                String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition + cardNumber;
+                Log.i("FILENAME2", fileName);
                 FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 Log.i("OFFERNOTIFICATION", "write: " + offersSoFar);
@@ -144,7 +146,8 @@ public class OfferNotification extends Activity {
         int offers = 2;
         List<Integer> offersIdsList = null;
         try {
-            String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
+            String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition + cardNumber;
+            Log.i("FILENAME3", fileName);
             FileInputStream fileInputStream = openFileInput(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             offers = objectInputStream.readInt();

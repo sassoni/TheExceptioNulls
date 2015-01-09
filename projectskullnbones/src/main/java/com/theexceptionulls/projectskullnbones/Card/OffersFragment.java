@@ -66,6 +66,7 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
             cardPosition = CardsListManager.getInstance().getCardDataListSize() - 1;
         } else {
             cardPosition = getArguments().getInt(Constants.CARD_POSITION);
+            cardNumber = getArguments().getString(Constants.CARD_NUMBER);
         }
     }
 
@@ -120,7 +121,8 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
 
     private void loadOffersList(Context context) {
         try {
-            String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
+            String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition + cardNumber;
+            Log.i("FILENAME4", fileName);
             FileInputStream fileInputStream = context.openFileInput(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
            offersSoFar = objectInputStream.readInt();
@@ -137,7 +139,8 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
     private synchronized void saveOffersList(Context context) {
         if (offersList != null) {
             try {
-                String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition;
+                String fileName = Constants.OFFERS_FILE_PREFIX + cardPosition + cardNumber;
+                Log.i("FILENAME5", fileName);
                 FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 if (offersSoFar == -1) {
