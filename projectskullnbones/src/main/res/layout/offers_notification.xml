@@ -20,7 +20,7 @@
         android:layout_below="@+id/offer_notification_thanks"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="@string/offer_notification_savings"
+        android:text=""
         android:textSize="16sp" />
 
     <TextView
