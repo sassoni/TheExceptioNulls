@@ -231,13 +231,11 @@ public class OffersFragment extends Fragment implements OffersGridAdapter.Offers
                 })
                 .setNegativeButton(R.string.dislike_delete_offer, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //offersList = AppSettings.getInstance().getRandomOffers(Constants.OFFERS_LIST_SIZE);
                         for (Offers offer : offersList) {
                             Log.i("OFERSGRIDADAPTER", "id chosen: " + offer.getId());
                         }
                         Log.i("OFERSGRIDADAPTER", "position to remove: " + offerPosition);
                         offersList.remove(offerPosition);
-//                        offersGridAdapter.notifyDataSetChanged();
                         offersGridAdapter.updateAdapter(offersList);
                         saveOffersList(getActivity());
                         dialog.dismiss();

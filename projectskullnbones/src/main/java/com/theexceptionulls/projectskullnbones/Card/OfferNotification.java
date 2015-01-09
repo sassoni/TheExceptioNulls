@@ -97,6 +97,9 @@ public class OfferNotification extends Activity {
         // concatenate
         offersList.addAll(newOffers);
         offersSoFar += newOffers.size();
+        if (offersSoFar == offersList.size()) {
+            offersSoFar = 1;
+        }
         // write new list
         if (offersList != null) {
             try {
