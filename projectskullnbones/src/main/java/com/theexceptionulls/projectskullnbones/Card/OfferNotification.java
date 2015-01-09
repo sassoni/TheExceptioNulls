@@ -99,7 +99,7 @@ public class OfferNotification extends Activity {
         // concatenate
         offersList.addAll(newOffers);
         offersSoFar += newOffers.size();
-        if (offersSoFar == 19) {
+        if (offersSoFar == 18) {
             offersSoFar = 0;
         }
         // write new list

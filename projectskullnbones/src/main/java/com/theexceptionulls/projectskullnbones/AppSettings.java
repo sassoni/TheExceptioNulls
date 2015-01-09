@@ -2,6 +2,7 @@ package com.theexceptionulls.projectskullnbones;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.theexceptionulls.projectskullnbones.webservices.Offers;
 
@@ -87,10 +88,11 @@ public class AppSettings {
     public List<Offers> getNotificationOffers(int size, int lastOffer) {
         List<Offers> offers = new ArrayList<>();
         // If we reached the end, start again and get the first one
-        if (lastOffer + 1 >= offersList.size()) {
-            lastOffer = -1;
-        }
+//        if (lastOffer + size >= offersList.size()) {
+//            lastOffer = -1;
+//        }
         int end = lastOffer + size;
+        Log.i("*************", "end: " + end);
         for (int i = lastOffer+1; i <= end; i++) {
             offers.add(offersList.get(i));
         }
